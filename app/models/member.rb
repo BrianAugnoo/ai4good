@@ -1,3 +1,3 @@
 class Member < ApplicationRecord
-  belongs_to :group_id
+  belongs_to :group
 end

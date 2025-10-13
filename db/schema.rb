@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_10_145644) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_10_155954) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "criteria", force: :cascade do |t|
     t.string "name"
-    t.integer "coeffs"
+    t.integer "coeffs", default: 1
     t.float "values"
     t.bigint "examiner_id", null: false
     t.bigint "group_id", null: false
