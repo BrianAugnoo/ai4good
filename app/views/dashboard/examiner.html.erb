@@ -1,0 +1,24 @@
+<div class="full-container examiner-dashboard">
+  <div class="part1">
+    <div class="header">
+      <h2 class="text-white">DASHBOARD</h2>
+      <h3 class="text-white">Username: <span class="instrument-italic">Augnoo Brian</span></h3>
+    </div>
+
+    <div class="content">
+      <%= render "partial/admin_card", title: "total group", icon: "group", icon_color: "#EF4444", value: @groups.count %>
+      <%= render "partial/admin_card", title: "rated group", icon: "group_add", icon_color: "#F97316", value: @ratted_groups.count %>
+      <%= render "partial/admin_card", title: "remaining group", icon: "group_off", icon_color: "#EC4899", value: @remaining_groups.count %>
+      <%= render "partial/admin_card", title: "active session", icon: "group", icon_color: "#EF4444" %>
+    </div>
+  </div>
+
+  <div class="part2" data-controller="chart">
+    <div data-chart-target="chart"
+         data-complete="<%= @ratted_groups.count%>"
+         data-remaining="<%= @remaining_groups.count%>"
+         id="chart"
+    ></div>
+  </div>
+  <a href="#" class="join-btn">join session</a>
+</div>

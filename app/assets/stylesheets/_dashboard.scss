@@ -1,0 +1,133 @@
+.admin-dashboard {
+  display: flex;
+  .menu {
+    width: 30%;
+    height: 100%;
+    background-color: beige;
+  }
+}
+
+.examiner-dashboard {
+  display: flex;
+  flex-direction: column;
+  .part1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 40vh;
+    width: 100vw;
+    background-color: #0284C7;
+
+    .header {
+      display: flex;
+      // margin-top: 5vh;
+      margin-left: 10vw;
+      margin-right: 4vw;
+      justify-content: space-between;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+      margin-left: 10vw;
+      margin-right: 4vw;
+
+      .card {
+        width: 20vw;
+        height: 20vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .card-content {
+          display: flex;
+          // padding: 0.5rem;
+          justify-content: space-around;
+
+          .info{
+            // align-self: center;
+            display: flex;
+            flex-direction: column;
+
+            p {
+              margin-bottom: 0.2rem;
+              color: #94A3B8;
+              font-weight: bold;
+            }
+
+            h4 {
+              align-self: center;
+            }
+          }
+
+          .circle {
+            display: flex;
+            height: 4rem;
+            width: 4rem;
+            // height: auto;
+            border-radius: 50%;
+            justify-content: center;
+
+              img {
+              align-self: center;
+              height: 2.5rem;
+              width: 2.5rem;
+            }
+          }
+        }
+
+        .date {
+          color: #94A3B8;
+          align-self: center;
+        }
+      }
+    }
+  }
+
+  .part2 {
+    flex-grow: 1;
+    display: flex;
+    width: 100vw;
+    background-color: #F1F5F9;
+    justify-content: center;
+
+    #chart {
+      margin: 0 auto;
+    }
+  }
+}
+
+.join-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 5rem;
+    z-index: 10;
+    text-decoration: none;
+    padding: 17px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 0;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all 0.5s ease;
+}
+
+.join-btn:hover {
+  letter-spacing: 3px;
+  background-color: hsl(261deg 80% 48%);
+  color: white;
+  box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+}
+
+.join-btn:active {
+  letter-spacing: 3px;
+  background-color: hsl(261deg 80% 48%);
+  color: white;
+  box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+  transform: translateY(10px);
+  transition: 100ms;
+}
