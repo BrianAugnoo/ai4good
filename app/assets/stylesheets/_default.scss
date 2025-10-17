@@ -57,3 +57,23 @@
   'GRAD' 0,
   'opsz' 24
 }
+
+.back-button {
+  position: fixed;
+  // margin-bottom: 1rem;
+
+  a {
+    display: flex;
+    color: black;
+
+    img {
+      width: 20px;
+      height: 20px;
+      align-self: flex-end;
+    }
+
+    h5 {
+      margin: 0;
+    }
+  }
+}

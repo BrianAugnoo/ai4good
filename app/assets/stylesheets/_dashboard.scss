@@ -21,16 +21,16 @@
     .header {
       display: flex;
       // margin-top: 5vh;
-      margin-left: 10vw;
-      margin-right: 4vw;
+      margin-left: 7vw;
+      margin-right: 7vw;
       justify-content: space-between;
     }
 
     .content {
       display: flex;
       justify-content: space-between;
-      margin-left: 10vw;
-      margin-right: 4vw;
+      margin-left: 7vw;
+      margin-right: 7vw;
 
       .card {
         width: 20vw;
@@ -80,6 +80,10 @@
           color: #94A3B8;
           align-self: center;
         }
+      }
+
+      a {
+        text-decoration: none;
       }
     }
   }

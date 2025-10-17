@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get "dashboard/admin" => "dashboard#admin", as: :admin_dashboard
   get "dashboard/examiner" => "dashboard#examiner", as: :examiner_dashboard
+  resources :groups, only: [ :index, :show, :new, :create ]
+  post "groups/search" => "groups#search", as: :search_groups
 end

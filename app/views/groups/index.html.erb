@@ -1,0 +1,17 @@
+<div class="group-container" data-controller="search">
+  <%= render "partial/back_button", page_name: "dashboard", page_path: examiner_dashboard_path %>
+  <div class="search-bar">
+    <input type="text" data-search-target="input" placeholder="Search by name or establishment..." name="query">
+  </div>
+
+  <div class="groups">
+    <div class="nav">
+      <% @group_type.each do |key, value| %>
+        <%= link_to "#{key}", groups_path(ratted: value[1]), class: value[0]%>
+      <% end %>
+    </div>
+    <turbo-frame id="groups_list" data-search-target="list">
+      <%= render "groups", groups: @groups %>
+    </turbo-frame>
+  </div>
+</div>
