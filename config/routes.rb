@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get "dashboard/examiner" => "dashboard#examiner", as: :examiner_dashboard
   resources :groups, only: [ :index, :show, :new, :create ]
   post "groups/search" => "groups#search", as: :search_groups
+  ressources :evals
 end

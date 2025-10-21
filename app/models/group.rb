@@ -1,6 +1,7 @@
 class Group < ApplicationRecord
   has_many :criteria
   has_many :members
+  has_one :session
 
   # retourne la note final si tout les examinateur ont noter corectement tout les
   # critére sinon il y a un bug et ca retourne une string

@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  valid: false
+  admin: one
+  group: one
+
+two:
+  valid: false
+  admin: two
+  group: two

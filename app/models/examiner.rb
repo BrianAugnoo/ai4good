@@ -5,6 +5,7 @@ class Examiner < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :criteria
+  has_one :eval
 
   def radom_marks(group)
     Criterium.criteria_list.each do |criterium_name|
