@@ -27,4 +27,10 @@ class Group < ApplicationRecord
       false
     end
   end
+
+  def add_members(members)
+    members.each do |member_name|
+      Member.create!(name: member_name, group: self)
+    end
+  end
 end

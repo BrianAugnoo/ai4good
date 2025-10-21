@@ -12,12 +12,31 @@ class GroupsController < ApplicationController
       @groups = Group.all
       @group_type[:all] = [ "selected", nil ]
     end
+  end
 
+  def show
+    @group = Group.find(params[:id])
     respond_to do |f|
       f.html
-      f.turbo_stream do
-        render turbo_stream: turbo_stream.replace("all_group", partial: "groups/groups", locals: { groups: @groups })
-      end
     end
+  end
+
+  def new
+    @group = Group.new
+  end
+
+  def create
+    group = Group.new(set_params)
+    group.add_members(params[:members].split(",")) unless params[:members].empty?
+    if group.save
+      redirect_to admin_dashboard_path
+    else
+      raise
+    end
+  end
+
+  private
+  def set_params
+    params.require(:group).permit(:etablished, :name, :theme)
   end
 end

@@ -1,5 +1,10 @@
 class DashboardController < ApplicationController
+  before_action :authenticate_examiner!, only: [ :examiner ]
+  before_action :authenticate_admin!, only: [ :admin ]
   def admin
+    @groups = Group.all
+    @ratted_groups = @groups.where(ratted: true)
+    @remaining_groups = @groups.where(ratted: false)
   end
 
   def examiner

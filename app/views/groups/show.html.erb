@@ -1,0 +1,7 @@
+<h2>theme: <%= @group.theme %></h2>
+<h3>members</h3>
+<ul>
+  <% @group.members.each do |member| %>
+    <li><%= member.name %></li>
+  <% end %>
+</ul>

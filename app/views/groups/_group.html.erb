@@ -1,4 +1,6 @@
-<div class="group">
-  <h5 class="h5"><%= group.name %></h5>
-  <p><%= group.etablished %></p>
-</div>
+<%= link_to group_path(group), style: "text-decoration: none;" do %>
+  <div class="group">
+    <h5 class="h5"><%= group.name %></h5>
+    <p><%= group.etablished %></p>
+  </div>
+<% end %>
