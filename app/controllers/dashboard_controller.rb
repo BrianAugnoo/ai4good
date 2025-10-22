@@ -11,5 +11,6 @@ class DashboardController < ApplicationController
     @groups = Group.all
     @ratted_groups = @groups.where(ratted: true)
     @remaining_groups = @groups.where(ratted: false)
+    @session = Session.first
   end
 end

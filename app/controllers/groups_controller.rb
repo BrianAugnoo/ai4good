@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   def index
     ratted = params["ratted"]
-    @group_type = { all: [ "", nil ], ratted: [ "", true ], remaining: [ "", false] }
+    @group_type = { all: [ "", nil ], ratted: [ "", true ], remaining: [ "", false ] }
     if ratted == "true"
       @groups = Group.where(ratted: ratted)
       @group_type[:ratted] = [ "selected", true ]

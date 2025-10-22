@@ -1,0 +1,19 @@
+<div id="<%= "examiner-control-#{ examiner.id }"%>">
+  <% if Session.connection_completed? %>
+    <% if Session.status == 3 %>
+      <p>session finished <%= link_to "return to dashboard", examiner_dashboard_path %></p>
+    <% elsif Session.status == 2 %>
+      <p>wait for the end of session</p>
+    <% elsif examiner.submit_eval? %>
+      <p>wait for all evaluations</p>
+    <% else %>
+      <%= form_with url: criterium_index_path() do |f| %>
+        <% Criterium.criteria_list.each do |criterium_name| %>
+          <%= f.label criterium_name.to_sym, criterium_name %>
+          <%= f.text_field criterium_name.to_sym %>
+        <% end %>
+        <%= f.submit "valid" %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_21_181647) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_22_031642) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,7 +39,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_21_181647) do
   end
 
   create_table "evals", force: :cascade do |t|
-    t.boolean "done"
+    t.boolean "done", default: false
     t.bigint "examiner_id", null: false
     t.bigint "session_id", null: false
     t.datetime "created_at", null: false
@@ -79,11 +79,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_21_181647) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.boolean "valid"
+    t.boolean "is_valid", default: false
     t.bigint "admin_id", null: false
     t.bigint "group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "all_submited", default: false
     t.index ["admin_id"], name: "index_sessions_on_admin_id"
     t.index ["group_id"], name: "index_sessions_on_group_id"
   end

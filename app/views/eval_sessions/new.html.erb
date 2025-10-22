@@ -1,0 +1,7 @@
+<div data-controller="session">
+  <%= render "groups/groups", groups: @groups, partial_path: "groups/group"%>
+  <%= form_with url: eval_sessions_path(@session) do |f| %>
+    <%= f.hidden_field :group_id, id: "group-input", required: true %>
+    <%= f.submit "create session", class: "join-btn" %>
+  <% end %>
+</div>

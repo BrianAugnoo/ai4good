@@ -3,7 +3,7 @@
   <div class="part1">
     <div class="header">
       <h2 class="text-white">DASHBOARD</h2>
-      <h3 class="text-white">Username: <span class="instrument-italic">Augnoo Brian</span></h3>
+      <h3 class="text-white">Username: <span class="instrument-italic"><%= current_examiner.name %></span></h3>
     </div>
 
     <div class="content">
@@ -30,5 +30,14 @@
          id="chart"
     ></div>
   </div>
-  <a href="#" class="join-btn">join session</a>
+  <%= turbo_stream_from "exam-btn" %>
+  <div id="join-exam-btn">
+    <% if @session != nil %>
+      <% if current_examiner.sessions.empty? %>
+        <%= render "partial/join_btn", session: @session %>
+      <% else %>
+        <%= link_to "re-join session", eval_session_path(@session), class: "join-btn" %>
+      <% end %>
+    <% end %>
+  </div>
 </div>
