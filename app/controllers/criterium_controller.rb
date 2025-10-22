@@ -5,6 +5,6 @@ class CriteriumController < ApplicationController
     end
     @eval = current_examiner.evals[0]
     @eval.update!(done: true)
-      redirect_to eval_session_path(@eval.session)
+    # redirect_to eval_session_path(@eval.session)
   end
 end
