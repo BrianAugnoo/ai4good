@@ -22,6 +22,7 @@ class EvalSessionsController < ApplicationController
   def show
     begin
       @session = Session.find(params[:id])
+      redirect_to examiner_dashboard_path and return if !admin_signed_in? && current_examiner.evals.empty?
     rescue
       redirect_to root_path
     end

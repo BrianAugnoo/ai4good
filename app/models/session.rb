@@ -49,7 +49,7 @@ class Session < ApplicationRecord
   end
 
   def wait_examiner
-    broadcast_replace_to "eval-show",
+    broadcast_replace_to "eval-show-#{self.id}",
                           target: "admin-control",
                           partial: "partial/admin_control"
   end
@@ -57,7 +57,7 @@ class Session < ApplicationRecord
   def end_session
     wait_examiner
     Examiner.all.each do |examiner|
-      broadcast_replace_to "eval-show",
+      broadcast_replace_to "eval-show-#{self.id}",
                           target: "examiner-control-#{examiner.id}",
                           partial: "partial/examiner_control",
                           locals: { examiner: examiner }

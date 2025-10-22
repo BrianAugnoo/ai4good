@@ -1,4 +1,4 @@
-<%= turbo_stream_from "eval-show" %>
+<%= turbo_stream_from "eval-show-#{@session.id}" %>
 <% page_path = admin_signed_in? ? admin_dashboard_path : examiner_dashboard_path %>
 <%= render "partial/back_button", page_name: "dashboard", page_path: page_path %>
 <div id="eval-show-container">

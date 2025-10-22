@@ -6,7 +6,7 @@ class Eval < ApplicationRecord
 
   private
   def active_member
-    broadcast_replace_to "eval-show",
+    broadcast_replace_to "eval-show-#{self.session.id}",
                          target: "active-member",
                          partial: "eval_sessions/active_member",
                          locals: { examiner_count: self.session.examiners.count }
@@ -14,7 +14,7 @@ class Eval < ApplicationRecord
 
   def display_control
     if Session.connection_completed?
-      broadcast_replace_to "eval-show",
+      broadcast_replace_to "eval-show-#{self.session.id}",
                           target: "admin-control",
                           partial: "partial/admin_control"
 
@@ -25,7 +25,7 @@ class Eval < ApplicationRecord
   end
 
   def display_examiner_control(examiner)
-    broadcast_replace_to "eval-show",
+    broadcast_replace_to "eval-show-#{self.session.id}",
                           target: "examiner-control-#{examiner.id}",
                           partial: "partial/examiner_control",
                           locals: { examiner: examiner }
