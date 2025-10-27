@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+#projection-container {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+  background: #000000;
+}
+
+.loading-text {
+	place-self: center;
+	background: linear-gradient(90deg, #00f, #0ff, #00f) -100%/ 200%;
+	/* being excessively careful with compat,
+	 * though this has been supported unprefixed and
+	 * in the shorthand across major browsers for a while */
+	-webkit-background-clip: text;
+	        background-clip: text;
+	/* use color, don't use -webkit-text-fill-color anymore,
+	 * was meant to solve a problem we haven't had in years */
+	color: transparent;
+	font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 5rem;
+	animation: shimmer 2s linear infinite
+}
+
+@keyframes shimmer { to { background-position: 100% } }

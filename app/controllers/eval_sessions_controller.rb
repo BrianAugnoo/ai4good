@@ -2,6 +2,7 @@ class EvalSessionsController < ApplicationController
   def new
     @groups = Group.where(ratted: false)
     @session = Session.new
+    redirect_to admin_dashboard_path if Session.all.any?
   end
 
   def create

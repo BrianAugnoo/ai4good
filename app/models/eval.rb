@@ -21,6 +21,7 @@ class Eval < ApplicationRecord
       Examiner.all.each do |examiner|
         display_examiner_control(examiner)
       end
+      self.session.refresh_projection
     end
   end
 

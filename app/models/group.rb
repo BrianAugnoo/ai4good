@@ -14,13 +14,13 @@ class Group < ApplicationRecord
     criteria_list = Criterium.criteria_list.count
     cond1 = num_criteria != 0
     cond2 = num_criteria % criteria_list == 0 && num_criteria % num_examiner == 0
-    cond1 && cond2 ? total_points/criteria_list : "Examiners should not sumbit without all criteria marks having been met. Check the V or C."
+    cond1 && cond2 ? (total_points/num_criteria).round(2) : "Examiners should not sumbit without all criteria marks having been met. Check the V or C."
   end
 
-  def valid
+  def validate
     nb_examiner = Examiner.all.count
-    eval_examiner = criteria.pluck(:examiner_id).uniq.count
-    if nb_examiner == eval_examiner && self.final_marks.is_a?(Integer)
+    eval_examiner = self.criteria.pluck(:examiner_id).uniq.count
+    if nb_examiner == eval_examiner && self.final_marks.is_a?(Float)
       self.ratted = true
       self.save
       true

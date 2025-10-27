@@ -31,20 +31,31 @@ class Session < ApplicationRecord
     self.destroy
     Criterium.destroy_all
   end
+
+  def refresh_projection
+    broadcast_replace_to "home-projection",
+                         target: "projection",
+                         partial: "partial/projection"
+  end
+
   private
   def display_btn
     broadcast_replace_to "exam-btn",
                           target: "join-exam-btn",
                           partial: "partial/join_btn",
                           locals: { session: self }
+
+    self.refresh_projection
   end
 
   def valid_session
     status = Session.status
     if status == 3
+      self.refresh_projection
       end_session
     elsif status == 1
       wait_examiner
+      self.refresh_projection
     end
   end
 
@@ -62,6 +73,6 @@ class Session < ApplicationRecord
                           partial: "partial/examiner_control",
                           locals: { examiner: examiner }
     end
-    self.clean!
+    self.destroy!
   end
 end
