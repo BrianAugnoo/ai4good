@@ -1,17 +1,17 @@
 <div id="projection">
   <% if Session.all.empty? %>
-    <% happen = nil %>
+    <div class="loading-text">Await for next group..</div><% happen = nil %>
   <% else %>
     <% if !Session.connection_completed? %>
       <div class="loading-text">Await for exeminer connection...</div>
     <% else %>
       <% if Session.status == 0 %>
-        <p>session started</p>
+        <%= render "partial/active_session" %>
       <% elsif Session.status == 1 %>
         <p>wait for evaluations</p>
       <% elsif Session.status == 3 %>
         <% group = Session.first.group %>
-        <p><%= group.final_marks if group.valid? %></p>
+        <p><%= group.final_marks if group.validate %></p>
       <% end %>
     <% end %>
   <% end %>

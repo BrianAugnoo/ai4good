@@ -3,7 +3,7 @@ class Criterium < ApplicationRecord
   belongs_to :group
 
   # verifie que l'examinateur ne soumet pas plusieur fois une note sur le même critére
-  validates :name, uniqueness: { scope: :examiner, message: "the examiner has already submit this criterium" }
+  validates :id, uniqueness: { scope: :examiner, message: "the examiner has already submit this criterium" }
   # verifie que le critére fait bien parti de ce que l'on attend
   validate :criteria_identifiable
   validate :valid_value

@@ -35,8 +35,14 @@ class GroupsController < ApplicationController
     end
   end
 
+  def update
+    group = Group.find(params[:id])
+    group.update(set_params)
+    raise unless group.save
+  end
+
   private
   def set_params
-    params.require(:group).permit(:etablished, :name, :theme)
+    params.require(:group).permit(:etablished, :name, :theme, :timer)
   end
 end

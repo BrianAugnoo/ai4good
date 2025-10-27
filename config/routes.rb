@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get "dashboard/admin" => "dashboard#admin", as: :admin_dashboard
   get "dashboard/examiner" => "dashboard#examiner", as: :examiner_dashboard
-  resources :groups, only: [ :index, :show, :new, :create ]
+  resources :groups, only: [ :index, :show, :new, :create, :update ]
   post "groups/search" => "groups#search", as: :search_groups
   resources :eval_sessions, except: [ :index, :edit ]
   resources :evals, only: [ :create ]

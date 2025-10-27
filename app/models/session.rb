@@ -51,9 +51,11 @@ class Session < ApplicationRecord
   def valid_session
     status = Session.status
     if status == 3
+      self.send_timer
       self.refresh_projection
       end_session
     elsif status == 1
+      self.send_timer
       wait_examiner
       self.refresh_projection
     end
@@ -74,5 +76,11 @@ class Session < ApplicationRecord
                           locals: { examiner: examiner }
     end
     self.destroy!
+  end
+
+  def send_timer
+    broadcast_append_to "home-projection",
+                        target: "projection",
+                        partial: "partial/send_timer"
   end
 end
