@@ -5,10 +5,20 @@ class Examiner < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :criteria
+  has_many :evals
+  has_many :sessions, through: :evals
 
   def radom_marks(group)
     Criterium.criteria_list.each do |criterium_name|
       Criterium.create!(name: criterium_name, examiner: self, group: group, values: rand(20))
     end
+  end
+
+  def self.total
+    self.all.count
+  end
+
+  def submit_eval?
+    self.evals.first.done
   end
 end

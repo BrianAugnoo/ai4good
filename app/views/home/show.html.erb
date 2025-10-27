@@ -1,13 +1,13 @@
-<h1>Home#show</h1>
-<p>Find me in app/views/home/show.html.erb</p>
+<div class="logo">
+  <%= image_tag "AI4GOOD_logo.jpg" %>
+</div>
 
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-  </ul>
+<div class="home-show-backround" style="background: url('<%= asset_path "menu_backround.jpg"%>')">
+  <div class="space"></div>
+  <nav class="home-menu">
+    <h1>Menu</h1>
+    <%= link_to "admin dashboard", admin_dashboard_path%>
+    <%= link_to "examiner dashboard", examiner_dashboard_path%>
+    <%= link_to "display screen", home_projection_path%>
+  </nav>
 </div>

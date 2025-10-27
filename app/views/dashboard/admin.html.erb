@@ -1,0 +1,39 @@
+<div class="full-container examiner-dashboard">
+  <%= render "partial/back_button", page_name: "home", page_path: root_path %>
+  <div class="part1">
+    <div class="header">
+      <h2 class="text-white">DASHBOARD</h2>
+      <h3 class="text-white">Admin</h3>
+    </div>
+
+    <div class="content">
+      <%= link_to groups_path do %>
+        <%= render "partial/admin_card", title: "total group", icon: "group", icon_color: "#EF4444", value: @groups.count %>
+      <% end %>
+
+      <%= link_to groups_path(ratted: true) do %>
+        <%= render "partial/admin_card", title: "rated group", icon: "group_add", icon_color: "#F97316", value: @ratted_groups.count %>
+      <% end %>
+
+      <%= link_to groups_path(ratted: false) do %>
+        <%= render "partial/admin_card", title: "remaining group", icon: "group_off", icon_color: "#EC4899", value: @remaining_groups.count %>
+      <% end %>
+
+      <%= render "partial/admin_card", title: "active session", icon: "group", icon_color: "#EF4444" %>
+    </div>
+  </div>
+
+  <div class="part2" data-controller="chart">
+    <div data-chart-target="chart"
+         data-complete="<%= @ratted_groups.count%>"
+         data-remaining="<%= @remaining_groups.count%>"
+         id="chart"
+    ></div>
+  </div>
+
+  <% if Session.all.any? %>
+    <%= link_to "re-join session", eval_session_path(Session.first), class: "join-btn" %>
+  <% else %>
+    <%= link_to "Create Session", new_eval_session_path, class: "join-btn" %>
+  <% end %>
+</div>

@@ -1,0 +1,4 @@
+<%= form_with model: Eval.new do |f| %>
+  <%= f.hidden_field :session_id, value: session.id %>
+  <%= f.submit "join session", class: "join-btn" %>
+<% end %>

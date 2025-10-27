@@ -1,0 +1,12 @@
+<%= turbo_stream_from "eval-show-#{@session.id}" %>
+<% page_path = admin_signed_in? ? admin_dashboard_path : examiner_dashboard_path %>
+<%= render "partial/back_button", page_name: "dashboard", page_path: page_path %>
+<div id="eval-show-container">
+  <%= render "active_member", examiner_count: @session.examiners.count %>
+
+    <% if admin_signed_in? %>
+      <%= render "partial/admin_control" %>
+    <% elsif examiner_signed_in? %>
+      <%= render "partial/examiner_control", examiner: current_examiner %>
+    <% end %>
+</div>

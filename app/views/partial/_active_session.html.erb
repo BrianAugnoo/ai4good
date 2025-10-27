@@ -1,0 +1,15 @@
+<% group = Session.first.group %>
+<div class="timer" data-controller="timer">0:00</div>
+<div class="active-session">
+  <div class="group_info">
+    <p>etablished: <span><%= group.etablished %></span></p>
+    <p>group name: <span><%= group.name %></span></p>
+    <p>theme: <span><%= group.theme %></span></p>
+    <p>members:</p>
+    <ul>
+      <% group.members.each do |member| %>
+        <li><%= member.name %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

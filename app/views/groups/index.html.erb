@@ -1,0 +1,24 @@
+<div class="group-container" data-controller="search">
+  <% if examiner_signed_in? %>
+    <%= render "partial/back_button", page_name: "dashboard", page_path: examiner_dashboard_path %>
+  <% else %>
+    <%= render "partial/back_button", page_name: "dashboard", page_path: admin_dashboard_path %>
+  <% end %>
+  <div class="search-bar">
+    <input type="text" data-search-target="input" placeholder="Search by name or establishment..." name="query">
+  </div>
+
+  <div class="groups">
+    <div class="nav">
+      <% @group_type.each do |key, value| %>
+        <%= link_to "#{key}", groups_path(ratted: value[1]), class: value[0]%>
+      <% end %>
+    </div>
+      <%= render "groups", groups: @groups %>
+    </turbo-frame>
+  </div>
+
+  <% if admin_signed_in? %>
+    <%= link_to "add group", new_group_path, class: "join-btn" %>
+  <% end %>
+</div>

@@ -1,0 +1,14 @@
+<%= render "partial/back_button", page_name: "dashboard", page_path: admin_dashboard_path %>
+<div data-controller="session search" class="group-container">
+  <div class="search-bar">
+    <input type="text" data-search-target="input" placeholder="Search by name or establishment..." name="query">
+  </div>
+  <p>select one group</p>
+  <div class="groups">
+    <%= render "groups/groups", groups: @groups, partial_path: "groups/group"%>
+  </div>
+  <%= form_with url: eval_sessions_path(@session) do |f| %>
+    <%= f.hidden_field :group_id, id: "group-input", required: true %>
+    <%= f.submit "create session", class: "join-btn" %>
+  <% end %>
+</div>

@@ -1,0 +1,45 @@
+<%= render "partial/back_button", page_name: "groups", page_path: groups_path %>
+
+<div class="container px-2 py-4">
+  <div class="bg-white shadow-sm rounded-4 p-3">
+    <h5 class="text-center text-primary mb-4">create a new group</h5>
+    <%= form_with model: @group, local: true do |f| %>
+
+
+      <div class="mb-3">
+        <%= f.label :etablished, "Etablished", class: "form-label small fw-semibold" %>
+        <%= f.text_field :etablished, class: "form-control form-control-sm", placeholder: "University Of Mauritius", required: true %>
+      </div>
+
+
+      <div class="mb-3">
+        <%= f.label :name, "Name", class: "form-label small fw-semibold" %>
+        <%= f.text_field :name, class: "form-control form-control-sm", placeholder: "Something", required: true %>
+      </div>
+
+
+      <div class="mb-3">
+        <%= f.label :theme, "Theme", class: "form-label small fw-semibold" %>
+        <%= f.text_field :theme, class: "form-control form-control-sm", placeholder: "Mauritius history", required: true %>
+      </div>
+
+      <div class="mb-3">
+        <label for="members-input" class="form-label small fw-semibold">Members</label>
+        <input name="members" id="members-input" value="awesome,neat" autocomplete="off" placeholder="tap entry to validates the name">
+      </div>
+
+      <div class="d-grid">
+        <%= f.submit "Publish", class: "btn btn-primary btn-sm " %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+
+<script>
+    new TomSelect("#members-input", {
+      persist: false,
+      createOnBlur: true,
+      create: true
+    });
+</script>

@@ -69,3 +69,7 @@ gem "dotenv-rails", "~> 3.1"
 
 gem "cssbundling-rails"
 gem "jsbundling-rails"
+
+gem "simple_form", "~> 5.3"
+
+gem "kaminari", "~> 1.2"

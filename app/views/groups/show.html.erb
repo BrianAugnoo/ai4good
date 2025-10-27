@@ -1,0 +1,11 @@
+<h2>theme: <%= @group.theme %></h2>
+<h3>members</h3>
+<ul>
+  <% @group.members.each do |member| %>
+    <li><%= member.name %></li>
+  <% end %>
+</ul>
+<% if @group.ratted %>
+  <p>ratte: <%= @group.final_marks %></p>
+  <p>time: <%= @group.timer %></p>
+<% end %>
