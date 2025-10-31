@@ -7,6 +7,8 @@ class Examiner < ApplicationRecord
   has_many :criteria
   has_many :evals
   has_many :sessions, through: :evals
+  has_many :age_examiners
+  has_many :age_sections, through: :age_examiners
 
   def radom_marks(group)
     Criterium.criteria_list.each do |criterium_name|

@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  examinater: one
+  age_section: one
+
+two:
+  examinater: two
+  age_section: two

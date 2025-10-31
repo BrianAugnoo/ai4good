@@ -2,7 +2,7 @@ class Group < ApplicationRecord
   has_many :criteria
   has_many :members
   has_one :session
-
+  belongs_to :age_section
   # retourne la note final si tout les examinateur ont noter corectement tout les
   # critére sinon il y a un bug et ca retourne une string
   def final_marks

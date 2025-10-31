@@ -1,15 +1,21 @@
 puts("cleaning")
 Examiner.destroy_all
+AgeSection.destroy_all
 Group.destroy_all
 Member.destroy_all
 puts("create examiner")
 3.times do |i|
-  Examiner.create!(email: "admin#{i+1}@admin.com", name: Faker::Name.name, password: ENV["PASSWORD"])
+  Examiner.create!(email: "examiner#{i+1}@examiner.com", name: Faker::Name.name, password: ENV["PASSWORD"])
 end
 
-puts("crate groups")
-5.times do |i|
-  Group.create!(name: "group#{i+1}", etablished: Faker::University.name, theme: Faker::Book.genre)
+puts("create age section")
+AgeSection.create_for_seed
+
+puts("create groups")
+AgeSection.all.each do |age_section|
+  5.times do |i|
+    Group.create!(name: "group#{i+1}", etablished: Faker::University.name, theme: Faker::Book.genre, age_section_id: age_section.id)
+  end
 end
 
 puts("create members")

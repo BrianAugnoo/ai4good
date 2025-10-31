@@ -1,6 +1,7 @@
 class Criterium < ApplicationRecord
   belongs_to :examiner
   belongs_to :group
+  belongs_to :criterium_category
 
   # verifie que l'examinateur ne soumet pas plusieur fois une note sur le même critére
   validates :id, uniqueness: { scope: :examiner, message: "the examiner has already submit this criterium" }
