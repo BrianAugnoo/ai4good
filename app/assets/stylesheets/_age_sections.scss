@@ -1,0 +1,16 @@
+.age-sections-container {
+  display: flex;
+  min-width: 100vw;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+  .age-sections {
+    text-align: center;
+    width: 45%;
+    padding-top: 2rem;
+  }
+}
+
+.age-title {
+  text-align: center;
+}

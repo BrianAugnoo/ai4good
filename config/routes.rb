@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get "age_sections/index"
-  get "age_sections/show"
   get "session/new"
   get "session/show"
   get "menu/admin"
@@ -18,5 +16,5 @@ Rails.application.routes.draw do
   resources :evals, only: [ :create ]
   resources :criterium, only: [ :create ]
   patch "eval_sessions/valid_session" => "eval_sessions#valid_session", as: :valid_session
-  resources :age_sections, only: [ :index, :show, :edit, :update ]
+  resources :age_sections, except: [ :new, :create, :destroy ]
 end

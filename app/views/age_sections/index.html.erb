@@ -1,2 +1,14 @@
-<h1>AgeSections#index</h1>
-<p>Find me in app/views/age_sections/index.html.erb</p>
+<%= render "partial/back_button", page_name: "home", page_path: root_path %>
+<h1 class="age-title">Classement</h1>
+<div class="age-sections-container">
+  <% @age_sections.each do |age_section| %>
+    <div class="age-sections <%= age_section.size %>">
+      <h2><%= age_section.value %> ans</h2>
+      <% age_section.groups.each do |group| %>
+        <div id="age-groups">
+          <%= render "groups/group", group: group %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
