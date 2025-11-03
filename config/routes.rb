@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "settings/admin"
+  post "settings/admin" => "settings#examiner", as: :settings_examiner
+  post "settings/admin" => "settings#age_sections", as: :age_sections_settings
+  post "settings/admin" => "settings#marks", as: :marks_settings
   get "session/new"
   get "session/show"
   get "menu/admin"
@@ -17,4 +21,5 @@ Rails.application.routes.draw do
   resources :criterium, only: [ :create ]
   patch "eval_sessions/valid_session" => "eval_sessions#valid_session", as: :valid_session
   resources :age_sections, except: [ :new, :create, :destroy ]
+  resources :age_examiners, only: [ :create, :destroy ]
 end

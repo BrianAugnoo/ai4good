@@ -1,0 +1,13 @@
+<% examiners = Examiner.all %>
+<div class="content" id="setting-content">
+  <h1>Listes des examinateur</h1>
+  <% examiners.each do |examiner| %>
+    <div class="examiner">
+      <h3>nom: <span><%= examiner.name %></span></h3>
+      <h3>email: <span><%= examiner.email %></span></h3>
+      <%= link_to "modifier", "#", class: "btn btn-secondary" %>
+      <%= link_to "suprimer", "#", class: "btn btn-danger" %>
+    </div>
+  <% end %>
+  <%= link_to "ajouter un examinateur", "#", class: "btn btn-primary" %>
+</div>

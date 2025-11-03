@@ -1,0 +1,25 @@
+<div class="dropdown burger">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <%= image_tag "menu_icon.svg" %>
+  </a>
+
+  <ul class="dropdown-menu">
+    <li><%= link_to "Accueil", root_path, class: "dropdown-item" %></li>
+    <% if who_is_connected? == "invite" %>
+      <li><%= link_to "Admin Connexion", new_admin_registration_path, class: "dropdown-item" %></li>
+      <li><%= link_to "Examiner Connexion", new_examiner_registration_path, class: "dropdown-item" %></li>
+    <% elsif who_is_connected? == "examinateur" %>
+      <li><%= link_to "Tableau de bord", examiner_dashboard_path, class: "dropdown-item" %></li>
+      <li></li>
+    <% elsif who_is_connected? == "admin" %>
+      <li><%= link_to "Tableau de bord", admin_dashboard_path, class: "dropdown-item" %></li>
+      <li><%= link_to "Paramétre", settings_admin_path, class: "dropdown-item" %></li>
+      <li>
+        <button type="button" class="btn btn-danger dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Deconnexion
+        </button>
+      </li>
+      <%= render "partial/modal" %>
+    <% end %>
+  </ul>
+</div>

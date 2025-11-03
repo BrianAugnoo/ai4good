@@ -1,0 +1,22 @@
+<% age_sections = AgeSection.all %>
+<div class="content age_sections" id="setting-content">
+  <% age_sections.order(:value).each do |age_section| %>
+    <div class="age-section">
+      <h3><%= age_section.value %> ans</h3>
+      <% if age_section.age_examiners.each.any? %>
+        <% age_section.age_examiners.each do |age_examiner| %>
+          <div>
+            <h5><%= age_examiner.examiner.name %></h5>
+            <%= button_to "X", age_examiner_path(id: age_examiner.id), method: :delete, class: "btn btn-danger" %>
+          </div>
+        <% end %>
+      <% else %>
+        <p>aucun examinateur ajouter a cette tranche d'age</p>
+      <% end %>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ags-<%= age_section.id%>">
+        ajouter un examinateur
+      </button>
+    </div>
+      <%= render "settings/age_examiner", age_section: age_section %>
+  <% end %>
+</div>
