@@ -7,16 +7,10 @@
     </div>
 
     <div class="content">
-      <%= link_to groups_path do %>
-        <%= render "partial/admin_card", title: "total group", icon: "group", icon_color: "#EF4444", value: @groups.count %>
-      <% end %>
-
-      <%= link_to groups_path(ratted: true) do %>
-        <%= render "partial/admin_card", title: "rated group", icon: "group_add", icon_color: "#F97316", value: @ratted_groups.count %>
-      <% end %>
-
-      <%= link_to groups_path(ratted: false) do %>
-        <%= render "partial/admin_card", title: "remaining group", icon: "group_off", icon_color: "#EC4899", value: @remaining_groups.count %>
+      <% @age_sections.each do |age_section| %>
+        <%= link_to groups_path(age_section_id: age_section.id) do %>
+          <%= render "partial/admin_card", title:"#{ age_section.value} ans", icon: "group", icon_color: "#EF4444", value: age_section.groups.count %>
+        <% end %>
       <% end %>
 
       <%= render "partial/admin_card", title: "active session", icon: "group", icon_color: "#EF4444" %>
@@ -29,15 +23,5 @@
          data-remaining="<%= @remaining_groups.count%>"
          id="chart"
     ></div>
-  </div>
-  <%= turbo_stream_from "exam-btn" %>
-  <div id="join-exam-btn">
-    <% if @session != nil %>
-      <% if current_examiner.sessions.empty? %>
-        <%= render "partial/join_btn", session: @session %>
-      <% else %>
-        <%= link_to "re-join session", eval_session_path(@session), class: "join-btn" %>
-      <% end %>
-    <% end %>
   </div>
 </div>

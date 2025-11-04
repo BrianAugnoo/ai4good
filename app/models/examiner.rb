@@ -9,6 +9,7 @@ class Examiner < ApplicationRecord
   has_many :sessions, through: :evals
   has_many :age_examiners
   has_many :age_sections, through: :age_examiners
+  has_many :criterium_categories, through: :criteria
 
   def radom_marks(group)
     Criterium.criteria_list.each do |criterium_name|
@@ -22,5 +23,13 @@ class Examiner < ApplicationRecord
 
   def submit_eval?
     self.evals.first.done
+  end
+
+  def criteria_submited(group, category)
+    begin
+      self.criterium_categories.where(name: category)[0].criteria.where(group_id: group.id)
+    rescue
+      []
+    end
   end
 end

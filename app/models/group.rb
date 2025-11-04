@@ -3,6 +3,7 @@ class Group < ApplicationRecord
   has_many :members
   has_one :session
   belongs_to :age_section
+  has_many :criterium_categories, through: :criteria
   # retourne la note final si tout les examinateur ont noter corectement tout les
   # critére sinon il y a un bug et ca retourne une string
   def final_marks
@@ -32,6 +33,18 @@ class Group < ApplicationRecord
   def add_members(members)
     members.each do |member_name|
       Member.create!(name: member_name, group: self)
+    end
+  end
+
+  def rated_by?(examiner, category)
+    begin
+      if self.criterium_categories.where(name: category)[0].criteria.exists?(column: "entry")
+        true
+      else
+        false
+      end
+    rescue
+      false
     end
   end
 end

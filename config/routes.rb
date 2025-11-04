@@ -18,8 +18,9 @@ Rails.application.routes.draw do
   post "groups/search" => "groups#search", as: :search_groups
   resources :eval_sessions, except: [ :index, :edit ]
   resources :evals, only: [ :create ]
-  resources :criterium, only: [ :create ]
+  resources :criterium, only: [ :new, :create ]
   patch "eval_sessions/valid_session" => "eval_sessions#valid_session", as: :valid_session
   resources :age_sections, except: [ :new, :create, :destroy ]
   resources :age_examiners, only: [ :create, :destroy ]
+  resources :statuses, only: [ :update ]
 end

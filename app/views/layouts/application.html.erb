@@ -32,6 +32,8 @@
   </head>
 
   <body>
+    <%= turbo_stream_from "application" %>
+    <div id="refresh"></div>
     <%= render "partial/off_canvas" %>
     <%= render "partial/burger" %>
     <%= yield %>

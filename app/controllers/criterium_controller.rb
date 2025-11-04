@@ -1,10 +1,28 @@
 class CriteriumController < ApplicationController
   def create
-    Criterium.criteria_list.each do |criterium_name|
-      Criterium.create!(name: criterium_name, values: params[criterium_name], group_id: Session.first.group.id, examiner_id: current_examiner.id)
+    begin
+      @criterium_category = CriteriumCategory.find(params[:criterium_category_id])
+      CriteriumCategory.categories[@criterium_category.name].each do |key, value|
+        Criterium.create!(
+          examiner_id: current_examiner.id,
+          name: key,
+          group_id: params[:group_id].to_i,
+          criterium_category_id: params[:criterium_category_id].to_i,
+          values: params[key.to_sym]
+        )
+      end
+    rescue => e
+      raise e
     end
-    @eval = current_examiner.evals[0]
-    @eval.update!(done: true)
-    # redirect_to eval_session_path(@eval.session)
+    if current_examiner.criteria_submited(@group, CriteriumCategory.find(params[:criterium_category_id]).name).any?
+      redirect_to group_path(Group.find(params[:group_id].to_i))
+    else
+      redirect_to group_path(Group.find(params[:group_id].to_i))
+    end
+  end
+
+  def new
+    @criterium_category = CriteriumCategory.where(name: params[:categorie])[0]
+    @group_id = Group.find(params[:group_id]).id
   end
 end

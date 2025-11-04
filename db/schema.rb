@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_03_112521) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_03_215838) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -85,6 +85,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_03_112521) do
     t.boolean "ratted", default: false
     t.string "timer", default: "0"
     t.bigint "age_section_id"
+    t.boolean "first_rate", default: false
+    t.boolean "second_rate", default: false
+    t.float "note_totals", default: 0.0
     t.index ["age_section_id"], name: "index_groups_on_age_section_id"
   end
 
@@ -94,6 +97,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_03_112521) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_members_on_group_id"
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.boolean "first_rate", default: false
+    t.boolean "second_rate", default: false
+    t.boolean "edit_rate", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "age_examiners", "age_sections"

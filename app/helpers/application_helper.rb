@@ -24,4 +24,8 @@ module ApplicationHelper
       destroy_examiner_session_path
     end
   end
+
+  def status
+    Status.first
+  end
 end
