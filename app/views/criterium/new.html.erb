@@ -6,7 +6,7 @@
       <% CriteriumCategory.categories[@criterium_category.name].each do |key, value| %>
         <div class="mb-3">
           <%= f.label key.to_sym, "#{key}: #{value}", class: "form-label small fw-semibold" %>
-          <%= f.select key.to_sym, (1..10).to_a, class: "form-control form-control-sm", required: true %>
+          <%= f.select key.to_sym, (1..5).to_a, class: "form-control form-control-sm", required: true %>
         </div>
       <% end %>
 

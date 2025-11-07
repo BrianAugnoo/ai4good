@@ -4,6 +4,9 @@ class Group < ApplicationRecord
   has_one :session
   belongs_to :age_section
   has_many :criterium_categories, through: :criteria
+  has_many :examiners, through: :criteria
+  has_one_attached :video
+  has_one_attached :photo
   # retourne la note final si tout les examinateur ont noter corectement tout les
   # critére sinon il y a un bug et ca retourne une string
   def final_marks

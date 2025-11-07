@@ -1,5 +1,7 @@
 class CriteriumCategory < ApplicationRecord
   has_many :criteria
+  has_many :groups, through: :criteria
+  has_many :examiners, through: :criteria
   def self.categories
     {
       "30%"=> {
@@ -27,5 +29,14 @@ class CriteriumCategory < ApplicationRecord
 
   def self.first_categories
     self.categories["30%"]
+  end
+
+  def submited?(examiner = false, group)
+    if examiner
+      submited_criteria = self.criteria.where(examiner: examiner, group: group)
+      submited_criteria.any? ? return [ true, submited_criteria ] : return [ false, [] ]
+    else
+      self.criteria.where(group: group).map(&:examiner)
+    end
   end
 end

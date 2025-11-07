@@ -28,4 +28,10 @@ module ApplicationHelper
   def status
     Status.first
   end
+
+  def categories
+    CriteriumCategory.categories.map do |key, value|
+      CriteriumCategory.where(name: key).first
+    end
+  end
 end

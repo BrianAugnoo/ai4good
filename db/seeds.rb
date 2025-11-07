@@ -2,7 +2,7 @@
 # Examiner.destroy_all
 # AgeSection.destroy_all
 # Group.destroy_all
-Member.destroy_all
+# Member.destroy_all
 # puts("create examiner")
 # 3.times do |i|
 #   Examiner.create!(email: "examiner#{i+1}@examiner.com", name: Faker::Name.name, password: ENV["PASSWORD"])
@@ -18,11 +18,23 @@ Member.destroy_all
 #   end
 # end
 
-puts("create members")
-Group.all.each do |group|
-  5.times do
-    Member.create!(group_id: group.id, name: Faker::Name.name)
-  end
-end
+# puts("create members")
+# Group.all.each do |group|
+#   5.times do
+#     Member.create!(group_id: group.id, name: Faker::Name.name)
+#   end
+# end
 
-puts("lets go gang😎")
+# puts("lets go gang😎")
+
+# Crée un document
+doc = Document.create(title: "Test S3 Upload")
+
+# Attache un fichier local
+doc.file.attach(
+  io: File.open(Rails.root.join("rails.png")),  # met le chemin réel
+  filename: "fichier.txt",
+  content_type: "text/plain"
+)
+
+puts(doc.file.attached?)
