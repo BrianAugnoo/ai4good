@@ -1,0 +1,134 @@
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-left: 1rem;
+  background-color: #CBCBCB;
+  width: 15vw;
+  height: 100vh;
+  color: white;
+
+  .nav-body {
+    display: flex;
+    flex-direction: column;
+    height: 75%;
+
+    a {
+      text-decoration: none;
+      color: white;
+      font-size: larger;
+    }
+
+    button {
+      border: none;
+      color: white;
+      font-size: larger;
+      background-color: transparent;
+      padding-left: 0;
+    }
+  }
+}
+
+.setting-container {
+  display: flex;
+}
+
+.setting-content {
+  display: flex;
+  background-color: #F2F4F7;
+  flex-grow: 1;
+  justify-content: space-around;
+
+  .content {
+    align-self: center;
+    background-color: white;
+    display: inline-block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.selected-btn {
+  border-bottom: black;
+}
+
+.nav-body button:hover,
+.nav-body a:hover {
+  color: #000;
+}
+
+.nav-body .active {
+  color: #007bff !important;
+  font-weight: 600;
+}
+
+.nav-body .active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #007bff !important;
+}
+
+.age_sections {
+  display: flex !important;
+  text-align: center;
+
+  .age-section {
+    margin-left: 2rem;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.3s;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:checked + .slider::before {
+  transform: translateX(22px);
+}

@@ -1,24 +1,40 @@
-puts("cleaning")
-Examiner.destroy_all
-Group.destroy_all
-Member.destroy_all
-puts("create examiner")
-3.times do |i|
-  Examiner.create!(email: "admin#{i+1}@admin.com", name: Faker::Name.name, password: ENV["PASSWORD"])
-end
+# puts("cleaning")
+# Examiner.destroy_all
+# AgeSection.destroy_all
+# Group.destroy_all
+# Member.destroy_all
+# puts("create examiner")
+# 3.times do |i|
+#   Examiner.create!(email: "examiner#{i+1}@examiner.com", name: Faker::Name.name, password: ENV["PASSWORD"])
+# end
 
-puts("crate groups")
-5.times do |i|
-  Group.create!(name: "group#{i+1}", etablished: Faker::University.name, theme: Faker::Book.genre)
-end
+# puts("create age section")
+# AgeSection.create_for_seed
 
-puts("create members")
-5.times do |i|
-  group_id = Group.where(name: "group#{i+1}")[0].id
-  puts(group_id)
-  5.times do
-    Member.create!(group_id: group_id, name: Faker::Name.name)
-  end
-end
+# puts("create groups")
+# AgeSection.all.each do |age_section|
+#   5.times do |i|
+#     Group.create!(name: "group#{i+1}", etablished: Faker::University.name, theme: Faker::Book.genre, age_section_id: age_section.id)
+#   end
+# end
 
-puts("lets go gang😎")
+# puts("create members")
+# Group.all.each do |group|
+#   5.times do
+#     Member.create!(group_id: group.id, name: Faker::Name.name)
+#   end
+# end
+
+# puts("lets go gang😎")
+
+# Crée un document
+doc = Document.create(title: "Test S3 Upload")
+
+# Attache un fichier local
+doc.file.attach(
+  io: File.open(Rails.root.join("rails.png")),  # met le chemin réel
+  filename: "fichier.txt",
+  content_type: "text/plain"
+)
+
+puts(doc.file.attached?)

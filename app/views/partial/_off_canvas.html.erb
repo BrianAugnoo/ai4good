@@ -1,0 +1,31 @@
+<button class="btn btn-secondary off-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">menu</button>
+
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Menu</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p>Status: <%= who_is_connected? %></p>
+    <div class="menu-btn">
+      <%= link_to "Accueil", root_path%>
+      <% if who_is_connected? == "invite" %>
+        <%= link_to "Admin Connexion", new_admin_session_path, class: "dropdown-item" %>
+        <%= link_to "Examiner Connexion", new_examiner_session_path, class: "dropdown-item" %>
+      <% elsif who_is_connected? == "examinateur" %>
+        <%= link_to "Tableau de bord", dashboard_path %>
+      <% elsif who_is_connected? == "admin" %>
+        <%= link_to "Tableau de bord", dashboard_path %>
+        <%= link_to "Paramétre", settings_admin_path %>
+      <% end %>
+    </div>
+  </div>
+  <div class="p-3 border-top d-grid gap-2">
+    <% if who_is_connected? != "invite" %>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Deconnexion
+      </button>
+    <% end %>
+  </div>
+</div>
+<%= render "partial/modal" %>

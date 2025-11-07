@@ -1,0 +1,42 @@
+<%= turbo_stream_from "setting" %>
+<div class="setting-container">
+  <nav class="side-nav">
+    <div class="nav-head">
+      <h2>Paramétre</h2>
+    </div>
+
+    <div class="nav-body">
+      <%= link_to "Profile", settings_admin_path%>
+      <%= button_to "Tranche d'ages", age_sections_settings_path(partial: "age_sections"), method: :post, data: {turbo: true} %>
+      <%= button_to "Examinateur", settings_examiner_path(partial: "examiner"), method: :post, data: {turbo: true} %>
+      <%= button_to "Notation", marks_settings_path(partial: "marks"), method: :post, data: {turbo: true} %>
+    </div>
+  </nav>
+  <div class="setting-content">
+    <div class="content profile" id="setting-content">
+      <h3>Username: <%= current_admin.name %></h3>
+      <h3>Email: <%= current_admin.email %></h3>
+      <%= link_to "Changer de nom", "#", class: "btn btn-secondary" %>
+      <%= link_to "Changer de mot de passe", "#", class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+  const navItems = document.querySelectorAll(".nav-body a, .nav-body button");
+
+  // Par défaut : activer le link_to "Profile"
+  const defaultActive = document.querySelector(".nav-body a");
+  if (defaultActive) defaultActive.classList.add("active");
+
+  navItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      // Supprime la classe active sur tous les autres
+      navItems.forEach((el) => el.classList.remove("active"));
+      // Ajoute la classe active sur l’élément cliqué
+      item.classList.add("active");
+    });
+  });
+});
+</script>

@@ -1,0 +1,38 @@
+<% examiners = Examiner.where.not(id: age_section.examiners.select(:id)) %>
+
+<div class="modal fade" id="ags-<%= age_section.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          Selectionner un examinateur pour la section <%= age_section.value %> ans
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <% if examiners.any? %>
+        <%= form_with model: AgeExaminer.new, url: age_examiners_path, local: true, data: {controller: "close-modal"} do |f| %>
+          <div class="modal-body">
+            <%= f.hidden_field :age_section_id, value: age_section.id %>
+            <%= f.label :examiner_id, "Sélectionner un examinateur" %>
+            <%= f.collection_select :examiner_id, examiners, :id, :name %>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close<%= age_section.id %>">Close</button>
+            <%= f.submit "Valider", class: "btn btn-primary", id: "issue", data: { age_section: age_section.id} %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="modal-body">
+          <p>Tout les examinateur sont déja ajouter</p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

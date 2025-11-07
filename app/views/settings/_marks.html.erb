@@ -1,0 +1,34 @@
+<div class="content age_sections" id="setting-content" data-controller="status">
+  <p>first marks permit</p>
+  <label class="switch">
+    <input
+      type="checkbox"
+      data-status-target="toggle"
+      data-column="first_rate"
+      <%= "checked" if Status.first.first_rate %>
+    >
+    <span class="slider"></span>
+  </label>
+
+  <p>second marks permit</p>
+  <label class="switch">
+    <input
+      type="checkbox"
+      data-status-target="toggle"
+      data-column="second_rate"
+      <%= "checked" if Status.first.second_rate %>
+    >
+    <span class="slider"></span>
+  </label>
+
+  <p>edit marks permit</p>
+  <label class="switch">
+    <input
+      type="checkbox"
+      data-status-target="toggle"
+      data-column="edit_rate"
+      <%= "checked" if Status.first.edit_rate %>
+    >
+    <span class="slider"></span>
+  </label>
+</div>

@@ -1,0 +1,2 @@
+class StatuesController < ApplicationController
+end

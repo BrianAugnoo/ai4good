@@ -1,0 +1,2 @@
+module StatuesHelper
+end

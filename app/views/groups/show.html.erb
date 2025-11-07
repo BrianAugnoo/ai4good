@@ -9,3 +9,36 @@
   <p>ratte: <%= @group.final_marks %></p>
   <p>time: <%= @group.timer %></p>
 <% end %>
+
+<% if admin_signed_in? %>
+  <% categories.each do |category| %>
+    <h3><%= category.name %></h3>
+    <%= render "examiner_category", category: category, group: @group %>
+  <% end %>
+<% end %>
+
+<% if examiner_signed_in? %>
+  <div>
+    <h3>categorie noté</h3>
+    <% if current_examiner.criteria_submited(@group, "30%").any? %>
+    <p>30%</p>
+      <% current_examiner.criteria_submited(@group, "30%").each do |criterium| %>
+        <p><%= criterium.name %>: <%= criterium.values %></p>
+      <% end %>
+    <% end %>
+    <% if current_examiner.criteria_submited(@group, "70%").any? %>
+    <p>70%</p>
+      <% current_examiner.criteria_submited(@group, "70%").each do |criterium| %>
+        <p><%= criterium.name %>: <%= criterium.values %></p>
+      <% end %>
+    <% end %>
+  </div>
+  <div id="eval-group">
+    <% if status.first_rate && current_examiner.criteria_submited(@group, "30%").empty? %>
+      <%= render "first_rate", group: @group %>
+    <% end %>
+    <% if status.second_rate && current_examiner.criteria_submited(@group, "70%").empty? %>
+      <%= render "second_rate", group: @group %>
+    <% end %>
+  </div>
+<% end %>
