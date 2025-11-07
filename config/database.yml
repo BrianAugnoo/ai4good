@@ -79,20 +79,8 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
-    <<: *default
-    database: ai4good_production
-    username: ai4good
-    password: <%= ENV["AI4GOOD_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: ai4good_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: ai4good_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: ai4good_production_cable
-    migrations_paths: db/cable_migrate
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV['DATABASE_URL'] %>
+
