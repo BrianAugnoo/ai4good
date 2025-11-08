@@ -75,3 +75,5 @@ gem "simple_form", "~> 5.3"
 gem "kaminari", "~> 1.2"
 
 gem "aws-sdk-s3", require: false
+
+gem "dockerfile-rails", ">= 1.7", group: :development

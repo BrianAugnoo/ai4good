@@ -28,13 +28,13 @@
 # puts("lets go gang😎")
 
 # Crée un document
-doc = Document.create(title: "Test S3 Upload")
+# doc = Document.create(title: "Test S3 Upload")
 
-# Attache un fichier local
-doc.file.attach(
-  io: File.open(Rails.root.join("rails.png")),  # met le chemin réel
-  filename: "fichier.txt",
-  content_type: "text/plain"
-)
+# # Attache un fichier local
+# doc.file.attach(
+#   io: File.open(Rails.root.join("rails.png")),  # met le chemin réel
+#   filename: "fichier.txt",
+#   content_type: "text/plain"
+# )
 
-puts(doc.file.attached?)
+# puts(doc.file.attached?)
