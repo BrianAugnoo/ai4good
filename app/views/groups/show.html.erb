@@ -1,3 +1,4 @@
+<%= render "partial/back_button", page_name: "groupes", page_path: groups_path(age_section_id: @group.age_section.id) %>
 <h2>theme: <%= @group.theme %></h2>
 <h3>members</h3>
 <ul>
@@ -11,28 +12,33 @@
 <% end %>
 
 <% if admin_signed_in? %>
-  <% categories.each do |category| %>
+  <%= link_to "modifier les information", edit_group_path(@group), class: "btn btn-primary" %>
+<% end %>
+
+<% categories.each do |category| %>
+  <% if admin_signed_in? %>
     <h3><%= category.name %></h3>
     <%= render "examiner_category", category: category, group: @group %>
+
+  <% else %>
+    <div class="dropdown">
+      <% criteria = current_examiner.criteria_submited(@group, category.name) %>
+      <% if criteria.any? %>
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= category.name %> achevée
+        </button>
+        <ul class="dropdown-menu">
+          <p>moyenne: <%= criteria.sum(:values) / criteria.count %></p>
+          <% criteria.each do |criterium| %>
+            <p><%= criterium.name %>: <%= criterium.values %></p>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
   <% end %>
 <% end %>
 
 <% if examiner_signed_in? %>
-  <div>
-    <h3>categorie noté</h3>
-    <% if current_examiner.criteria_submited(@group, "30%").any? %>
-    <p>30%</p>
-      <% current_examiner.criteria_submited(@group, "30%").each do |criterium| %>
-        <p><%= criterium.name %>: <%= criterium.values %></p>
-      <% end %>
-    <% end %>
-    <% if current_examiner.criteria_submited(@group, "70%").any? %>
-    <p>70%</p>
-      <% current_examiner.criteria_submited(@group, "70%").each do |criterium| %>
-        <p><%= criterium.name %>: <%= criterium.values %></p>
-      <% end %>
-    <% end %>
-  </div>
   <div id="eval-group">
     <% if status.first_rate && current_examiner.criteria_submited(@group, "30%").empty? %>
       <%= render "first_rate", group: @group %>
@@ -42,3 +48,31 @@
     <% end %>
   </div>
 <% end %>
+
+<div class="video">
+  <h2>video</h2>
+  <% if !@group.video.attached? %>
+    <p>aucune video n'as éte ajouter</p>
+    <% if admin_signed_in? %>
+      <%= link_to "ajouter une video", edit_group_path(@group, video: true), class:"btn btn-primary" %>
+    <% end %>
+  <% else %>
+    <video id="player" playsinline controls>
+      <source src="<%= url_for(@group.video) %>" type="<%= @group.video.content_type %>">
+    </video>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+    const playerElement = document.querySelector("#player")
+    if (playerElement) {
+      new Plyr(playerElement, {
+        controls: [
+          'play-large', 'play', 'progress', 'current-time', 'mute',
+          'volume', 'settings', 'fullscreen'
+        ]
+      })
+    }
+  })
+</script>

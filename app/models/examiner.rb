@@ -26,6 +26,10 @@ class Examiner < ApplicationRecord
   end
 
   def criteria_submited(group, category_name)
-      self.criterium_categories.where(name: category_name)[0].criteria.where(group_id: group.id)
+    begin
+      self.criterium_categories.where(name: category_name)[0].criteria.where(group_id: group.id, examiner: self)
+    rescue
+      self.criterium_categories.where(name: category_name)
+    end
   end
 end

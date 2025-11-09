@@ -63,8 +63,21 @@
   }
 }
 
-.group {
+#group {
+  display: flex;
+  width: 100%;
   border-bottom: 3px solid #EEEEEE;
+  justify-content: center;
+
+  img {
+    width: 5rem;
+    aspect-ratio: 1 / 1;
+    // border-bottom: 3px solid #EEEEEE;
+  }
+}
+
+.group {
+  // border-bottom: 3px solid #EEEEEE;
   text-align: center;
 
   h5 {

@@ -22,13 +22,16 @@ class CriteriumCategory < ApplicationRecord
     }
   end
 
-  def self.create_for_seed
-    self.create!(name: "30%")
-    self.create!(name: "70%")
+  def self.keys
+    self.categories.map do |key, value|
+      key
+    end
   end
 
-  def self.first_categories
-    self.categories["30%"]
+  def self.create_for_seed
+    self.keys.each do |name|
+      self.create!(name: name)
+    end
   end
 
   def submited?(examiner = false, group)
@@ -36,7 +39,7 @@ class CriteriumCategory < ApplicationRecord
       submited_criteria = self.criteria.where(examiner: examiner, group: group)
       submited_criteria.any? ? return [ true, submited_criteria ] : return [ false, [] ]
     else
-      self.criteria.where(group: group).map(&:examiner)
+      self.criteria.where(group: group).map(&:examiner).uniq
     end
   end
 end

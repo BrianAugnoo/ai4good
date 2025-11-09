@@ -11,26 +11,18 @@ class Group < ApplicationRecord
   # critére sinon il y a un bug et ca retourne une string
   def final_marks
     criteria = self.criteria
-    return "sybau🥀" if criteria.empty?
-    total_points = criteria.sum(:values)
-    num_criteria = criteria.count
-    num_examiner = criteria.pluck(:examiner_id).uniq.count
-    criteria_list = Criterium.criteria_list.count
-    cond1 = num_criteria != 0
-    cond2 = num_criteria % criteria_list == 0 && num_criteria % num_examiner == 0
-    cond1 && cond2 ? (total_points/num_criteria).round(2) : "Examiners should not sumbit without all criteria marks having been met. Check the V or C."
+    criteria.sum(:values) / criteria.count
   end
 
-  def validate
-    nb_examiner = Examiner.all.count
-    eval_examiner = self.criteria.pluck(:examiner_id).uniq.count
-    if nb_examiner == eval_examiner && self.final_marks.is_a?(Float)
-      self.ratted = true
-      self.save
-      true
-    else
-      false
+  def validate_rate
+    valid = false
+    CriteriumCategory.keys.each do |category|
+      total_examiners = self.age_section.examiners.reload.pluck(:id).sort
+      submited_examiner = CriteriumCategory.where(name: category).first.submited?(self).map { |examiner| examiner.id}.sort
+      valid = submited_examiner == total_examiners
     end
+    self.update(ratted: valid)
+    self.save ? return valid : return 0
   end
 
   def add_members(members)
