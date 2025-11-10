@@ -1,0 +1,15 @@
+<tr>
+  <td class="group-info">
+    <%= group.photo.attached? ? image_tag(group.photo) : image_tag("group_default.webp") %>
+    <p><%= group.etablished %></p>
+  </td>
+  <% evaluation = group.evaluation %>
+  <% evaluation.each do |element| %>
+    <td class="<%= element[:class] %>"><%= element[:mark] %></td>
+  <% end %>
+  <% if group.ratted %>
+    <td class="final-marks"><%= group.final_marks %></td>
+  <% else %>
+    <td class="final-marks">en cours</td>
+  <% end %>
+</tr>

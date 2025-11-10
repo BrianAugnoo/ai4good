@@ -107,3 +107,18 @@
 .examiner_category {
   display: flex;
 }
+
+.group-info {
+  display: flex;
+
+  p {
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 5rem;
+    aspect-ratio: 1 / 1;
+  }
+}

@@ -51,3 +51,76 @@
 .space {
   height: 35vh;
 }
+
+:root {
+  --main-bg-color: #2a2a40;
+  --black: #000;
+  --dark-navy: #0a0a23;
+  --dark-grey: #d0d0d5;
+  --medium-grey: #dfdfe2;
+  --light-grey: #f5f6f7;
+  --peach: #f28373;
+  --salmon-color: #f0aea9;
+  --light-blue: #8bd9f6;
+  --light-orange: #f8b172;
+  --light-green: #93cb5b;
+  --golden-yellow: #f1ba33;
+  --gold: #f9aa23;
+  --green: #6bca6b;
+}
+
+.leadeardboard {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: var(--main-bg-color);
+  width: 45vw;
+  margin-bottom: 3rem;
+  border-radius: 0.5rem;
+  box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+
+  nav {
+    background-color: #D0D0D5 !important;
+    padding: 10px 0;
+  }
+}
+
+
+.title {
+  margin: 25px 0;
+  text-align: center;
+  color: var(--light-grey);
+}
+
+.table-wrapper {
+  padding: 0 25px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  color: #D0D0D5 !important;
+  margin: auto;
+  table-layout: fixed;
+  border-collapse: collapse;
+  overflow-x: scroll;
+}
+
+#topics {
+  text-align: start;
+  width: 50%;
+}
+
+th {
+  border-bottom: 1px solid #D0D0D5 !important;
+  padding-bottom: 10px;
+  font-size: 1rem;
+}
+
+tr {
+  border-bottom: 1px solid #D0D0D5 !important;
+}
+td {
+  // border-bottom: 1px solid #D0D0D5 !important;
+  padding: 20px 0;
+}
