@@ -4,7 +4,7 @@ class CriteriumCategory < ApplicationRecord
   has_many :examiners, through: :criteria
   def self.categories
     {
-      "30%"=> {
+      "Evaluation 1"=> {
         "organisation"=> "Le groupe s'est-il bien réparti les rôles et les tâches ?",
         "méthode de travail"=> "Le projet a-t-il été préparé avec une vraie démarche (idées, scénario, essais) ?",
         "esprit critique"=> "Les élèves ont-ils su améliorer leur travail après les premiers essais ?",
@@ -12,7 +12,7 @@ class CriteriumCategory < ApplicationRecord
         "colaboration"=> "Ont-ils bien travaillé ensemble et communiqué efficacement ?"
       },
 
-      "70%"=> {
+      "Evaluation 2"=> {
         "clareté du message"=> "La vidéo raconte-t-elle clairement une idée ou une histoire ?",
         "qualité audio-visuelle"=> "Le rendu est-il agréable à regarder et à écouter ?",
         "originalité"=> "L'usage de l'IA est-il créatif et personnel ?",

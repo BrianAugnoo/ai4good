@@ -22,6 +22,7 @@ class Group < ApplicationRecord
       valid = submited_examiner == total_examiners
     end
     self.update(ratted: valid)
+    self.update(points: final_marks)
     self.save ? return valid : return 0
   end
 
@@ -54,7 +55,6 @@ class Group < ApplicationRecord
     end
   end
 
-  private
   def classify_mark(mark)
     if mark < 1.25
       { mark: mark, class: "mark-1" }

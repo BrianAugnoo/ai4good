@@ -1,4 +1,5 @@
 <%= render "partial/back_button", page_name: "groupes", page_path: groups_path(age_section_id: @group.age_section.id) %>
+<h1>Etablissement: <%= @group.etablished %></h1>
 <h2>theme: <%= @group.theme %></h2>
 <h3>members</h3>
 <ul>
@@ -40,11 +41,11 @@
 
 <% if examiner_signed_in? %>
   <div id="eval-group">
-    <% if status.first_rate && current_examiner.criteria_submited(@group, "30%").empty? %>
-      <%= render "first_rate", group: @group %>
+    <% if status.first_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[0]).empty? %>
+      <%= link_to CriteriumCategory.keys[0], new_criterium_path(categorie: CriteriumCategory.keys[0], group_id: @group.id ), class: "btn btn-primary" %>
     <% end %>
-    <% if status.second_rate && current_examiner.criteria_submited(@group, "70%").empty? %>
-      <%= render "second_rate", group: @group %>
+    <% if status.second_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[1]).empty? %>
+      <%= link_to CriteriumCategory.keys[1], new_criterium_path(categorie: CriteriumCategory.keys[1], group_id: @group.id ), class: "btn btn-primary" %>
     <% end %>
   </div>
 <% end %>

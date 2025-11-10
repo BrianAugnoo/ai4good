@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_08_175800) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_10_015730) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -123,6 +123,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_08_175800) do
     t.boolean "second_rate", default: false
     t.float "note_totals", default: 0.0
     t.string "indentifiant", limit: 5, default: -> { "SUBSTRING(md5((random())::text) FROM 1 FOR 5)" }
+    t.float "points", default: 0.0
     t.index ["age_section_id"], name: "index_groups_on_age_section_id"
   end
 

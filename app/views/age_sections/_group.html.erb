@@ -5,11 +5,11 @@
   </td>
   <% evaluation = group.evaluation %>
   <% evaluation.each do |element| %>
-    <td class="<%= element[:class] %>"><%= element[:mark] %></td>
+    <td class="marked <%= element[:class] %>"><p><%= element[:mark] %></p></td>
   <% end %>
   <% if group.ratted %>
-    <td class="final-marks"><%= group.final_marks %></td>
+    <td class="marked final-marks <%= group.classify_mark(group.final_marks)[:class] %>"><p><%= group.final_marks %></p></td>
   <% else %>
-    <td class="final-marks">en cours</td>
+    <td class="marked final-marks">en cours</td>
   <% end %>
 </tr>

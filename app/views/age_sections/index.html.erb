@@ -15,7 +15,7 @@
           </thead>
 
           <tbody id="posts-container">
-            <% age_section.groups.each do |group| %>
+            <% age_section.groups.order(points: :desc).each do |group| %>
               <%= render "group", group: group %>
             <% end %>
           </tbody>
