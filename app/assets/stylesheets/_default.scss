@@ -66,6 +66,7 @@ home {
 
 .back-button {
   position: fixed;
+  z-index: 1000;
   // margin-bottom: 1rem;
 
   a {
@@ -93,6 +94,7 @@ home {
 .burger {
   position: fixed;
   right: 0;
+  z-index: 1000;
 }
 
 .menu-btn {
@@ -100,6 +102,7 @@ home {
   display: flex;
   flex-direction: column;
   padding-top: 0.4rem;
+  z-index: 1000;
   a {
     text-decoration: none;
     color: black;
