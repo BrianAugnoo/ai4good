@@ -1,102 +1,178 @@
+// --- Variables de la Charte ---
+$primary: #5C12CF;   // Violet profond
+$secondary: #EC0EED; // Magenta vibrant
+$bg-page: #f8f9fb;   // Blanc cassé très léger pour le fond (plus moderne que #EEEEEE)
+$bg-card: #ffffff;
+$text-main: #2c3e50;
+$text-light: #95a5a6;
+$shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
+$shadow-hover: 0 8px 25px rgba(92, 18, 207, 0.15); // Ombre teintée avec la primaire
+$radius: 16px;
+
+// --- Mixins ---
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// --- Styles ---
+
 .group-container {
-  background-color: #EEEEEE;
+  background-color: $bg-page;
   min-height: 100vh;
-  // min-width: 100vw;
-  padding-top: 2rem;
-
-  .search-bar {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-
-    input {
-      width: 40vw;
-      height: 3rem !important;
-      border: 3px solid #0D56CA;
-      padding: 5px;
-      height: 20px;
-      border-radius: 5px;
-      outline: none;
-    }
-  }
-
-  .back-button {
-    left: 5vw;
-  }
+  padding-top: 3rem;
+  font-family: "Roboto", sans-serif; // Assure-toi que la police est chargée
+  color: $text-main;
 
   h1 {
     text-align: center;
+    font-weight: 700;
+    color: $primary;
+    font-size: 2rem;
+    margin: 2rem 0;
+    letter-spacing: -0.5px;
   }
+
+  // 1. Search Bar Moderne
+  .search-bar {
+    margin: 0 auto;
+    @include flex-center;
+    margin-bottom: 1rem;
+
+    input {
+      width: 90%;
+      max-width: 500px;
+      height: 3.5rem !important; // Force override sur ton ancien style
+      border: none;
+      background-color: $bg-card;
+      padding: 0 1.5rem;
+      border-radius: 50px; // Forme de pilule moderne
+      outline: none;
+      box-shadow: $shadow-soft;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      color: $text-main;
+
+      &::placeholder {
+        color: lighten($text-light, 10%);
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px rgba($primary, 0.2), $shadow-hover;
+      }
+    }
+  }
+
+  // Bouton retour (si présent dans .back-button)
+  
 }
 
 .groups {
-  background-color: #FBFBFB;
+  background-color: transparent; // On enlève le fond gris du conteneur global
   width: 90%;
+  max-width: 800px; // Limite la largeur sur grand écran pour la lisibilité
   margin: 0 auto;
-  margin-top: 2rem;
-  // padding-top: 2rem;
-  padding-bottom: 2rem;
-  border-radius: 1rem;
+  padding-bottom: 4rem;
 
+  // 3. Navigation (Tabs)
   .nav {
     display: flex;
-    // justify-content: space-around;
-    // border-bottom: 3px solid #EEEEEE;
+    justify-content: center;
+    margin-bottom: 2rem;
+    background: transparent;
+    gap: 1rem;
 
     a {
-      flex: 0 0 33.3333%;
+      flex: 1;
       text-decoration: none;
       text-align: center;
-      border-bottom: 3px solid #EEEEEE;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
+      padding: 0.8rem 1rem;
       cursor: pointer;
-      text-transform: uppercase;
-      font-size: 15px;
-      color: #4F5251;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $text-light;
+      border-bottom: 2px solid transparent; // Prépare la transition
+      transition: all 0.3s ease;
+      border-radius: 8px; // Légèrement arrondi
+
+      &:hover {
+        color: lighten($primary, 10%);
+        background-color: rgba($primary, 0.03);
+      }
     }
 
     .selected {
-      color: #0D56CA;
-      border-bottom: 4px solid #0D56CA;
+      color: $primary;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border-bottom: 2px solid $primary; // Indicateur actif sobre
     }
   }
 }
 
 #group {
   display: flex;
+  align-items: center;
   width: 100%;
-  border-bottom: 3px solid #EEEEEE;
-  justify-content: center;
+  background-color: $bg-card;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: $radius;
+  box-shadow: $shadow-soft;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(0,0,0,0.02); // Bordure ultra subtile
 
+  &:hover {
+    transform: translateY(-3px); // Effet de levitation
+    box-shadow: $shadow-hover;
+  }
+
+  // Image du groupe
   img {
-    width: 5rem;
-    aspect-ratio: 1 / 1;
-    // border-bottom: 3px solid #EEEEEE;
-  }
-}
-
-.group {
-  // border-bottom: 3px solid #EEEEEE;
-  text-align: center;
-
-  h5 {
-    font-family: "Roboto", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    font-variation-settings: "wdth" 100;
-    margin-top: 0.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: cover;
+    border-radius: 50%; // Image ronde
+    margin-right: 1rem;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
-  p {
-    color: #4F5251;
+  // Le conteneur texte à l'intérieur du lien
+  .group {
+    text-align: left; // Plus lisible que centré
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h5 {
+      font-family: "Roboto", sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin: 0;
+      color: $text-main;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: $text-light;
+      margin-top: 0.2rem;
+    }
+  }
+
+  // Note / Ratting (si présent à droite)
+  & > p:last-child {
+    font-weight: 700;
+    color: $primary; // Note en violet
+    background: rgba($primary, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
   }
 }
-
-.selected-group {
-  background-color: gray;
-}
-
 // .neant {
 //   box-shadow:
 //     inset 0 0 5px 2px rgba(255, 255, 255, 0.9),
