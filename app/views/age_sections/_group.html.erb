@@ -16,3 +16,30 @@
     <td class="marked final-marks">en cours</td>
   <% end %>
 </tr>
+
+<div class="mobile-card">
+  <div class="mobile-card-header">
+    <%= group.photo.attached? ? image_tag(group.photo) : image_tag("group_default.webp") %>
+
+    <div>
+      <strong><%= group.name %></strong>
+      <p><%= group.etablished %></p>
+    </div>
+  </div>
+
+  <% evaluation = group.evaluation %>
+
+  <div class="mobile-card-body">
+    <span class="mobile-badge mark-<%= evaluation[0][:class] %>">
+      Eval 1 : <%= evaluation[0][:mark] %>
+    </span>
+
+    <span class="mobile-badge mark-<%= evaluation[1][:class] %>">
+      Eval 2 : <%= evaluation[1][:mark] %>
+    </span>
+
+    <span class="mobile-badge mark-<%= group.classify_mark(group.final_marks)[:class] %>">
+      Finale : <%= group.final_marks || "en cours" %>
+    </span>
+  </div>
+</div>

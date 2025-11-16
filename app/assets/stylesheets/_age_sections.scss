@@ -1,3 +1,21 @@
+:root {
+  --main-bg-color: #2a2a40;
+  --black: #000;
+  --dark-navy: #0a0a23;
+  --dark-grey: #d0d0d5;
+  --medium-grey: #dfdfe2;
+  --light-grey: #f5f6f7;
+  --peach: #f28373;
+  --salmon-color: #f0aea9;
+  --light-blue: #8bd9f6;
+  --light-orange: #f8b172;
+  --light-green: #93cb5b;
+  --golden-yellow: #f1ba33;
+  --gold: #f9aa23;
+  --green: #6bca6b;
+}
+
+
 .age-sections-container {
   display: flex;
   min-width: 100vw;
@@ -143,5 +161,102 @@ td {
   padding-top: 20px;
   p {
     background-color: #31694E;
+  }
+}
+
+/* Version tableau (desktop) */
+.leadeardboard table {
+  display: table;
+}
+
+@media (min-width: 768px) {
+  .mobile-card {
+    display: none !important;
+  }
+}
+
+/* Version cards (mobile) */
+@media (max-width: 768px) {
+  .leadeardboard {
+    width: 90vw;
+  }
+
+  .leadeardboard table,
+  .leadeardboard thead {
+    display: none !important;
+  }
+
+  .mobile-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(6px);
+    color: white;
+  }
+
+  .mobile-card-header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .mobile-card-header img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .mobile-card-body {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mobile-badge {
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    width: fit-content;
+  }
+}
+
+.mobile-age-selector {
+  display: none;
+  gap: 0.5rem;
+  margin: 1rem auto;
+  width: 100%;
+  justify-content: center;
+
+  .age-btn {
+    background: #ffffff22;
+    border: 1px solid #ffffff55;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  .age-btn.active {
+    background: #6c4fe0;
+    border-color: #6c4fe0;
+    color: white;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-age-selector {
+    display: flex;
+  }
+
+  /* cacher tout au départ, le JS active le bon */
+  .leadeardboard {
+    display: none;
   }
 }

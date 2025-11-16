@@ -1,3 +1,16 @@
+.logo {
+  width: 7vw;
+  aspect-ratio: 1 / 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .home-menu {
 	display: flex;
 	flex-direction: column;
@@ -42,30 +55,11 @@
 
 .home-show-backround {
   // background: url("../images/menu_backround.jpg");
-  background-repeat: no-repeat;
+  background: linear-gradient(135deg, #6C4FE0, #8E67E8, #C786FF);
   background-size: cover;
-  background-position: center;
   height: 100vh;
 }
 
 .space {
   height: 35vh;
 }
-
-:root {
-  --main-bg-color: #2a2a40;
-  --black: #000;
-  --dark-navy: #0a0a23;
-  --dark-grey: #d0d0d5;
-  --medium-grey: #dfdfe2;
-  --light-grey: #f5f6f7;
-  --peach: #f28373;
-  --salmon-color: #f0aea9;
-  --light-blue: #8bd9f6;
-  --light-orange: #f8b172;
-  --light-green: #93cb5b;
-  --golden-yellow: #f1ba33;
-  --gold: #f9aa23;
-  --green: #6bca6b;
-}
-
