@@ -1,27 +1,37 @@
-<div class="full-container examiner-dashboard">
-  <%= render "partial/back_button", page_name: "home", page_path: root_path %>
-  <div class="part1">
-    <div class="header">
-      <h2 class="text-white">DASHBOARD</h2>
-      <h3 class="text-white">Admin</h3>
-    </div>
+<div class="dashboard-wrapper">
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="titles">
+        <%= render "partial/back_button", page_name: "home", page_path: root_path %>
+        <h2>Tableau de bord</h2>
+        <h3>Vue <span class="highlight">Administrateur</span></h3>
+      </div>
+      </div>
+  </div>
 
-    <div class="content">
+  <div class="dashboard-container">
+
+    <div class="cards-grid">
       <% @age_sections.each do |age_section| %>
-        <%= link_to groups_path(age_section_id: age_section.id) do %>
-          <%= render "partial/admin_card", title:"#{ age_section.value} ans", icon: "group", icon_color: "#EF4444", value: age_section.groups.count %>
+        <%= link_to groups_path(age_section_id: age_section.id), class: "card-link" do %>
+          <%= render "partial/admin_card",
+              title: "#{age_section.value} ans",
+              icon: "group",
+              value: age_section.groups.count %>
         <% end %>
       <% end %>
 
-      <%= render "partial/admin_card", title: "active session", icon: "group", icon_color: "#EF4444" %>
+      <%= render "partial/admin_card", title: "Active Session", icon: "group", value: "On" %>
     </div>
-  </div>
 
-  <div class="part2" data-controller="chart">
-    <div data-chart-target="chart"
-         data-complete="<%= @ratted_groups.count%>"
-         data-remaining="<%= @remaining_groups.count%>"
-         id="chart"
-    ></div>
+    <div class="chart-section" data-controller="chart">
+      <h4>Progression Globale</h4>
+      <div id="chart"
+           data-chart-target="chart"
+           data-complete="<%= @ratted_groups.count %>"
+           data-remaining="<%= @remaining_groups.count %>">
+      </div>
+    </div>
+
   </div>
 </div>
