@@ -1,7 +1,10 @@
 <tr>
   <td class="group-info">
     <%= group.photo.attached? ? image_tag(group.photo) : image_tag("group_default.webp") %>
-    <p><%= group.etablished %></p>
+    <div>
+      <p><%= group.etablished %></p>
+      <p><%= group.name %></p>
+    </div>
   </td>
   <% evaluation = group.evaluation %>
   <% evaluation.each do |element| %>

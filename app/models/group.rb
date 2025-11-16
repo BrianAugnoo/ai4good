@@ -50,8 +50,10 @@ class Group < ApplicationRecord
       total_examiners = self.age_section.examiners.reload.pluck(:id).sort
       submited_examiner = CriteriumCategory.where(name: category).first.submited?(self).map { |examiner| examiner.id }.sort
       valid = submited_examiner == total_examiners
-      valid ? mark = CriteriumCategory.where(name: category)[0].criteria.where(group: self).sum(:values) : next { mark: "En cours", class: "" }
-      classify_mark(mark / 5)
+      puts(valid)
+      crit = CriteriumCategory.where(name: category)[0].criteria.where(group: self)
+      valid ? mark = crit.sum(:values) / crit.count : next { mark: "En cours", class: "" }
+      classify_mark(mark)
     end
   end
 
@@ -62,7 +64,7 @@ class Group < ApplicationRecord
       { mark: mark, class: "mark-2" }
     elsif mark < 3.75
       { mark: mark, class: "mark-3" }
-    elsif
+    else
       { mark: mark, class: "mark-4" }
     end
   end

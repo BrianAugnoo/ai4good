@@ -9,5 +9,8 @@
       <%= link_to "suprimer", "#", class: "btn btn-danger" %>
     </div>
   <% end %>
-  <%= link_to "ajouter un examinateur", "#", class: "btn btn-primary" %>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-examiner">
+    Créer un examinateur
+  </button>
+  <%= render "settings/add_examiner" %>
 </div>

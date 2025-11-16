@@ -12,7 +12,7 @@ class CriteriumController < ApplicationController
           values: params[key.to_sym]
         )
       end
-      group.validate
+      group.validate_rate
     rescue => e
       raise e
     end

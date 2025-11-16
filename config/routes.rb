@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post "settings/admin" => "settings#examiner", as: :settings_examiner
   post "settings/admin" => "settings#age_sections", as: :age_sections_settings
   post "settings/admin" => "settings#marks", as: :marks_settings
+  post "examiners/create" => "examiners#create", as: :examiner
   get "session/new"
   get "session/show"
   get "menu/admin"

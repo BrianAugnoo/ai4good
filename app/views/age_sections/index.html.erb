@@ -15,7 +15,10 @@
           </thead>
 
           <tbody id="posts-container">
-            <% age_section.groups.order(points: :desc).each do |group| %>
+            <% age_section.groups.where(ratted: true).order(points: :desc).each do |group| %>
+              <%= render "group", group: group %>
+            <% end %>
+            <% age_section.groups.where(ratted: false).each do |group| %>
               <%= render "group", group: group %>
             <% end %>
           </tbody>

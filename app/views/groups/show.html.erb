@@ -1,69 +1,125 @@
+<%# J'ajoute un conteneur principal pour contrôler la mise en page globale %>
 <%= render "partial/back_button", page_name: "groupes", page_path: groups_path(age_section_id: @group.age_section.id) %>
-<h1>Etablissement: <%= @group.etablished %></h1>
-<h2>theme: <%= @group.theme %></h2>
-<h3>members</h3>
-<ul>
-  <% @group.members.each do |member| %>
-    <li><%= member.name %></li>
-  <% end %>
-</ul>
-<% if @group.ratted %>
-  <p>ratte: <%= @group.final_marks %></p>
-  <p>time: <%= @group.timer %></p>
-<% end %>
+<div class="group-show-container">
 
-<% if admin_signed_in? %>
-  <%= link_to "modifier les information", edit_group_path(@group), class: "btn btn-primary" %>
-<% end %>
+  <%# 1. EN-TÊTE DE PAGE: Sépare la navigation et le titre du contenu %>
+  <div class="page-header">
+    <div class="header-info">
+      <h1>Etablissement: <%= @group.etablished %></h1>
+      <h2>theme: <%= @group.theme %></h2>
+      <% unless @group.email.nil? %>
+        <h2>email: <%= @group.email %></h2>
+      <% end %>
+      <h2>email envoyée: <%= @group.send_email %></h2>
+    </div>
+  </div>
 
-<% categories.each do |category| %>
-  <% if admin_signed_in? %>
-    <h3><%= category.name %></h3>
-    <%= render "examiner_category", category: category, group: @group %>
+  <%# 2. GRILLE DE CONTENU: Sépare les informations principales de la barre latérale %>
+  <div class="content-grid">
 
-  <% else %>
-    <div class="dropdown">
-      <% criteria = current_examiner.criteria_submited(@group, category.name) %>
-      <% if criteria.any? %>
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <%= category.name %> achevée
-        </button>
-        <ul class="dropdown-menu">
-          <p>moyenne: <%= criteria.sum(:values) / criteria.count %></p>
-          <% criteria.each do |criterium| %>
-            <p><%= criterium.name %>: <%= criterium.values %></p>
+    <%# COLONNE PRINCIPALE (Évaluations et Vidéo) %>
+    <div class="main-content">
+
+      <%# Carte pour les évaluations (logique admin/examiner intacte) %>
+      <div class="card card-evaluations">
+        <h3>Évaluations</h3>
+        <div class="evaluation-categories">
+          <% categories.each do |category| %>
+            <% if admin_signed_in? %>
+              <div class="admin-category-section">
+                <h4><%= category.name %></h4>
+                <%= render "examiner_category", category: category, group: @group %>
+              </div>
+            <% else %>
+              <div class="dropdown">
+                <% criteria = current_examiner.criteria_submited(@group, category.name) %>
+                <% if criteria.any? %>
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <%= category.name %> achevée
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><p class="dropdown-header-summary">Moyenne: <%= criteria.sum(:values) / criteria.count %></p></li>
+                    <% criteria.each do |criterium| %>
+                      <li><p class="dropdown-item-summary"><%= criterium.name %>: <%= criterium.values %></p></li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%# Liens d'action pour l'examinateur (logique intacte) %>
+        <% if examiner_signed_in? %>
+          <div id="eval-group" class="evaluation-actions">
+            <% if status.first_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[0]).empty? %>
+              <%= link_to CriteriumCategory.keys[0], new_criterium_path(categorie: CriteriumCategory.keys[0], group_id: @group.id ), class: "btn btn-primary" %>
+            <% end %>
+            <% if status.second_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[1]).empty? %>
+              <%= link_to CriteriumCategory.keys[1], new_criterium_path(categorie: CriteriumCategory.keys[1], group_id: @group.id ), class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <%# Carte pour la vidéo (logique intacte) %>
+      <div class="card card-video">
+        <h2>Vidéo</h2>
+        <div class="video-container">
+          <% if !@group.video.attached? %>
+            <p>Aucune vidéo n'a été ajoutée.</p>
+            <% if admin_signed_in? %>
+              <%= link_to "Ajouter une vidéo", edit_group_path(@group, video: true), class:"btn btn-primary" %>
+            <% end %>
+          <% else %>
+            <video id="player" playsinline controls>
+              <source src="<%= url_for(@group.video) %>" type="<%= @group.video.content_type %>">
+            </video>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# COLONNE LATÉRALE (Membres et Actions) %>
+    <div class="sidebar-content">
+
+      <%# Carte pour les actions admin (logique intacte) %>
+      <% if admin_signed_in? %>
+        <div class="card card-admin-actions">
+          <%= link_to "Modifier les informations", edit_group_path(@group), class: "btn btn-secondary btn-full-width" %>
+        </div>
+      <% end %>
+
+      <%# Carte pour les membres (logique intacte) %>
+      <div class="card card-members">
+        <h3>Membres</h3>
+        <ul class="members-list">
+          <% @group.members.each do |member| %>
+            <li><%= member.name %></li>
           <% end %>
         </ul>
+      </div>
+
+      <%# Carte pour les résultats (logique intacte) %>
+      <% if @group.ratted %>
+        <div class="card card-results">
+          <h4>Résultats Finaux</h4>
+          <div class="result-item">
+            <span>Note:</span>
+            <strong><%= @group.final_marks %></strong>
+          </div>
+          <div class="result-item">
+            <span>Temps:</span>
+            <strong><%= @group.timer %></strong>
+          </div>
+        </div>
       <% end %>
+
     </div>
-  <% end %>
-<% end %>
-
-<% if examiner_signed_in? %>
-  <div id="eval-group">
-    <% if status.first_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[0]).empty? %>
-      <%= link_to CriteriumCategory.keys[0], new_criterium_path(categorie: CriteriumCategory.keys[0], group_id: @group.id ), class: "btn btn-primary" %>
-    <% end %>
-    <% if status.second_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[1]).empty? %>
-      <%= link_to CriteriumCategory.keys[1], new_criterium_path(categorie: CriteriumCategory.keys[1], group_id: @group.id ), class: "btn btn-primary" %>
-    <% end %>
   </div>
-<% end %>
-
-<div class="video">
-  <h2>video</h2>
-  <% if !@group.video.attached? %>
-    <p>aucune video n'as éte ajouter</p>
-    <% if admin_signed_in? %>
-      <%= link_to "ajouter une video", edit_group_path(@group, video: true), class:"btn btn-primary" %>
-    <% end %>
-  <% else %>
-    <video id="player" playsinline controls>
-      <source src="<%= url_for(@group.video) %>" type="<%= @group.video.content_type %>">
-    </video>
-  <% end %>
 </div>
 
+<%# Le script JS reste inchangé %>
 <script>
   document.addEventListener("turbo:load", () => {
     const playerElement = document.querySelector("#player")

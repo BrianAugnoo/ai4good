@@ -111,6 +111,12 @@
 .group-info {
   display: flex;
 
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
   p {
     margin: 0 !important;
     display: flex;
@@ -159,5 +165,163 @@
   padding-top: 20px;
   p {
     background-color: #31694E;
+  }
+}
+
+/* Variables pour un style "Sobre" */
+:root {
+  --color-bg-page: #f4f7f6;        /* Un gris très clair pour le fond */
+  --color-bg-card: #ffffff;       /* Cartes blanches */
+  --color-border: #e0e0e0;         /* Bordure subtile */
+  --color-text-primary: #222222;  /* Texte principal (pas noir pur) */
+  --color-text-secondary: #555555;/* Texte secondaire */
+  --color-shadow: rgba(0, 0, 0, 0.05); /* Ombre très légère */
+  --border-radius-main: 8px;      /* Coins arrondis */
+}
+
+/* Conteneur principal de la page */
+.group-show-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-page);
+}
+
+/* 1. En-tête de page */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+}
+
+/* 2. Grille de contenu */
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Layout 2/3 - 1/3 */
+  gap: 2rem;
+
+  /* Responsive pour les petits écrans */
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr; /* Passe à une seule colonne */
+  }
+}
+
+/* Style de base pour toutes les "Cartes" */
+.card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-main);
+  box-shadow: 0 4px 12px var(--color-shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem; /* Espace entre les cartes en mode mobile */
+
+  h3, h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.75rem;
+  }
+}
+
+/* Styles spécifiques aux cartes */
+
+/* Colonne Principale */
+.card-evaluations {
+  .evaluation-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .dropdown-menu {
+    padding: 1rem;
+    .dropdown-header-summary {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+    }
+    .dropdown-item-summary {
+      padding: 0.25rem 1rem;
+      color: var(--color-text-secondary);
+    }
+  }
+  .evaluation-actions {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+.card-video {
+  .video-container {
+    width: 100%;
+    /* Assure que Plyr.js s'affiche correctement */
+    --plyr-border-radius: var(--border-radius-main);
+  }
+}
+
+/* Colonne Latérale */
+.sidebar-content {
+  .btn-full-width {
+    width: 100%;
+    background-color: var(--color-text-secondary);
+    border-color: var(--color-text-secondary);
+    &:hover {
+      background-color: var(--color-text-primary);
+      border-color: var(--color-text-primary);
+    }
+  }
+}
+
+.card-members {
+  .members-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    li {
+      background-color: var(--color-bg-page);
+      border: 1px solid var(--color-border);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px; /* Style "Pill/Tag" */
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+    }
+  }
+}
+
+.card-results {
+  .result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+
+    span {
+      color: var(--color-text-secondary);
+    }
+    strong {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
   }
 }
