@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_16_142738) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_17_135826) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -97,6 +97,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_142738) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "establishment_criteria", force: :cascade do |t|
+    t.string "name"
+    t.float "values"
+    t.bigint "examiner_id", null: false
+    t.bigint "establishment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id"], name: "index_establishment_criteria_on_establishment_id"
+    t.index ["examiner_id"], name: "index_establishment_criteria_on_examiner_id"
+  end
+
+  create_table "establishments", force: :cascade do |t|
+    t.string "name"
+    t.float "marks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "examiners", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -106,6 +124,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_142738) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "permited", default: false
     t.index ["email"], name: "index_examiners_on_email", unique: true
     t.index ["reset_password_token"], name: "index_examiners_on_reset_password_token", unique: true
   end
@@ -126,7 +145,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_142738) do
     t.float "points", default: 0.0
     t.string "email"
     t.boolean "send_email", default: false
+    t.bigint "establishment_id", null: false
     t.index ["age_section_id"], name: "index_groups_on_age_section_id"
+    t.index ["establishment_id"], name: "index_groups_on_establishment_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -152,6 +173,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_142738) do
   add_foreign_key "criteria", "criterium_categories"
   add_foreign_key "criteria", "examiners"
   add_foreign_key "criteria", "groups"
+  add_foreign_key "establishment_criteria", "establishments"
+  add_foreign_key "establishment_criteria", "examiners"
   add_foreign_key "groups", "age_sections"
+  add_foreign_key "groups", "establishments"
   add_foreign_key "members", "groups"
 end

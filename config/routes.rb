@@ -24,4 +24,5 @@ Rails.application.routes.draw do
   resources :age_sections, except: [ :new, :create, :destroy ]
   resources :age_examiners, only: [ :create, :destroy ]
   resources :statuses, only: [ :update ]
+  resources :establishments
 end
