@@ -1,4 +1,4 @@
-<%= render "partial/back_button", page_name: Group.find(@group_id).name, page_path: group_path(Group.find(@group_id)) %>
+<%= render "partial/back_button", page_name: @establishment.name, page_path: establishment_path(@establishment.id) %>
 <div class="evaluation-container">
   <div class="evaluation-card">
 
@@ -6,11 +6,11 @@
       <div class="icon-header">
         <i class="fa-solid fa-clipboard-check"></i>
       </div>
-      <h5><%= @criterium_category.name %></h5>
+      <h5>evaluation de <%= @establishment.name %></h5>
       <p>Veuillez noter chaque critère ci-dessous</p>
     </div>
 
-    <%= form_with url: criterium_index_path(criterium_category_id: @criterium_category.id, group_id: @group_id), local: true, class: "evaluation-form" do |f| %>
+    <%= form_with model: @establishment_criterium , url: establishment_establishment_criteria_path(@establishment.id, @establishment_criterium), local: true, class: "evaluation-form" do |f| %>
 
       <div class="criteria-list">
         <% CriteriumCategory.categories[@criterium_category.name].each do |key, value| %>

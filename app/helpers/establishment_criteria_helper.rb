@@ -1,0 +1,2 @@
+module EstablishmentCriteriaHelper
+end
