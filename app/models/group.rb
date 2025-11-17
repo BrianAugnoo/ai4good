@@ -2,9 +2,12 @@ class Group < ApplicationRecord
   has_many :criteria
   has_many :members
   has_one :session
-  belongs_to :age_section
   has_many :criterium_categories, through: :criteria
   has_many :examiners, through: :criteria
+
+  belongs_to :age_section
+  belongs_to :establishment
+
   has_one_attached :video
   has_one_attached :photo
   # retourne la note final si tout les examinateur ont noter corectement tout les

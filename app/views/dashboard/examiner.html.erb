@@ -20,7 +20,12 @@
         <% end %>
       <% end %>
 
-      <%= render "partial/admin_card", title: "Active Session", icon: "group", value: "On" %>
+      <%= link_to establishments_path, class: "card-link" do %>
+        <%= render "partial/admin_card",
+          title: "Etablissements",
+          icon: "group",
+          value: Establishment.all.count %>
+      <% end %>
     </div>
 
     <div class="chart-section" data-controller="chart">

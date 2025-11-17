@@ -1,2 +1,12 @@
-<h1>Establishments#index</h1>
-<p>Find me in app/views/establishments/index.html.erb</p>
+<% if admin_signed_in? || examiner_permited? %>
+  <div class="establishement-container">
+    <h1>Liste des Etablissements</h1>
+    <div class="groups">
+      <% @establishments.each do |establishment| %>
+        <%= render "establishment", establishment: establishment %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <p>vous n'avez pas la permission d'acceder a cette page veiller vous renseignez auprés des admins</p>
+<% end %>

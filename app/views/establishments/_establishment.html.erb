@@ -1,0 +1,8 @@
+<%= link_to establishment_path(establishment), style: "text-decoration: none;", id: "group", data: {id: establishment.id} do %>
+  <%= establishment.logo.attached? ? image_tag(establishment.logo) : image_tag("group_default.webp") %>
+  <div class="group">
+    <h5 class="h5"><%= establishment.name %></h5>
+    <% count = establishment.groups.count %>
+    <p><%= count %> groupe<%= "s" if count > 1  %></p>
+  </div>
+<% end %>

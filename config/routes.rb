@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   post "settings/admin" => "settings#examiner", as: :settings_examiner
   post "settings/admin" => "settings#age_sections", as: :age_sections_settings
   post "settings/admin" => "settings#marks", as: :marks_settings
-  post "examiners/create" => "examiners#create", as: :examiner
+  resources :examiners, only: [ :create, :update, :destroy ]
   get "session/new"
   get "session/show"
   get "menu/admin"
@@ -24,5 +24,8 @@ Rails.application.routes.draw do
   resources :age_sections, except: [ :new, :create, :destroy ]
   resources :age_examiners, only: [ :create, :destroy ]
   resources :statuses, only: [ :update ]
-  resources :establishments
+  resources :establishments do
+    resources :establishment_criteria, only: [ :new, :create ]
+  end
+  resources :establishment_criteria, only: [ :edit, :update ]
 end

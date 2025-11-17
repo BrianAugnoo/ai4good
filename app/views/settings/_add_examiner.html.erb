@@ -8,7 +8,7 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
       </div>
 
-      <%= form_with model: Examiner.new, url: examiner_path, local: true, data: { controller: "close-modal" } do |f| %>
+      <%= form_with model: Examiner.new, url: examiners_path, local: true, data: { controller: "close-modal" } do |f| %>
         <div class="modal-body">
           <div class="mb-3">
             <%= f.label :name, "Nom de l’examinateur", class: "form-label fw-semibold" %>
@@ -36,7 +36,7 @@
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="close-examiner">
             Annuler
           </button>
-          <%= f.submit "Créer", class: "btn btn-primary px-4", id: "issue", data: { age_section: "examiner" } %>
+          <%= f.submit "Créer", class: "btn btn-primary px-4", id: "issue", data: { age_section: "-examiner" } %>
         </div>
       <% end %>
     </div>
