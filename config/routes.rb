@@ -28,4 +28,5 @@ Rails.application.routes.draw do
     resources :establishment_criteria, only: [ :new, :create ]
   end
   resources :establishment_criteria, only: [ :edit, :update ]
+  resources :criteria_names, only: [ :index, :create, :destroy ]
 end

@@ -10,3 +10,7 @@
 <% else %>
   <p>vous n'avez pas la permission d'acceder a cette page veiller vous renseignez auprés des admins</p>
 <% end %>
+
+<% if admin_signed_in? %>
+  <%= link_to "Modifier les Critére", criteria_names_path %>
+<% end %>

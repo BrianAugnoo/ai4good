@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_17_135826) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_18_150739) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -83,6 +83,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_17_135826) do
     t.index ["criterium_category_id"], name: "index_criteria_on_criterium_category_id"
     t.index ["examiner_id"], name: "index_criteria_on_examiner_id"
     t.index ["group_id"], name: "index_criteria_on_group_id"
+  end
+
+  create_table "criteria_names", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "criterium_categories", force: :cascade do |t|

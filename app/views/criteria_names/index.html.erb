@@ -1,0 +1,33 @@
+<div class="criteria-name-container">
+  <% @criteria_names.each do |criteria_name| %>
+    <h3>name: <%= criteria_name.name %></h3>
+    <p><%= criteria_name.description %></p>
+    <%= button_to "Suprimer", criteria_name_path(criteria_name), method: :delete %>
+  <% end %>
+</div>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#criteria">
+  Ajouter un critere
+</button>
+
+<div class="modal fade" id="criteria" tabindex="-1" aria-labelledby="criteriaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="criteriaModalLabel">Ajouter un Critére</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_with model: CriteriaName.new, class: "add-criteria" do |f| %>
+        <div class="modal-body">
+          <%= f.label :name, "ajouter le nom du critére" %>
+          <%= f.text_field :name %>
+          <%= f.label :description, "ajouter une bref description" %>
+          <%= f.text_area :description %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <%= f.submit "Ajouter" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
