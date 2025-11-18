@@ -4,7 +4,7 @@ class Status < ApplicationRecord
   private
   def eval_btn
     broadcast_append_to "application",
-                      target: "eval-group",
+                      target: "status-refresh",
                       partial: "partial/refresh"
   end
 end

@@ -5,4 +5,7 @@
     <% count = establishment.groups.count %>
     <p><%= count %> groupe<%= "s" if count > 1  %></p>
   </div>
+  <% if establishment.valid_eval? %>
+    <p><%= establishment.total_marks %></p>
+  <% end %>
 <% end %>

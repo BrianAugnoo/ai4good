@@ -13,17 +13,19 @@
     <%= form_with model: @establishment_criterium , url: establishment_establishment_criteria_path(@establishment.id, @establishment_criterium), local: true, class: "evaluation-form" do |f| %>
 
       <div class="criteria-list">
-        <% CriteriumCategory.categories[@criterium_category.name].each do |key, value| %>
+        <% @criteria_names.each do |criteria_name| %>
           <div class="criterium-item">
             <div class="criterium-label">
-              <span class="key-name"><%= key.to_s.humanize %></span>
-              <span class="key-desc"><%= value %></span>
+              <span class="key-name"><%= criteria_name.name.humanize %></span>
+              <span class="key-desc"><%= criteria_name.description %></span>
             </div>
 
             <div class="star-rating">
               <% 5.downto(1) do |i| %>
-                <% unique_id = "#{key}_#{i}" %>
-                <%= f.radio_button key.to_sym, i, id: unique_id, class: "star-input", required: true %>
+                <%# .parameterize transforme "Nom du Critère" en "nom-du-critere" pour éviter les bugs d'ID HTML %>
+                <% unique_id = "#{criteria_name.name.parameterize}_#{i}" %>
+
+                <%= f.radio_button criteria_name.name, i, id: unique_id, class: "star-input", required: true %>
                 <label for="<%= unique_id %>" class="star-label" title="<%= i %> étoiles">
                   <i class="fa-solid fa-star"></i>
                 </label>

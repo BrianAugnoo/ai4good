@@ -1,4 +1,5 @@
 <%= render "partial/back_button", page_name: "Retour", page_path: establishments_path %>
+<div id="status-refresh"></div>
 <div class="group-show-wrapper">
 
   <%# --- HEADER --- %>
@@ -41,15 +42,67 @@
           <div class="categories-list">
             <%# Vue Admin : On affiche tout %>
             <% if admin_signed_in? %>
-              <div class="admin-cat-block">
+                <div id="estb-show"></div>
                 <% @permited_examiners.each do |examiner| %>
-                  <%= link_to examiner.name, "#", class: "btn btn-primary" %>
+                  <% criteria = examiner.establishment_criteria.where(establishment: @establishment) %>
+                  <% feed = criteria.to_a.any? %>
+                  <div class="dropdown-wrapper">
+                    <button class="btn-outline-brand dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                      <span><%= examiner.name %></span>
+                      <% if feed %>
+                        <span class="badge-check">Complété</span>
+                      <% end %>
+                    </button>
+
+                    <% if feed %>
+                      <ul class="dropdown-menu custom-dropdown">
+                        <li class="dd-header">
+                          <span>Moyenne</span>
+                          <span class="score-pill"><%= (criteria.sum(:values) / criteria.count).round(2) %></span>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <% criteria.each do |criterium| %>
+                          <li class="dd-item">
+                            <span class="c-name"><%= criterium.name %></span>
+                            <span class="c-val"><%= criterium.values %></span>
+                          </li>
+                        <% end %>
+                      </ul>
+                    <% end %>
+                  </div>
                 <% end %>
-              </div>
 
             <%# Vue Examinateur : Dropdowns Stylisés %>
             <% else %>
-              <%= link_to "Evaluer", new_establishment_establishment_criterium_path(@establishment.id) %>
+              <% if @evals.to_a.any? %>
+                <div class="dropdown-wrapper">
+                  <button class="btn-outline-brand dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <span>Evaluation</span>
+                    <span class="badge-check">Complété</span>
+                  </button>
+
+                  <ul class="dropdown-menu custom-dropdown">
+                    <li class="dd-header">
+                      <span>Moyenne</span>
+                      <span class="score-pill"><%= (@evals.sum(:values) / @evals.count).round(2) %></span>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <% @evals.each do |criterium| %>
+                      <li class="dd-item">
+                        <span class="c-name"><%= criterium.name %></span>
+                        <span class="c-val"><%= criterium.values %></span>
+                      </li>
+                    <% end %>
+                    <% if status.edit_rate %>
+                      <%= link_to "Modifier", edit_establishment_criterium_path(@evals.first.id), class: "btn-action-gradient" %>
+                    <% end %>
+                  </ul>
+                </div>
+              <% else %>
+                <div class="action-buttons">
+                  <%= link_to "Procéder a l'évaluation", new_establishment_establishment_criterium_path(@establishment.id), class: "btn-action-gradient" %>
+                </div>
+              <% end %>
             <% end %>
           </div>
 
@@ -81,8 +134,13 @@
         <ul class="members-list">
           <% @establishment.groups.each do |group| %>
             <li>
-              <span class="avatar"><%= group.name[0].upcase %></span>
-              <span class="name"><%= group.name %></span>
+              <% if admin_signed_in? %>
+                <span class="avatar"><%= group.name[0].upcase %></span>
+                <span class="name"><%= group.name %></span>
+              <% else %>
+              <span class="avatar">A</span>
+              <span class="name">Anonyme</span>
+              <% end %>
             </li>
           <% end %>
         </ul>

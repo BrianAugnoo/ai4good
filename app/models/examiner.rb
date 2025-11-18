@@ -8,6 +8,7 @@ class Examiner < ApplicationRecord
   has_many :evals
   has_many :sessions, through: :evals
   has_many :age_examiners
+  has_many :establishment_criteria
   has_many :age_sections, through: :age_examiners
   has_many :criterium_categories, through: :criteria
 

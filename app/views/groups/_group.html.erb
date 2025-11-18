@@ -1,4 +1,6 @@
 <%= link_to group_path(group), style: "text-decoration: none;", id: "group", data: {id: group.id} do %>
+  <%= classement ||= false  %>
+  <span><%= classement if classement %></span>
   <%= group.photo.attached? ? image_tag(group.photo) : image_tag("group_default.webp") %>
   <div class="group">
     <h5 class="h5"><%= group.name %></h5>

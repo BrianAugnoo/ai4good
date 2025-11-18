@@ -1,33 +1,60 @@
-<div class="criteria-name-container">
-  <% @criteria_names.each do |criteria_name| %>
-    <h3>name: <%= criteria_name.name %></h3>
-    <p><%= criteria_name.description %></p>
-    <%= button_to "Suprimer", criteria_name_path(criteria_name), method: :delete %>
-  <% end %>
-</div>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#criteria">
-  Ajouter un critere
-</button>
+<%= render "partial/back_button", page_name: "Etablissement", page_path: establishments_path %>
+<div class="criteria-page-wrapper">
 
-<div class="modal fade" id="criteria" tabindex="-1" aria-labelledby="criteriaModalLabel" aria-hidden="true">
+  <div class="page-header">
+    <h2>Critères d'évaluation</h2>
+    <button type="button" class="btn-add-primary" data-bs-toggle="modal" data-bs-target="#criteria">
+      <i class="fa-solid fa-plus"></i> Ajouter un critère
+    </button>
+  </div>
+
+  <div class="criteria-grid">
+    <% @criteria_names.each do |criteria_name| %>
+      <div class="criteria-card">
+        <div class="card-content">
+          <h3><%= criteria_name.name %></h3>
+          <p><%= criteria_name.description.presence || "Aucune description fournie." %></p>
+        </div>
+
+        <div class="card-actions">
+          <%= button_to criteria_name_path(criteria_name), method: :delete, class: "btn-delete-ghost", form: { data: { turbo_confirm: "Êtes-vous sûr ?" } } do %>
+            <span>Supprimer</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="modal fade custom-modal" id="criteria" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
+
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="criteriaModalLabel">Ajouter un Critére</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title">Nouveau Critère</h1>
+        <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Close">✕</button>
       </div>
-      <%= form_with model: CriteriaName.new, class: "add-criteria" do |f| %>
+
+      <%= form_with model: CriteriaName.new, class: "add-criteria-form" do |f| %>
         <div class="modal-body">
-          <%= f.label :name, "ajouter le nom du critére" %>
-          <%= f.text_field :name %>
-          <%= f.label :description, "ajouter une bref description" %>
-          <%= f.text_area :description %>
+          <div class="form-group">
+            <%= f.label :name, "Nom du critère", class: "form-label" %>
+            <%= f.text_field :name, class: "form-input", placeholder: "Ex: Originalité, Technique..." %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :description, "Description courte", class: "form-label" %>
+            <%= f.text_area :description, class: "form-input", rows: 3, placeholder: "Détails sur ce qu'il faut évaluer..." %>
+          </div>
         </div>
+
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <%= f.submit "Ajouter" %>
+          <button type="button" class="btn-cancel" data-bs-dismiss="modal">Annuler</button>
+          <%= f.submit "Enregistrer", class: "btn-submit" %>
         </div>
       <% end %>
+
     </div>
   </div>
 </div>
