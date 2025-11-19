@@ -12,6 +12,11 @@ class Group < ApplicationRecord
   has_one_attached :photo
   # retourne la note final si tout les examinateur ont noter corectement tout les
   # critére sinon il y a un bug et ca retourne une string
+
+  def etablished
+    self.establishment.name
+  end
+
   def final_marks
     criteria = self.criteria
     criteria.sum(:values) / criteria.count

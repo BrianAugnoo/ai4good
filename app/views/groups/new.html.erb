@@ -6,11 +6,6 @@
     <%= form_with model: @group, url: groups_path(age_section_id: @age_section.id), local: true do |f| %>
 
 
-      <div class="mb-3">
-        <%= f.label :etablished, "Etablissement", class: "form-label small fw-semibold" %>
-        <%= f.text_field :etablished, class: "form-control form-control-sm", placeholder: "University Of Mauritius", required: true %>
-      </div>
-
 
       <div class="mb-3">
         <%= f.label :name, "Nom", class: "form-label small fw-semibold" %>
@@ -24,8 +19,8 @@
       </div>
 
       <div class="mb-3">
-        <label for="members-input" class="form-label small fw-semibold">Membres du group</label>
-        <input name="members" id="members-input" value="awesome,neat" autocomplete="off" placeholder="taper entrée pour valider le nom du participant">
+        <%= f.label :establishment_id, "selectioner l'etablissement" %>
+        <%= f.collection_select :establishment_id, @establishments, :id, :name %>
       </div>
 
       <div class="mb-3">
@@ -44,27 +39,3 @@
     <% end %>
   </div>
 </div>
-
-<script>
-    new TomSelect("#members-input", {
-      persist: false,
-      createOnBlur: true,
-      create: true
-    });
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("avatar_input");
-    const preview = document.getElementById("avatar_preview");
-
-    input.addEventListener("change", (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        preview.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
-  });
-</script>

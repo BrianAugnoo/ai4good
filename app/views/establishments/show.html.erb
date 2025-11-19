@@ -127,11 +127,13 @@
               <% end %>
             </div>
           <% else %>
-            <div class="video-wrapper">
-              <video id="player" playsinline controls>
-                <source src="<%= url_for(@group.video) %>" type="<%= @group.video.content_type %>">
-              </video>
-            </div>
+            <% @establishment.videos.each do |video| %>
+              <div class="video-wrapper">
+                <video id="player" playsinline controls>
+                  <source src="<%= url_for(video) %>" type="<%= video.content_type %>">
+                </video>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </section>
@@ -188,3 +190,15 @@
 
   </div>
 </div>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+    const playerElement = document.querySelector("#player")
+    if (playerElement) {
+      new Plyr(playerElement, {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+        resetOnEnd: true
+      })
+    }
+  })
+</script>

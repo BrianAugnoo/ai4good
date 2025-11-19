@@ -26,14 +26,15 @@ class GroupsController < ApplicationController
   def new
     @group = Group.new
     @age_section = AgeSection.find(params[:age_section_id])
+    @establishments = Establishment.all
   end
 
   def create
     @age_section = AgeSection.find(params[:age_section_id])
     group = Group.new(set_params)
     group.age_section = @age_section
-    group.add_members(params[:members].split(",")) unless params[:members].empty?
     if group.save
+      flash[:notice] = "Group Ajouter Avec succés"
       redirect_to groups_path(age_section_id: @age_section.id)
     else
       raise
@@ -49,14 +50,16 @@ class GroupsController < ApplicationController
     group = Group.find(params[:id])
     group.update(set_params)
     if group.save
+      flash[:notice] = "Group Succesful Changed"
       redirect_to group_path(group)
     else
-      raise
+      flash[:alert] = "Une erreur est survenu"
+      render edit_group_path(group)
     end
   end
 
   private
   def set_params
-    params.require(:group).permit(:etablished, :name, :theme, :timer, :photo, :video)
+    params.require(:group).permit(:name, :theme, :timer, :photo, :video, :establishment_id)
   end
 end
