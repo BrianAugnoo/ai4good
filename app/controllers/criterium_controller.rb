@@ -1,5 +1,6 @@
 class CriteriumController < ApplicationController
   def create
+    group = Group.find(params[:group_id].to_i)
     begin
       @criterium_category = CriteriumCategory.find(params[:criterium_category_id])
       CriteriumCategory.categories[@criterium_category.name].each do |key, value|
@@ -11,14 +12,11 @@ class CriteriumController < ApplicationController
           values: params[key.to_sym]
         )
       end
+      group.validate_rate
     rescue => e
       raise e
     end
-    if current_examiner.criteria_submited(@group, CriteriumCategory.find(params[:criterium_category_id]).name).any?
-      redirect_to group_path(Group.find(params[:group_id].to_i))
-    else
-      redirect_to group_path(Group.find(params[:group_id].to_i))
-    end
+      redirect_to group_path(group)
   end
 
   def new

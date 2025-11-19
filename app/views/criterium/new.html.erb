@@ -1,17 +1,40 @@
-<div class="container px-2 py-4">
-  <div class="bg-white shadow-sm rounded-4 p-3">
-    <h5 class="text-center text-primary mb-4">30%</h5>
-    <%= form_with  url: criterium_index_path(criterium_category_id: @criterium_category.id, group_id: @group_id), local: true do |f| %>
+<%= render "partial/back_button", page_name: Group.find(@group_id).name, page_path: group_path(Group.find(@group_id)) %>
+<div class="evaluation-container">
+  <div class="evaluation-card">
 
-      <% CriteriumCategory.categories[@criterium_category.name].each do |key, value| %>
-        <div class="mb-3">
-          <%= f.label key.to_sym, "#{key}: #{value}", class: "form-label small fw-semibold" %>
-          <%= f.select key.to_sym, (1..5).to_a, class: "form-control form-control-sm", required: true %>
-        </div>
-      <% end %>
+    <div class="card-header">
+      <div class="icon-header">
+        <i class="fa-solid fa-clipboard-check"></i>
+      </div>
+      <h5><%= @criterium_category.name %></h5>
+      <p>Veuillez noter chaque critère ci-dessous</p>
+    </div>
 
-      <div class="d-grid">
-        <%= f.submit "Evaluer", class: "btn btn-primary btn-sm " %>
+    <%= form_with url: criterium_index_path(criterium_category_id: @criterium_category.id, group_id: @group_id), local: true, class: "evaluation-form" do |f| %>
+
+      <div class="criteria-list">
+        <% CriteriumCategory.categories[@criterium_category.name].each do |key, value| %>
+          <div class="criterium-item">
+            <div class="criterium-label">
+              <span class="key-name"><%= key.to_s.humanize %></span>
+              <span class="key-desc"><%= value %></span>
+            </div>
+
+            <div class="star-rating">
+              <% 5.downto(1) do |i| %>
+                <% unique_id = "#{key}_#{i}" %>
+                <%= f.radio_button key.to_sym, i, id: unique_id, class: "star-input", required: true %>
+                <label for="<%= unique_id %>" class="star-label" title="<%= i %> étoiles">
+                  <i class="fa-solid fa-star"></i>
+                </label>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Valider l'évaluation", class: "btn-submit-gradient" %>
       </div>
 
     <% end %>

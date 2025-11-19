@@ -1,29 +1,71 @@
-<h2>Sign up</h2>
+<div class="custom-auth-container">
+  <div class="custom-auth-card">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "examiners/shared/error_messages", resource: resource %>
+    <div class="auth-header">
+      <h2>Bienvenue</h2>
+      <p>Créez votre compte pour commencer.</p>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= form_with(model: resource, scope: resource_name, url: registration_path(resource_name), local: true, class: "auth-form") do |f| %>
+
+      <div class="form-group">
+        <%= f.label :name, "Nom Complet", class: "form-label" %>
+        <%= f.text_field :name,
+            autofocus: true,
+            placeholder: "Jean Paul",
+            class: "form-input" %>
+      </div>
+
+
+      <div class="form-group">
+        <%= f.label :email, "Adresse email", class: "form-label" %>
+        <%= f.email_field :email,
+            autofocus: true,
+            autocomplete: "email",
+            placeholder: "exemple@email.com",
+            class: "form-input #{'input-error' if resource.errors[:email].any?}" %>
+
+        <% if resource.errors[:email].any? %>
+          <span class="field-error"><%= resource.errors[:email].first %></span>
+        <% end %>
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <%= f.label :password, "Mot de passe", class: "form-label" %>
+          <% if @minimum_password_length %>
+            <span class="label-hint">(<%= @minimum_password_length %> min)</span>
+          <% end %>
+        </div>
+        <%= f.password_field :password,
+            autocomplete: "new-password",
+            placeholder: "••••••••",
+            class: "form-input #{'input-error' if resource.errors[:password].any?}" %>
+
+        <% if resource.errors[:password].any? %>
+          <span class="field-error"><%= resource.errors[:password].first %></span>
+        <% end %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label" %>
+        <%= f.password_field :password_confirmation,
+            autocomplete: "new-password",
+            placeholder: "••••••••",
+            class: "form-input #{'input-error' if resource.errors[:password_confirmation].any?}" %>
+
+        <% if resource.errors[:password_confirmation].any? %>
+          <span class="field-error"><%= resource.errors[:password_confirmation].first %></span>
+        <% end %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "S'inscrire maintenant", class: "btn-gradient" %>
+      </div>
+    <% end %>
+
+    <div class="auth-footer">
+      <%= render "examiners/shared/links" %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "examiners/shared/links" %>
+</div>

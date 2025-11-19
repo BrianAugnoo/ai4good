@@ -1,14 +1,72 @@
 <%= render "partial/back_button", page_name: "home", page_path: root_path %>
-<h1 class="age-title">Classement</h1>
-<div class="age-sections-container">
-  <% @age_sections.each do |age_section| %>
-    <div class="age-sections <%= age_section.size %>">
-      <h2><%= age_section.value %> ans</h2>
-      <% age_section.groups.each do |group| %>
-        <div id="age-groups">
-          <%= render "groups/group", group: group %>
-        </div>
-      <% end %>
+<div class="age-sections-container" style="background: url('<%= asset_path "gradient_purple.avif"%>')">
+  <div class="mobile-age-selector">
+  <% @age_sections.order(:value).each do |age| %>
+    <button class="age-btn" data-age="<%= age.value %>">
+      <%= age.value %> ans
+    </button>
+  <% end %>
+</div>
+
+  <% @age_sections.order(:value).each do |age_section| %>
+    <div class="leadeardboard" data-age-section="<%= age_section.value %>" >
+      <h1 class="title"><%= age_section.value %> ans</h1>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th id="topics">Groupes</th>
+              <th id="avatars">Evaluation 1</th>
+              <th id="replies">Evaluation 2</th>
+              <th id="views">Notes Finales</th>
+            </tr>
+          </thead>
+
+          <tbody id="posts-container">
+            <% age_section.groups.where(ratted: true).order(points: :desc).each do |group| %>
+              <%= render "group", group: group %>
+            <% end %>
+            <% age_section.groups.where(ratted: false).each do |group| %>
+              <%= render "group", group: group %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   <% end %>
 </div>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+
+    // ⛔️ Si écran > 768px → on sort du script
+    if (window.matchMedia("(min-width: 769px)").matches) {
+      return;
+    }
+
+    const buttons = document.querySelectorAll(".age-btn");
+    const sections = document.querySelectorAll(".leadeardboard");
+
+    if (buttons.length === 0 || sections.length === 0) return;
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const age = btn.dataset.age;
+
+        sections.forEach(section => {
+          if (section.dataset.ageSection === age) {
+            section.style.display = "block";
+          } else {
+            section.style.display = "none";
+          }
+        });
+
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    // active automatiquement le premier bouton
+    buttons[0].click();
+  });
+</script>

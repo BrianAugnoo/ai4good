@@ -1,13 +1,26 @@
-<% examiners = Examiner.all %>
-<div class="content" id="setting-content">
+<% examiners = Examiner.order(permited: :desc) %>
+<div class="content" id="setting-content" data-controller="examiner-permit">
   <h1>Listes des examinateur</h1>
   <% examiners.each do |examiner| %>
     <div class="examiner">
       <h3>nom: <span><%= examiner.name %></span></h3>
       <h3>email: <span><%= examiner.email %></span></h3>
+      <label class="switch">
+        <input
+          type="checkbox"
+          data-examiner-permit-target="toggle"
+          data-column="permited"
+          data-id="<%= examiner.id %>"
+          <%= "checked" if examiner.permited %>
+        >
+        <span class="slider"></span>
+      </label>
       <%= link_to "modifier", "#", class: "btn btn-secondary" %>
-      <%= link_to "suprimer", "#", class: "btn btn-danger" %>
+      <%= button_to "suprimer", examiner_path(examiner), method: :delete, class: "btn btn-danger", data: { turbo: true } %>
     </div>
   <% end %>
-  <%= link_to "ajouter un examinateur", "#", class: "btn btn-primary" %>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-examiner">
+    Créer un examinateur
+  </button>
+  <%= render "settings/add_examiner" %>
 </div>

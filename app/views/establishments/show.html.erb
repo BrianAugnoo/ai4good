@@ -1,0 +1,204 @@
+<%= render "partial/back_button", page_name: "Retour", page_path: establishments_path %>
+<div id="status-refresh"></div>
+<div class="group-show-wrapper">
+
+  <%# --- HEADER --- %>
+  <header class="page-header">
+    <div class="header-top">
+
+      <% if admin_signed_in? %>
+        <%= link_to edit_establishment_path(@establishment), class: "btn-ghost" do %>
+           Modifier le groupe
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="header-banner">
+      <div class="banner-content">
+        <span class="badge-theme">Evaluation</span>
+        <h1><%= @establishment.name %></h1>
+
+        <div class="meta-tags">
+          <span>Evaluation par Etablissements</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <%# --- GRID LAYOUT --- %>
+  <div class="dashboard-grid">
+
+    <%# --- COLONNE GAUCHE (Contenu Principal) --- %>
+    <div class="main-column">
+
+      <%# CARTE 1: ÉVALUATIONS %>
+      <section class="custom-card">
+        <div class="card-header">
+          <h3>Évaluations</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="categories-list">
+            <%# Vue Admin : On affiche tout %>
+            <% if admin_signed_in? %>
+                <div id="estb-show"></div>
+                <% @permited_examiners.each do |examiner| %>
+                  <% criteria = examiner.establishment_criteria.where(establishment: @establishment) %>
+                  <% feed = criteria.to_a.any? %>
+                  <div class="dropdown-wrapper">
+                    <button class="btn-outline-brand dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                      <span><%= examiner.name %></span>
+                      <% if feed %>
+                        <span class="badge-check">Complété</span>
+                      <% end %>
+                    </button>
+
+                    <% if feed %>
+                      <ul class="dropdown-menu custom-dropdown">
+                        <li class="dd-header">
+                          <span>Moyenne</span>
+                          <span class="score-pill"><%= (criteria.sum(:values) / criteria.count).round(2) %></span>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <% criteria.each do |criterium| %>
+                          <li class="dd-item">
+                            <span class="c-name"><%= criterium.name %></span>
+                            <span class="c-val"><%= criterium.values %></span>
+                          </li>
+                        <% end %>
+                      </ul>
+                    <% end %>
+                  </div>
+                <% end %>
+
+            <%# Vue Examinateur : Dropdowns Stylisés %>
+            <% else %>
+              <% if @evals.to_a.any? %>
+                <div class="dropdown-wrapper">
+                  <button class="btn-outline-brand dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <span>Evaluation</span>
+                    <span class="badge-check">Complété</span>
+                  </button>
+
+                  <ul class="dropdown-menu custom-dropdown">
+                    <li class="dd-header">
+                      <span>Moyenne</span>
+                      <span class="score-pill"><%= (@evals.sum(:values) / @evals.count).round(2) %></span>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <% @evals.each do |criterium| %>
+                      <li class="dd-item">
+                        <span class="c-name"><%= criterium.name %></span>
+                        <span class="c-val"><%= criterium.values %></span>
+                      </li>
+                    <% end %>
+                    <% if status.edit_rate %>
+                      <%= link_to "Modifier", edit_establishment_criterium_path(@evals.first.id), class: "btn-action-gradient" %>
+                    <% end %>
+                  </ul>
+                </div>
+              <% else %>
+                <div class="action-buttons">
+                  <%= link_to "Procéder a l'évaluation", new_establishment_establishment_criterium_path(@establishment.id), class: "btn-action-gradient" %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+
+          <%# ACTIONS EXAMINATEUR %>
+          <% if examiner_signed_in? %>
+
+          <% end %>
+        </div>
+      </section>
+
+      <%# CARTE 2: VIDÉO %>
+      <section class="custom-card">
+        <div class="card-header">
+          <h3>Vidéos de présentation</h3>
+        </div>
+        <div class="card-body">
+          <% if !@establishment.videos.attached? %>
+            <div class="empty-video">
+              <p>Aucune vidéo disponible.</p>
+              <% if admin_signed_in? %>
+                <%= link_to "Ajouter une vidéo", edit_establishment_path(@establishment, video: true), class:"link-brand", data: { turbo: "false" } %>
+              <% end %>
+            </div>
+          <% else %>
+            <% @establishment.videos.each do |video| %>
+              <div class="video-wrapper">
+                <video id="player" playsinline controls>
+                  <source src="<%= url_for(video) %>" type="<%= video.content_type %>">
+                </video>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </section>
+    </div>
+
+
+    <%# --- COLONNE DROITE (Sidebar) --- %>
+    <aside class="sidebar-column">
+
+      <%# CARTE RÉSULTAT (Mise en avant avec le dégradé) %>
+      <% if @establishment.valid_eval? && admin_signed_in? %>
+        <div class="result-card-gradient">
+          <div class="result-content">
+            <span class="label">Note Finale</span>
+            <span class="big-score"><%= @establishment.total_marks %></span>
+            <div class="timer-badge">
+              <span>⏱ 0</span>
+            </div>
+          </div>
+        </div>
+        <% elsif examiner_signed_in? && @evals.to_a.any? %>
+        <div class="result-card-gradient">
+          <div class="result-content">
+            <span class="label">Note Attribuer</span>
+            <span class="big-score"><%= (@evals.sum(:values) / @evals.count).round(2) %></span>
+            <div class="timer-badge">
+              <span>⏱ 0</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <%# CARTE MEMBRES %>
+      <div class="custom-card members-card">
+        <div class="card-header">
+          <h3>Nom des Groupes</h3>
+        </div>
+        <ul class="members-list">
+          <% @establishment.groups.each do |group| %>
+            <li>
+              <% if admin_signed_in? %>
+                <span class="avatar"><%= group.name[0].upcase %></span>
+                <span class="name"><%= group.name %></span>
+              <% else %>
+              <span class="avatar">A</span>
+              <span class="name">Anonyme</span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+    </aside>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+    const playerElement = document.querySelector("#player")
+    if (playerElement) {
+      new Plyr(playerElement, {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+        resetOnEnd: true
+      })
+    }
+  })
+</script>

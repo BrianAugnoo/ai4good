@@ -9,20 +9,6 @@ home {
   background-color: #F2F4F7;
 }
 
-.logo {
-  width: 15vw;
-  aspect-ratio: 1 / 1;
-  position: fixed;
-  box-shadow: 0px 0px 13px 5px rgba(3, 179, 248, 0.4);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
 
 .full-container {
   min-height: 100vh;
@@ -66,6 +52,7 @@ home {
 
 .back-button {
   position: fixed;
+  z-index: 1000;
   // margin-bottom: 1rem;
 
   a {
@@ -93,6 +80,7 @@ home {
 .burger {
   position: fixed;
   right: 0;
+  z-index: 1000;
 }
 
 .menu-btn {
@@ -100,6 +88,7 @@ home {
   display: flex;
   flex-direction: column;
   padding-top: 0.4rem;
+  z-index: 1000;
   a {
     text-decoration: none;
     color: black;
@@ -115,4 +104,151 @@ home {
 .off-btn {
   position: fixed;
   right: 0;
+}
+
+// Variables
+$primary: #5C12CF;
+$secondary: #EC0EED;
+$text-dark: #1e293b;
+$text-light: #64748b;
+$border-light: #e2e8f0;
+
+// Mixin Gradient
+@mixin brand-gradient {
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+}
+
+// --- Bouton Trigger (qui ouvre le menu) ---
+.menu-trigger {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1001;
+  @include brand-gradient;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba($primary, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  // Assurez-vous d'avoir les icônes FontAwesome chargées pour l'icône de menu
+  i { color: white; }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($primary, 0.4);
+  }
+}
+
+// --- Le Menu Offcanvas (Sidebar) ---
+.sidebar {
+  width: 300px !important; // Largeur fixe
+  border: none;
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+  background: white; // Fond blanc propre
+
+  // Header
+  .sidebar-header {
+    @include brand-gradient; // Dégradé pour l'en-tête
+    color: white;
+    padding: 1.5rem;
+
+    .sidebar-title {
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .btn-close-white {
+      filter: invert(1); // Rend l'icône de fermeture blanche
+      opacity: 0.8;
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  // Corps
+  .sidebar-body {
+    padding: 1.5rem 0;
+
+    .status-info {
+      padding: 0 1.5rem 1.5rem;
+      font-size: 0.95rem;
+      color: $text-light;
+      border-bottom: 1px solid $border-light;
+      margin-bottom: 1rem;
+
+      .status-badge {
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 0.3rem 0.6rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+
+        // Styles spécifiques au statut
+        &.status-invite {
+          background: #f1f5f9;
+          color: $text-light;
+        }
+        &.status-examinateur, &.status-admin {
+          background: rgba($primary, 0.1);
+          color: $primary;
+        }
+      }
+    }
+
+    .menu-nav-links {
+      display: flex;
+      flex-direction: column;
+
+      .menu-link {
+        color: $text-dark;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.2s;
+
+        &:hover {
+          background-color: rgba($primary, 0.05);
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  // Footer (Déconnexion)
+  .sidebar-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid $border-light;
+
+    .btn-logout {
+      width: 100%;
+      background: $primary;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba($primary, 0.3);
+      transition: background 0.2s;
+
+      &:hover {
+        background: darken($primary, 5%);
+      }
+
+      i {
+        margin-right: 0.5rem;
+      }
+    }
+  }
 }

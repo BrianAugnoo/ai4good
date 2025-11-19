@@ -1,4 +1,5 @@
 .side-nav {
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -39,6 +40,7 @@
   background-color: #F2F4F7;
   flex-grow: 1;
   justify-content: space-around;
+  min-height: 100vh;
 
   .content {
     align-self: center;
@@ -131,4 +133,209 @@ input:checked + .slider {
 
 input:checked + .slider::before {
   transform: translateX(22px);
+}
+
+#setting-content {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 2rem;
+  }
+
+  .examiner {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    h3 {
+      font-size: 1rem;
+      color: #495057;
+      margin-bottom: 0.5rem;
+
+      span {
+        font-weight: 500;
+        color: #0d6efd;
+      }
+    }
+
+    .btn {
+      margin-right: 0.5rem;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      padding: 0.4rem 1rem;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      border-color: #6c757d;
+
+      &:hover {
+        background-color: #5a6268;
+      }
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+
+      &:hover {
+        background-color: #bb2d3b;
+      }
+    }
+  }
+
+  button[data-bs-target="#add-examiner"] {
+    display: block;
+    margin: 1.5rem auto 0;
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+  }
+}
+
+/* --- Modal styling --- */
+#add-examiner {
+  .modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .modal-header {
+    background: #0d6efd;
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+
+    .btn-close {
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+
+    label {
+      font-weight: 500;
+      color: #495057;
+    }
+
+    input {
+      @extend .form-control;
+      border-radius: 8px;
+    }
+  }
+
+  .modal-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 1rem 2rem;
+  }
+}
+
+.age_sections {
+  display: flex !important;
+  flex-wrap: wrap;     /* Permet le passage à la ligne si l'écran est petit */
+  gap: 2rem;           /* Remplace les margins hasardeuses */
+  justify-content: center; /* Centre les blocs sur la page */
+  align-items: flex-start; /* Évite que les cartes s'étirent toutes à la même hauteur */
+  padding: 2rem;
+
+  .age-section-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;      /* Coins arrondis */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Ombre légère pour le relief */
+    padding: 1.5rem;
+    width: 300px;             /* Largeur fixe pour aligner les colonnes */
+    display: flex;
+    flex-direction: column;   /* Pile verticale */
+
+    .section-title {
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #333;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 0.5rem;
+    }
+
+    .examiners-list {
+      flex-grow: 1;           /* Occupe l'espace disponible */
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+
+      .examiner-row {
+        display: flex;        /* LA CLÉ DU SUCCÈS : Flexbox */
+        justify-content: space-between; /* Nom à gauche, Croix à droite */
+        align-items: center;  /* Centrage vertical parfait */
+        padding: 0.5rem 0;
+        border-bottom: 1px dashed #eee;
+
+        .examiner-name {
+          font-size: 0.95rem;
+          margin: 0;          /* Supprime les marges par défaut du h5 */
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis; /* Coupe proprement les noms trop longs */
+          max-width: 180px;
+        }
+
+        /* Style du bouton "X" minimaliste */
+        .btn-delete-icon {
+          background: #ffe5e5;
+          color: #d32f2f;
+          border: none;
+          width: 28px;
+          height: 28px;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-weight: bold;
+          font-size: 12px;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: #d32f2f;
+            color: white;
+          }
+        }
+      }
+
+      .empty-state {
+        text-align: center;
+        color: #999;
+        font-style: italic;
+        margin-top: 1rem;
+      }
+    }
+
+    .btn-add {
+      width: 100%;            /* Bouton pleine largeur */
+      margin-top: auto;       /* Pousse le bouton tout en bas de la carte */
+      font-size: 0.9rem;
+    }
+  }
 }

@@ -1,0 +1,86 @@
+<%= render "partial/back_button", page_name: @establishment.name, page_path: establishment_path(@establishment) %>
+<% if @edit_video %>
+  <div class="form-container">
+    <div class="creation-card">
+
+      <div class="card-header">
+        <h2>Ajouter des vidéos à <%= @establishment.name %></h2>
+        <p>Sélectionnez une ou plusieurs vidéos à téléverser.</p>
+      </div>
+
+      <%= form_with model: @establishment, method: :patch, local: true, class: "video-upload-form" do |f| %>
+
+        <div class="form-group file-upload-group">
+          <%= f.label :videos, "Sélectionner les fichiers vidéo", class: "form-label file-label" %>
+
+          <div class="file-input-wrapper">
+            <%= f.file_field :videos, multiple: true, accept: "video/*", class: "file-input-hidden", id: "video_input", direct_upload: true %>
+
+            <label for="video_input" class="custom-file-upload">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Choisir les fichiers
+            </label>
+          </div>
+        </div>
+
+        <div id="video-preview-arena" class="preview-arena">
+          <p class="preview-placeholder">Aucune vidéo sélectionnée.</p>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Enregistrer les vidéos", class: "btn-submit-gradient" %>
+        </div>
+
+      <% end %>
+
+      <script>
+        const input = document.getElementById("video_input");
+        const previewArena = document.getElementById("video-preview-arena");
+
+        input.addEventListener("change", (event) => {
+          // 1. Vider l'ancienne prévisualisation
+          previewArena.innerHTML = '';
+
+          const files = event.target.files;
+
+          if (files.length === 0) {
+              previewArena.innerHTML = '<p class="preview-placeholder">Aucune vidéo sélectionnée.</p>';
+              return;
+          }
+
+          // 2. Parcourir les fichiers sélectionnés
+          for (let i = 0; i < files.length; i++) {
+              const file = files[i];
+              if (!file.type.startsWith('video/')) continue; // S'assurer que c'est une vidéo
+
+              const reader = new FileReader();
+
+              reader.onload = (e) => {
+                  // Créer l'élément vidéo
+                  const videoElement = document.createElement('video');
+                  videoElement.src = e.target.result;
+                  videoElement.controls = true;
+                  videoElement.classList.add('video-preview');
+
+                  // Créer le conteneur pour l'élément (pour le nom et le style)
+                  const previewContainer = document.createElement('div');
+                  previewContainer.classList.add('video-preview-item');
+
+                  const fileName = document.createElement('p');
+                  fileName.textContent = file.name;
+                  fileName.classList.add('video-file-name');
+
+                  previewContainer.appendChild(videoElement);
+                  previewContainer.appendChild(fileName);
+
+                  // Ajouter l'élément au conteneur principal
+                  previewArena.appendChild(previewContainer);
+              };
+
+              reader.readAsDataURL(file);
+          }
+        });
+      </script>
+
+    </div>
+  </div>
+<% end %>

@@ -34,4 +34,8 @@ module ApplicationHelper
       CriteriumCategory.where(name: key).first
     end
   end
+
+  def examiner_permited?
+    current_examiner.permited if examiner_signed_in?
+  end
 end

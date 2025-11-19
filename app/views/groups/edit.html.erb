@@ -1,0 +1,109 @@
+<%= render "partial/back_button", page_name: @group.etablished, page_path: group_path(@group) %>
+<% if @edit_video %>
+  <div class="container px-2 py-4">
+    <div class="bg-white shadow-sm rounded-4 p-3">
+      <h5 class="text-center text-primary mb-4">Téléverser une video</h5>
+      <%= form_with model: @group, method: :patch, local: true do |f| %>
+        <div class="mb-3">
+          <%= f.label :video, "inserer la vidéo", class: "form-label small fw-semibold" %>
+          <%= f.file_field :video,
+                direct_upload: true,
+                accept: "video/mp4,video/webm,video/ogg",
+                id: "video_input",
+                required: true,
+                class: "form-control form-control-sm" %>
+        </div>
+
+        <!-- 🎥 Zone de prévisualisation -->
+        <div class="mt-3 text-center">
+          <video id="video_preview" controls width="400" style="display: none;"></video>
+        </div>
+
+        <div class="mt-3">
+          <%= f.submit "Enregistrer", class: "btn btn-primary btn-sm" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const input = document.getElementById("video_input");
+      const preview = document.getElementById("video_preview");
+
+      if (!input || !preview) return;
+
+      input.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const url = URL.createObjectURL(file);
+        preview.src = url;
+        preview.style.display = "block";
+
+        // Nettoie l'URL temporaire quand on change de fichier
+        preview.onended = () => {
+          URL.revokeObjectURL(url);
+        };
+      });
+    });
+  </script>
+
+<% else %>
+  <div class="container px-2 py-4">
+  <div class="bg-white shadow-sm rounded-4 p-3">
+    <h5 class="text-center text-primary mb-4">modifier le group</h5>
+    <%= form_with model: @group, method: :put, local: true do |f| %>
+
+      <div class="mb-3">
+        <%= f.label :name, "Nom", class: "form-label small fw-semibold" %>
+        <%= f.text_field :name, class: "form-control form-control-sm", placeholder: "Placez le nom du group", required: true %>
+      </div>
+
+
+      <div class="mb-3">
+        <%= f.label :theme, "Theme", class: "form-label small fw-semibold" %>
+        <%= f.text_field :theme, class: "form-control form-control-sm", placeholder: "Histoire de Maurice", required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :photo, "Modifier le logo de l'établissement", class: "form-label small fw-semibold" %>
+        <%= f.file_field :photo, direct_upload: true, accept: "image/*", id: "avatar_input", class: "form-control form-control-sm" %>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <img id="avatar_preview" style="max-width: 150px; border-radius: 10px;" />
+      </div>
+
+      <div class="d-grid">
+        <%= f.submit "Publish", class: "btn btn-primary btn-sm " %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+
+  <script>
+      new TomSelect("#members-input", {
+        persist: false,
+        createOnBlur: true,
+        create: true
+      });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const input = document.getElementById("avatar_input");
+      const preview = document.getElementById("avatar_preview");
+
+      input.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  </script>
+<% end %>

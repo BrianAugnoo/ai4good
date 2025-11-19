@@ -1,0 +1,44 @@
+<%= render "partial/back_button", page_name: @establishment.name, page_path: establishment_path(@establishment.id) %>
+<div class="evaluation-container">
+  <div class="evaluation-card">
+
+    <div class="card-header">
+      <div class="icon-header">
+        <i class="fa-solid fa-clipboard-check"></i>
+      </div>
+      <h5> modification de l'évaluation de <%= @establishment.name %></h5>
+      <p>Veuillez noter chaque critère ci-dessous</p>
+    </div>
+
+    <%= form_with url: establishment_criterium_path(@establishment.id, @establishment_criterium.id), method: :patch, local: true, class: "evaluation-form" do |f| %>
+
+      <div class="criteria-list">
+        <% @criteria_names.each do |criteria_name| %>
+          <div class="criterium-item">
+            <div class="criterium-label">
+              <span class="key-name"><%= criteria_name.name.humanize %></span>
+              <span class="key-desc"><%= criteria_name.description %></span>
+            </div>
+
+            <div class="star-rating">
+              <% 5.downto(1) do |i| %>
+                <%# .parameterize transforme "Nom du Critère" en "nom-du-critere" pour éviter les bugs d'ID HTML %>
+                <% unique_id = "#{criteria_name.name.parameterize}_#{i}" %>
+
+                <%= f.radio_button criteria_name.name, i, id: unique_id, class: "star-input", required: true %>
+                <label for="<%= unique_id %>" class="star-label" title="<%= i %> étoiles">
+                  <i class="fa-solid fa-star"></i>
+                </label>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Valider l'évaluation", class: "btn-submit-gradient" %>
+      </div>
+
+    <% end %>
+  </div>
+</div>

@@ -1,44 +1,178 @@
-<h2>theme: <%= @group.theme %></h2>
-<h3>members</h3>
-<ul>
-  <% @group.members.each do |member| %>
-    <li><%= member.name %></li>
-  <% end %>
-</ul>
-<% if @group.ratted %>
-  <p>ratte: <%= @group.final_marks %></p>
-  <p>time: <%= @group.timer %></p>
-<% end %>
+<%= render "partial/back_button", page_name: "Retour", page_path: groups_path(age_section_id: @group.age_section.id) %>
+<div class="group-show-wrapper">
 
-<% if admin_signed_in? %>
-  <% categories.each do |category| %>
-    <h3><%= category.name %></h3>
-    <%= render "examiner_category", category: category, group: @group %>
-  <% end %>
-<% end %>
+  <%# --- HEADER --- %>
+  <header class="page-header">
+    <div class="header-top">
 
-<% if examiner_signed_in? %>
-  <div>
-    <h3>categorie noté</h3>
-    <% if current_examiner.criteria_submited(@group, "30%").any? %>
-    <p>30%</p>
-      <% current_examiner.criteria_submited(@group, "30%").each do |criterium| %>
-        <p><%= criterium.name %>: <%= criterium.values %></p>
+      <% if admin_signed_in? %>
+        <%= link_to edit_group_path(@group), class: "btn-ghost" do %>
+           Modifier le groupe
+        <% end %>
       <% end %>
-    <% end %>
-    <% if current_examiner.criteria_submited(@group, "70%").any? %>
-    <p>70%</p>
-      <% current_examiner.criteria_submited(@group, "70%").each do |criterium| %>
-        <p><%= criterium.name %>: <%= criterium.values %></p>
+    </div>
+
+    <div class="header-banner">
+      <div class="banner-content">
+        <span class="badge-theme"><%= @group.theme %></span>
+        <h1><%= @group.etablished %></h1>
+
+        <div class="meta-tags">
+          <span>nom du groupe: <%= @group.name %></span>
+          <span>indentifiant: <%= @group.indentifiant %></span>
+          <% if @group.email.present? %>
+            <span class="meta-tag"><i class="fa-regular fa-envelope"></i> <%= @group.email %></span>
+          <% end %>
+          <span class="meta-tag <%= @group.send_email ? 'status-success' : 'status-pending' %>">
+            Email envoyé: <strong><%= @group.send_email ? "Oui" : "Non" %></strong>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <%# --- GRID LAYOUT --- %>
+  <div class="dashboard-grid">
+
+    <%# --- COLONNE GAUCHE (Contenu Principal) --- %>
+    <div class="main-column">
+
+      <%# CARTE 1: ÉVALUATIONS %>
+      <section class="custom-card">
+        <div class="card-header">
+          <h3>Évaluations</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="categories-list">
+            <% categories.each do |category| %>
+
+              <%# Vue Admin : On affiche tout %>
+              <% if admin_signed_in? %>
+                <div class="admin-cat-block">
+                  <h4><%= category.name %></h4>
+                  <%= render "examiner_category", category: category, group: @group %>
+                </div>
+
+              <%# Vue Examinateur : Dropdowns Stylisés %>
+              <% else %>
+                <% criteria = current_examiner.criteria_submited(@group, category.name) %>
+
+                <% if criteria.any? %>
+                  <div class="dropdown-wrapper">
+                    <button class="btn-outline-brand dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                      <span><%= category.name %></span>
+                      <span class="badge-check">Complété</span>
+                    </button>
+
+                    <ul class="dropdown-menu custom-dropdown">
+                      <li class="dd-header">
+                        <span>Moyenne</span>
+                        <span class="score-pill"><%= criteria.sum(:values) / criteria.count %></span>
+                      </li>
+                      <li><hr class="dropdown-divider"></li>
+                      <% criteria.each do |criterium| %>
+                        <li class="dd-item">
+                          <span class="c-name"><%= criterium.name %></span>
+                          <span class="c-val"><%= criterium.values %></span>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <%# ACTIONS EXAMINATEUR %>
+          <% if examiner_signed_in? %>
+            <div class="action-buttons">
+              <% if status.first_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[0]).empty? %>
+                <%= link_to new_criterium_path(categorie: CriteriumCategory.keys[0], group_id: @group.id), class: "btn-action-gradient" do %>
+                  Noter : <%= CriteriumCategory.keys[0] %>
+                <% end %>
+              <% end %>
+
+              <% if status.second_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[1]).empty? %>
+                <%= link_to new_criterium_path(categorie: CriteriumCategory.keys[1], group_id: @group.id), class: "btn-action-gradient" do %>
+                   Noter : <%= CriteriumCategory.keys[1] %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </section>
+
+      <%# CARTE 2: VIDÉO %>
+      <section class="custom-card">
+        <div class="card-header">
+          <h3>Vidéo de présentation</h3>
+        </div>
+        <div class="card-body">
+          <% if !@group.video.attached? %>
+            <div class="empty-video">
+              <p>Aucune vidéo disponible.</p>
+              <% if admin_signed_in? %>
+                <%= link_to "Ajouter une vidéo", edit_group_path(@group, video: true), class:"link-brand" %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="video-wrapper">
+              <video id="player" playsinline controls>
+                <source src="<%= url_for(@group.video) %>" type="<%= @group.video.content_type %>">
+              </video>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    </div>
+
+
+    <%# --- COLONNE DROITE (Sidebar) --- %>
+    <aside class="sidebar-column">
+
+      <%# CARTE RÉSULTAT (Mise en avant avec le dégradé) %>
+      <% if @group.ratted %>
+        <div class="result-card-gradient">
+          <div class="result-content">
+            <span class="label">Note Finale</span>
+            <span class="big-score"><%= @group.final_marks %></span>
+            <div class="timer-badge">
+              <span>⏱ <%= @group.timer %></span>
+            </div>
+          </div>
+        </div>
       <% end %>
-    <% end %>
+
+      <%# CARTE MEMBRES %>
+      <div class="custom-card members-card">
+        <div class="card-header">
+          <h3>Membres</h3>
+        </div>
+        <ul class="members-list">
+          <% @group.members.each do |member| %>
+            <li>
+              <span class="avatar"><%= member.name[0].upcase %></span>
+              <span class="name"><%= member.name %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+    </aside>
+
   </div>
-  <div id="eval-group">
-    <% if status.first_rate && current_examiner.criteria_submited(@group, "30%").empty? %>
-      <%= render "first_rate", group: @group %>
-    <% end %>
-    <% if status.second_rate && current_examiner.criteria_submited(@group, "70%").empty? %>
-      <%= render "second_rate", group: @group %>
-    <% end %>
-  </div>
-<% end %>
+</div>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+    const playerElement = document.querySelector("#player")
+    if (playerElement) {
+      new Plyr(playerElement, {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+        resetOnEnd: true
+      })
+    }
+  })
+</script>

@@ -1,3 +1,40 @@
+$color-dark: #0e045e;
+$color-purple: #a80fc4;
+$color-magenta: #d84de8;
+
+// --- Animation pour le fond ---
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo {
+  width: 7vw;
+  aspect-ratio: 1 / 1;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
 .home-menu {
 	display: flex;
 	flex-direction: column;
@@ -8,7 +45,7 @@
 
 	a {
 		font-family: Raleway, serif;
-		color: #333;
+		color: white;
 		cursor: pointer;
 		font-size: 20px;
 		font-weight: 700;
@@ -28,24 +65,36 @@
 		transition: ease all 0.3s;
 		&:hover {
 			transform: scale(1.1);
-			background: rgba(255, 255, 255, 0.8);
+			// background: rgba(255, 255, 255, 0.8);
 		}
 	}
 
   h1 {
-    margin: 0 auto;
-    color: black; /* couleur du texte */
-    text-shadow: 2px 2px 4px rgba(196, 195, 195, 0.7);
-    margin-bottom: 2vh;
+    text-align: center;
+    color: white; // Texte blanc pour contraster
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }
 
 .home-show-backround {
-  // background: url("../images/menu_backround.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
+  // 1. Le Gradient Harmonieux
+  // Utilise tes 3 couleurs pour un dégradé diagonal riche
+  background: linear-gradient(135deg, $color-dark 0%, $color-purple 50%, $color-magenta 100%);
+  background-size: 300% 300%; // Fond large pour l'animation
+  animation: gradient-flow 15s ease infinite; // Animation subtile
+
+  // 2. Centrage parfait (remplace le "space" div)
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; // Évite les débordements
+  padding: 2rem; // Marge de sécurité pour les petits écrans
 }
 
 .space {

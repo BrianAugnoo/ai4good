@@ -1,0 +1,61 @@
+<%= render "partial/back_button", page_name: "Etablissements", page_path: establishments_path %>
+<div class="form-container">
+  <div class="creation-card">
+
+    <div class="card-header">
+      <h2>Créer un Établissement</h2>
+      <p>Veuillez entrer les informations de base de l'établissement.</p>
+    </div>
+
+    <%= form_with model: Establishment.new, local: true, class: "establishment-form" do |f| %>
+
+      <div class="form-group">
+        <%= f.label :name, "Nom de l'établissement", class: "form-label" %>
+        <%= f.text_field :name, required: true, class: "form-input", placeholder: "Ex: Université de la Tech" %>
+      </div>
+
+      <div class="form-group file-upload-group">
+        <%= f.label :logo, "Logo de l'établissement", class: "form-label file-label" %>
+        <div class="file-input-wrapper">
+          <%= f.file_field :logo, direct_upload: true, accept: "image/*", id: "avatar_input", class: "file-input-hidden" %>
+
+          <label for="avatar_input" class="custom-file-upload">
+             <i class="fa-solid fa-cloud-arrow-up"></i> Téléverser un logo
+          </label>
+        </div>
+      </div>
+
+      <div class="logo-preview-area">
+        <img id="avatar_preview" class="logo-preview" />
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Créer l'Établissement", class: "btn-submit-gradient" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // Votre logique JS reste inchangée
+  const input = document.getElementById("avatar_input");
+const preview = document.getElementById("avatar_preview");
+
+if (!input || !preview) {
+  console.warn("Avatar elements not found");
+} else {
+  input.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      preview.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+</script>

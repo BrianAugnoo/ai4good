@@ -1,0 +1,59 @@
+<div class="modal fade" id="add-examiner" tabindex="-1" aria-labelledby="addExaminerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-3">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="addExaminerLabel">
+          Rentrer les informations de l’examinateur
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <%= form_with model: Examiner.new, url: examiners_path, local: true, data: { controller: "close-modal" } do |f| %>
+        <div class="modal-body">
+          <div class="mb-3">
+            <%= f.label :name, "Nom de l’examinateur", class: "form-label fw-semibold" %>
+            <%= f.text_field :name, class: "form-control", placeholder: "Ex: Jean Dupont", required: true %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :email, "Adresse email (@examiner.com)", class: "form-label fw-semibold" %>
+            <%= f.email_field :email, class: "form-control", placeholder: "exemple@examiner.com", required: true %>
+            <div class="form-text text-muted">Veuillez utiliser une adresse se terminant par @examiner.com</div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password, "Mot de passe (minimum 8 caractères)", class: "form-label fw-semibold" %>
+            <div class="input-group">
+              <%= f.password_field :password, class: "form-control", id: "examiner-password" %>
+              <button class="btn btn-outline-secondary" type="button" id="toggle-password">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="close-examiner">
+            Annuler
+          </button>
+          <%= f.submit "Créer", class: "btn btn-primary px-4", id: "issue", data: { age_section: "-examiner" } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+    const toggleBtn = document.querySelector("#toggle-password");
+    const passwordInput = document.querySelector("#examiner-password");
+    const icon = toggleBtn.querySelector("i");
+
+    if (toggleBtn && passwordInput) {
+      toggleBtn.addEventListener("click", () => {
+        const isHidden = passwordInput.type === "password";
+        passwordInput.type = isHidden ? "text" : "password";
+        icon.classList.toggle("bi-eye");
+        icon.classList.toggle("bi-eye-slash");
+      });
+    }
+</script>

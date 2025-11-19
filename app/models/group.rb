@@ -2,35 +2,36 @@ class Group < ApplicationRecord
   has_many :criteria
   has_many :members
   has_one :session
-  belongs_to :age_section
   has_many :criterium_categories, through: :criteria
   has_many :examiners, through: :criteria
+
+  belongs_to :age_section
+  belongs_to :establishment
+
   has_one_attached :video
   has_one_attached :photo
   # retourne la note final si tout les examinateur ont noter corectement tout les
   # critére sinon il y a un bug et ca retourne une string
-  def final_marks
-    criteria = self.criteria
-    return "sybau🥀" if criteria.empty?
-    total_points = criteria.sum(:values)
-    num_criteria = criteria.count
-    num_examiner = criteria.pluck(:examiner_id).uniq.count
-    criteria_list = Criterium.criteria_list.count
-    cond1 = num_criteria != 0
-    cond2 = num_criteria % criteria_list == 0 && num_criteria % num_examiner == 0
-    cond1 && cond2 ? (total_points/num_criteria).round(2) : "Examiners should not sumbit without all criteria marks having been met. Check the V or C."
+
+  def etablished
+    self.establishment.name
   end
 
-  def validate
-    nb_examiner = Examiner.all.count
-    eval_examiner = self.criteria.pluck(:examiner_id).uniq.count
-    if nb_examiner == eval_examiner && self.final_marks.is_a?(Float)
-      self.ratted = true
-      self.save
-      true
-    else
-      false
+  def final_marks
+    criteria = self.criteria
+    criteria.sum(:values) / criteria.count
+  end
+
+  def validate_rate
+    valid = false
+    CriteriumCategory.keys.each do |category|
+      total_examiners = self.age_section.examiners.reload.pluck(:id).sort
+      submited_examiner = CriteriumCategory.where(name: category).first.submited?(self).map { |examiner| examiner.id }.sort
+      valid = submited_examiner == total_examiners
     end
+    self.update(ratted: valid)
+    self.update(points: final_marks)
+    self.save ? return valid : return 0
   end
 
   def add_members(members)
@@ -48,6 +49,31 @@ class Group < ApplicationRecord
       end
     rescue
       false
+    end
+  end
+
+  def evaluation
+    CriteriumCategory.keys.map do |category|
+      mark = 0
+      total_examiners = self.age_section.examiners.reload.pluck(:id).sort
+      submited_examiner = CriteriumCategory.where(name: category).first.submited?(self).map { |examiner| examiner.id }.sort
+      valid = submited_examiner == total_examiners
+      puts(valid)
+      crit = CriteriumCategory.where(name: category)[0].criteria.where(group: self)
+      valid ? mark = crit.sum(:values) / crit.count : next { mark: "En cours", class: "" }
+      classify_mark(mark)
+    end
+  end
+
+  def classify_mark(mark)
+    if mark < 1.25
+      { mark: mark, class: "mark-1" }
+    elsif mark < 2.5
+      { mark: mark, class: "mark-2" }
+    elsif mark < 3.75
+      { mark: mark, class: "mark-3" }
+    else
+      { mark: mark, class: "mark-4" }
     end
   end
 end

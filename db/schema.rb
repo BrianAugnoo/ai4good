@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_08_175800) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_19_023209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -85,6 +85,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_08_175800) do
     t.index ["group_id"], name: "index_criteria_on_group_id"
   end
 
+  create_table "criteria_names", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "criterium_categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -93,6 +100,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_08_175800) do
 
   create_table "documents", force: :cascade do |t|
     t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "establishment_criteria", force: :cascade do |t|
+    t.string "name"
+    t.float "values"
+    t.bigint "examiner_id", null: false
+    t.bigint "establishment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id"], name: "index_establishment_criteria_on_establishment_id"
+    t.index ["examiner_id"], name: "index_establishment_criteria_on_examiner_id"
+  end
+
+  create_table "establishments", force: :cascade do |t|
+    t.string "name"
+    t.float "marks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -106,12 +131,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_08_175800) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "permited", default: false
     t.index ["email"], name: "index_examiners_on_email", unique: true
     t.index ["reset_password_token"], name: "index_examiners_on_reset_password_token", unique: true
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string "etablished"
     t.string "name"
     t.string "theme"
     t.datetime "created_at", null: false
@@ -123,7 +148,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_08_175800) do
     t.boolean "second_rate", default: false
     t.float "note_totals", default: 0.0
     t.string "indentifiant", limit: 5, default: -> { "SUBSTRING(md5((random())::text) FROM 1 FOR 5)" }
+    t.float "points", default: 0.0
+    t.string "email"
+    t.boolean "send_email", default: false
+    t.bigint "establishment_id", null: false
     t.index ["age_section_id"], name: "index_groups_on_age_section_id"
+    t.index ["establishment_id"], name: "index_groups_on_establishment_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -149,6 +179,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_08_175800) do
   add_foreign_key "criteria", "criterium_categories"
   add_foreign_key "criteria", "examiners"
   add_foreign_key "criteria", "groups"
+  add_foreign_key "establishment_criteria", "establishments"
+  add_foreign_key "establishment_criteria", "examiners"
   add_foreign_key "groups", "age_sections"
+  add_foreign_key "groups", "establishments"
   add_foreign_key "members", "groups"
 end

@@ -1,0 +1,2 @@
+class CriteriaName < ApplicationRecord
+end
