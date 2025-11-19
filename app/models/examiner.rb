@@ -4,11 +4,11 @@ class Examiner < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :criteria
+  has_many :criteria, dependent: :destroy
   has_many :evals
   has_many :sessions, through: :evals
-  has_many :age_examiners
-  has_many :establishment_criteria
+  has_many :age_examiners, dependent: :description
+  has_many :establishment_criteria, dependent: :destroy
   has_many :age_sections, through: :age_examiners
   has_many :criterium_categories, through: :criteria
 

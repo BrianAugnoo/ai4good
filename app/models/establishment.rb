@@ -1,6 +1,6 @@
 class Establishment < ApplicationRecord
-  has_many :groups
-  has_many :establishment_criteria
+  has_many :groups, dependent: :destroy
+  has_many :establishment_criteria, dependent: :destroy
   has_many :examiners, through: :establishment_criteria
 
   has_one_attached :logo

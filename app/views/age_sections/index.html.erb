@@ -1,5 +1,5 @@
 <%= render "partial/back_button", page_name: "home", page_path: root_path %>
-<% if examiner_signed_in? %>
+<% if admin_signed_in? %>
   <div class="age-sections-container" style="background: url('<%= asset_path "gradient_purple.avif"%>')">
     <div class="mobile-age-selector">
     <% @age_sections.order(:value).each do |age| %>
