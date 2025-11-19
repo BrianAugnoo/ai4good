@@ -2,7 +2,7 @@
   <% bs_type = { notice: "alert-success", alert: "alert-danger" }[type.to_sym] %>
 
   <div class="alert <%= bs_type %> alert-dismissible fade show" role="alert">
-    <%= message %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+    <%= message %>
   </div>
 <% end %>

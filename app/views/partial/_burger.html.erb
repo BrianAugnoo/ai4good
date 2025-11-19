@@ -10,13 +10,15 @@
       <li><%= link_to "Examiner Connexion", new_examiner_registration_path, class: "dropdown-item" %></li>
     <% elsif who_is_connected? == "examinateur" %>
       <li><%= link_to "Tableau de bord", examiner_dashboard_path, class: "dropdown-item" %></li>
-      <li></li>
+      <button type="button" class="btn-logout" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
+      </button>
     <% elsif who_is_connected? == "admin" %>
       <li><%= link_to "Tableau de bord", admin_dashboard_path, class: "dropdown-item" %></li>
-      <li><%= link_to "Paramétre", settings_admin_path, class: "dropdown-item" %></li>
+      <li><%= link_to "Paramètres", settings_admin_path, class: "dropdown-item" %></li>
       <li>
-        <button type="button" class="btn btn-danger dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Deconnexion
+        <button type="button" class="btn-logout" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
         </button>
       </li>
       <%= render "partial/modal" %>

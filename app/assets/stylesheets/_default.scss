@@ -79,8 +79,132 @@ home {
 
 .burger {
   position: fixed;
-  right: 0;
-  z-index: 1000;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1001;
+
+  // Style du bouton dropdown-toggle dans le burger
+  .dropdown-toggle {
+    background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba($primary, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1); // Rend l'icône blanche
+    }
+
+    &::after {
+      display: none; // Cache la flèche Bootstrap par défaut
+    }
+
+    &:hover,
+    &:focus {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba($primary, 0.4);
+    }
+
+    &[aria-expanded="true"] {
+      background: linear-gradient(135deg, darken($primary, 5%) 0%, darken($secondary, 5%) 100%);
+      transform: rotate(90deg);
+    }
+  }
+
+  // Style du menu dropdown
+  .dropdown-menu {
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
+    min-width: 250px;
+    background: white;
+    backdrop-filter: blur(10px);
+    animation: slideDown 0.3s ease-out;
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dropdown-item {
+      padding: 0.75rem 1.5rem;
+      color: black;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      border: none;
+      background: transparent;
+      text-decoration: none;
+      display: block;
+
+      &:hover,
+      &:focus {
+        background: rgba($primary, 0.1);
+        color: $primary;
+      }
+
+      &:active {
+        background: rgba($primary, 0.15);
+        color: $primary;
+      }
+    }
+
+    .btn-logout {
+      width: calc(100% - 3rem);
+      margin: 0.5rem 1.5rem;
+      background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba($primary, 0.3);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      text-decoration: none;
+
+      i {
+        font-size: 1rem;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba($primary, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
 }
 
 .menu-btn {
@@ -121,7 +245,7 @@ $border-light: #e2e8f0;
 // --- Bouton Trigger (qui ouvre le menu) ---
 .menu-trigger {
   position: fixed;
-  top: 1rem;
+  top: 3rem;
   right: 1rem;
   z-index: 1001;
   @include brand-gradient;
@@ -143,6 +267,11 @@ $border-light: #e2e8f0;
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba($primary, 0.4);
+  }
+
+  // Masquer sur mobile
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 

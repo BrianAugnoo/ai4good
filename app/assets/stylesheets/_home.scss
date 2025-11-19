@@ -33,6 +33,13 @@ $color-magenta: #d84de8;
     height: 100%;
     border-radius: 50%;
   }
+
+  // Agrandir le logo sur mobile
+  @media (max-width: 768px) {
+    width: 20vw;
+    min-width: 80px;
+    max-width: 100px;
+  }
 }
 
 .home-menu {
@@ -87,7 +94,7 @@ $color-magenta: #d84de8;
   background-size: 300% 300%; // Fond large pour l'animation
   animation: gradient-flow 15s ease infinite; // Animation subtile
 
-  // 2. Centrage parfait (remplace le "space" div)
+  // 2. Centrage parfait
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -97,6 +104,36 @@ $color-magenta: #d84de8;
   padding: 2rem; // Marge de sécurité pour les petits écrans
 }
 
-.space {
-  height: 35vh;
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.home-title {
+  font-family: Raleway, serif;
+  text-align: center;
+  color: white;
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 0 0 3rem 0;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4),
+               0 2px 8px rgba(255, 255, 255, 0.3),
+               0 0 30px rgba(168, 15, 196, 0.5);
+  letter-spacing: 0.15em;
+  animation: fadeIn 1s ease-out;
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+  width: 100%;
+
+  // Responsive
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+  }
 }
