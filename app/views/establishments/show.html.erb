@@ -115,7 +115,25 @@
 
       <%# CARTE 2: VIDÉO %>
       <section class="custom-card">
-
+        <div class="card-header">
+          <h3>Vidéos de présentation</h3>
+        </div>
+        <div class="card-body">
+          <% if !@establishment.videos.attached? %>
+            <div class="empty-video">
+              <p>Aucune vidéo disponible.</p>
+              <% if admin_signed_in? %>
+                <%= link_to "Ajouter une vidéo", edit_establishment_path(@establishment, video: true), class:"link-brand", data: { turbo: "false" } %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="video-wrapper">
+              <video id="player" playsinline controls>
+                <source src="<%= url_for(@group.video) %>" type="<%= @group.video.content_type %>">
+              </video>
+            </div>
+          <% end %>
+        </div>
       </section>
     </div>
 
@@ -124,7 +142,27 @@
     <aside class="sidebar-column">
 
       <%# CARTE RÉSULTAT (Mise en avant avec le dégradé) %>
-
+      <% if @establishment.valid_eval? && admin_signed_in? %>
+        <div class="result-card-gradient">
+          <div class="result-content">
+            <span class="label">Note Finale</span>
+            <span class="big-score"><%= @establishment.total_marks %></span>
+            <div class="timer-badge">
+              <span>⏱ 0</span>
+            </div>
+          </div>
+        </div>
+        <% elsif examiner_signed_in? && @evals.to_a.any? %>
+        <div class="result-card-gradient">
+          <div class="result-content">
+            <span class="label">Note Attribuer</span>
+            <span class="big-score"><%= (@evals.sum(:values) / @evals.count).round(2) %></span>
+            <div class="timer-badge">
+              <span>⏱ 0</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
 
       <%# CARTE MEMBRES %>
       <div class="custom-card members-card">

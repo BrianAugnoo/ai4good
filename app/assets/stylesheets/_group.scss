@@ -140,6 +140,49 @@ $radius: 16px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
+  .rank-badge {
+    width: 2.5rem;       // Largeur fixe
+    height: 2.5rem;      // Hauteur fixe
+    border-radius: 50%;  // Cercle parfait
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;    // Texte gras
+    font-size: 1.1rem;
+    margin-right: 1rem;  // Espace avant la photo
+    flex-shrink: 0;      // Empêche l'écrasement sur mobile
+
+    // Style par défaut (4ème et plus) : Gris sobre
+    background-color: #f1f5f9;
+    color: #64748b;      // Gris foncé
+    font-size: 1rem;
+
+    // --- LE PODIUM ---
+
+    // 1er : Le Dégradé "Winner"
+    &.rank-1 {
+      background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+      color: white;
+      box-shadow: 0 4px 10px rgba($primary, 0.4); // Petit halo de gloire
+      font-size: 1.2rem;
+      border: 2px solid white; // Pour ressortir
+    }
+
+    // 2ème : Violet (Primaire)
+    &.rank-2 {
+      background-color: white;
+      border: 2px solid $primary;
+      color: $primary;
+    }
+
+    // 3ème : Magenta (Secondaire)
+    &.rank-3 {
+      background-color: white;
+      border: 2px solid $secondary;
+      color: darken($secondary, 10%);
+    }
+  }
+
   // Le conteneur texte à l'intérieur du lien
   .group {
     text-align: left; // Plus lisible que centré
