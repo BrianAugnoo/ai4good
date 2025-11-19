@@ -1,40 +1,49 @@
-<%= render "partial/back_button", page_name: "home", page_path: root_path %>
-<div class="age-sections-container" style="background: url('<%= asset_path "gradient_purple.avif"%>')">
-  <div class="mobile-age-selector">
-  <% @age_sections.order(:value).each do |age| %>
-    <button class="age-btn" data-age="<%= age.value %>">
-      <%= age.value %> ans
-    </button>
-  <% end %>
-</div>
+<% if examiner_signed_in? %>
+  <%= render "partial/back_button", page_name: "home", page_path: root_path %>
+  <div class="age-sections-container" style="background: url('<%= asset_path "gradient_purple.avif"%>')">
+    <div class="mobile-age-selector">
+    <% @age_sections.order(:value).each do |age| %>
+      <button class="age-btn" data-age="<%= age.value %>">
+        <%= age.value %> ans
+      </button>
+    <% end %>
+  </div>
 
-  <% @age_sections.order(:value).each do |age_section| %>
-    <div class="leadeardboard" data-age-section="<%= age_section.value %>" >
-      <h1 class="title"><%= age_section.value %> ans</h1>
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th id="topics">Groupes</th>
-              <th id="avatars">Évaluation 1</th>
-              <th id="replies">Évaluation 2</th>
-              <th id="views">Notes finales</th>
-            </tr>
-          </thead>
+    <% @age_sections.order(:value).each do |age_section| %>
+      <div class="leadeardboard" data-age-section="<%= age_section.value %>" >
+        <h1 class="title"><%= age_section.value %> ans</h1>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th id="topics">Groupes</th>
+                <th id="avatars">Évaluation 1</th>
+                <th id="replies">Évaluation 2</th>
+                <th id="views">Notes finales</th>
+              </tr>
+            </thead>
 
-          <tbody id="posts-container">
-            <% age_section.groups.where(ratted: true).order(points: :desc).each do |group| %>
-              <%= render "group", group: group %>
-            <% end %>
-            <% age_section.groups.where(ratted: false).each do |group| %>
-              <%= render "group", group: group %>
-            <% end %>
-          </tbody>
-        </table>
+            <tbody id="posts-container">
+              <% age_section.groups.where(ratted: true).order(points: :desc).each do |group| %>
+                <%= render "group", group: group %>
+              <% end %>
+              <% age_section.groups.where(ratted: false).each do |group| %>
+                <%= render "group", group: group %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="evaluation-en-cours">
+    <div class="evaluation-message">
+      <h2>Évaluation en cours</h2>
+      <p>Veuillez patienter pendant que l'évaluation se déroule.</p>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
 
 <script>
   document.addEventListener("turbo:load", () => {

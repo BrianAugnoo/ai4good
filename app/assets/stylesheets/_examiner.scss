@@ -222,3 +222,21 @@ $card-radius: 20px;
     margin-bottom: 0 !important; // Annule la marge du label standard
   }
 }
+
+.login-error-banner {
+  background-color: #fee2e2; /* Fond rouge très pâle */
+  color: #dc2626;            /* Texte rouge vif */
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  i {
+    font-size: 1.1rem;
+  }
+}

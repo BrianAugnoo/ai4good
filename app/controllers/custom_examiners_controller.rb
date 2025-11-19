@@ -1,4 +1,4 @@
-class ExaminersController < ApplicationController
+class CustomExaminersController < ApplicationController
   def create
     begin
       Examiner.create!(set_params)
