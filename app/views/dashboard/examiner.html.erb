@@ -14,7 +14,7 @@
       <% @age_sections.each do |age_section| %>
         <%= link_to groups_path(age_section_id: age_section.id), class: "card-link" do %>
           <%= render "partial/admin_card",
-              title: "#{age_section.value} ans",
+              title: age_section.ages,
               icon: "group",
               value: age_section.groups.count %>
         <% end %>

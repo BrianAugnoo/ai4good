@@ -3,7 +3,7 @@
   <% age_sections.order(:value).each do |age_section| %>
     <div class="age-section age-section-card">
 
-      <h3 class="section-title"><%= age_section.value %> ans</h3>
+      <h3 class="section-title"><%= age_section.ages %></h3>
 
       <div class="examiners-list">
         <% if age_section.age_examiners.each.any? %>

@@ -4,14 +4,14 @@
     <div class="mobile-age-selector">
     <% @age_sections.order(:value).each do |age| %>
       <button class="age-btn" data-age="<%= age.value %>">
-        <%= age.value %> ans
+        <%= age.ages %>
       </button>
     <% end %>
   </div>
 
     <% @age_sections.order(:value).each do |age_section| %>
       <div class="leadeardboard" data-age-section="<%= age_section.value %>" >
-        <h1 class="title"><%= age_section.value %> ans</h1>
+        <h1 class="title"><%= age_section.ages %></h1>
         <div class="table-wrapper">
           <table>
             <thead>
