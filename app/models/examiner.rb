@@ -7,7 +7,7 @@ class Examiner < ApplicationRecord
   has_many :criteria, dependent: :destroy
   has_many :evals
   has_many :sessions, through: :evals
-  has_many :age_examiners, dependent: :description
+  has_many :age_examiners, dependent: :destroy
   has_many :establishment_criteria, dependent: :destroy
   has_many :age_sections, through: :age_examiners
   has_many :criterium_categories, through: :criteria
