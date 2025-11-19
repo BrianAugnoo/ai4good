@@ -2,10 +2,10 @@
 <% if @edit_video %>
   <div class="container px-2 py-4">
     <div class="bg-white shadow-sm rounded-4 p-3">
-      <h5 class="text-center text-primary mb-4">Téléverser une video</h5>
+      <h5 class="text-center text-primary mb-4">Téléverser une vidéo</h5>
       <%= form_with model: @group, method: :patch, local: true do |f| %>
         <div class="mb-3">
-          <%= f.label :video, "inserer la vidéo", class: "form-label small fw-semibold" %>
+          <%= f.label :video, "Insérer la vidéo", class: "form-label small fw-semibold" %>
           <%= f.file_field :video,
                 direct_upload: true,
                 accept: "video/mp4,video/webm,video/ogg",
@@ -52,17 +52,17 @@
 <% else %>
   <div class="container px-2 py-4">
   <div class="bg-white shadow-sm rounded-4 p-3">
-    <h5 class="text-center text-primary mb-4">modifier le group</h5>
+    <h5 class="text-center text-primary mb-4">Modifier le groupe</h5>
     <%= form_with model: @group, method: :put, local: true do |f| %>
 
       <div class="mb-3">
         <%= f.label :name, "Nom", class: "form-label small fw-semibold" %>
-        <%= f.text_field :name, class: "form-control form-control-sm", placeholder: "Placez le nom du group", required: true %>
+        <%= f.text_field :name, class: "form-control form-control-sm", placeholder: "Placez le nom du groupe", required: true %>
       </div>
 
 
       <div class="mb-3">
-        <%= f.label :theme, "Theme", class: "form-label small fw-semibold" %>
+        <%= f.label :theme, "Thème", class: "form-label small fw-semibold" %>
         <%= f.text_field :theme, class: "form-control form-control-sm", placeholder: "Histoire de Maurice", required: true %>
       </div>
 
@@ -76,7 +76,7 @@
       </div>
 
       <div class="d-grid">
-        <%= f.submit "Publish", class: "btn btn-primary btn-sm " %>
+        <%= f.submit "Publier", class: "btn btn-primary btn-sm " %>
       </div>
 
     <% end %>

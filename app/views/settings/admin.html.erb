@@ -2,20 +2,20 @@
 <div class="setting-container">
   <nav class="side-nav">
     <div class="nav-head">
-      <h2>Paramétre</h2>
+      <h2>Paramètres</h2>
     </div>
 
     <div class="nav-body">
-      <%= link_to "Profile", settings_admin_path%>
-      <%= button_to "Tranche d'ages", age_sections_settings_path(partial: "age_sections"), method: :post, data: {turbo: true} %>
+      <%= link_to "Profil", settings_admin_path%>
+      <%= button_to "Tranches d'âges", age_sections_settings_path(partial: "age_sections"), method: :post, data: {turbo: true} %>
       <%= button_to "Examinateur", settings_examiner_path(partial: "examiner"), method: :post, data: {turbo: true} %>
       <%= button_to "Notation", marks_settings_path(partial: "marks"), method: :post, data: {turbo: true} %>
     </div>
   </nav>
   <div class="setting-content">
     <div class="content profile" id="setting-content">
-      <h3>Username: <%= current_admin.name %></h3>
-      <h3>Email: <%= current_admin.email %></h3>
+      <h3>Nom d'utilisateur : <%= current_admin.name %></h3>
+      <h3>Email : <%= current_admin.email %></h3>
       <%= link_to "Changer de nom", "#", class: "btn btn-secondary" %>
       <%= link_to "Changer de mot de passe", "#", class: "btn btn-secondary" %>
     </div>

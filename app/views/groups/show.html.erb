@@ -18,8 +18,8 @@
         <h1><%= @group.etablished %></h1>
 
         <div class="meta-tags">
-          <span>nom du groupe: <%= @group.name %></span>
-          <span>indentifiant: <%= @group.indentifiant %></span>
+          <span>Nom du groupe : <%= @group.name %></span>
+          <span>Identifiant : <%= @group.indentifiant %></span>
           <% if @group.email.present? %>
             <span class="meta-tag"><i class="fa-regular fa-envelope"></i> <%= @group.email %></span>
           <% end %>

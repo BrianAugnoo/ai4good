@@ -4,12 +4,12 @@
     <% if status == 0 || status == 2%>
       <%= form_with url: valid_session_path, method: :patch do |f| %>
         <%= f.hidden_field :id, value: Session.first.id %>
-        <%= f.submit "end session", class: "join-btn" %>
+        <%= f.submit "Terminer la session", class: "join-btn" %>
       <% end %>
     <% elsif status == 1  %>
-      <p>wait for exminer sumbision...</p>
+      <p>En attente de la soumission des examinateurs...</p>
     <% elsif status == 3 %>
-      <p>session ended! <%= link_to "back to dashborad", admin_dashboard_path %></p>
+      <p>Session terminée ! <%= link_to "Retour au tableau de bord", admin_dashboard_path %></p>
     <% end %>
   <% end %>
 </div>

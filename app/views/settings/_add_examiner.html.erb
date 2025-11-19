@@ -3,12 +3,12 @@
     <div class="modal-content border-0 shadow-lg rounded-3">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="addExaminerLabel">
-          Rentrer les informations de l’examinateur
+          Entrer les informations de l'examinateur
         </h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
       </div>
 
-      <%= form_with model: Examiner.new, url: examiners_path, local: true, data: { controller: "close-modal" } do |f| %>
+      <%= form_with model: Examiner.new, url: custom_examiners_path, local: true, data: { controller: "close-modal" } do |f| %>
         <div class="modal-body">
           <div class="mb-3">
             <%= f.label :name, "Nom de l’examinateur", class: "form-label fw-semibold" %>

@@ -3,7 +3,6 @@
   <div class="establishement-container">
     <div>
       <h1>Liste des Etablissements</h1>
-      <%= link_to "Ajouter", new_establishment_path, data: { turbo: "false" } %>
     </div>
     <% i = 0 %>
     <div class="groups">
@@ -13,9 +12,10 @@
       <% end %>
     </div>
     <% if admin_signed_in? %>
-      <%= link_to "Modifier les Critére", criteria_names_path, class: "add" %>
+      <%= link_to "Ajouter", new_establishment_path, data: { turbo: "false" } %>
+      <%= link_to "Modifier les critères", criteria_names_path, class: "add" %>
     <% end %>
   </div>
 <% else %>
-  <p>vous n'avez pas la permission d'acceder a cette page veiller vous renseignez auprés des admins</p>
+  <p>Vous n'avez pas la permission d'accéder à cette page, veuillez vous renseigner auprès des admins.</p>
 <% end %>

@@ -1,7 +1,7 @@
 <div id="active-member">
   <% if Session.connection_completed? %>
-    <p id="wait-text"><%= examiner_count %>/<%= Examiner.all.count %> examiner found</p>
+    <p id="wait-text"><%= examiner_count %>/<%= Examiner.all.count %> examinateur<%= "s" if Examiner.all.count > 1 %> trouvé<%= "s" if examiner_count > 1 %></p>
   <% else %>
-    <p id="wait-text">wait for examiner: <%= examiner_count %>/<%= Examiner.all.count %></p>
+    <p id="wait-text">En attente d'examinateur<%= "s" if Examiner.all.count > 1 %> : <%= examiner_count %>/<%= Examiner.all.count %></p>
   <% end %>
 </div>

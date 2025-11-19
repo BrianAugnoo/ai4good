@@ -5,7 +5,7 @@
     <%= render "partial/back_button", page_name: "dashboard", page_path: admin_dashboard_path %>
   <% end %>
   <div class="search-bar">
-    <input type="text" data-search-target="input" placeholder="Search by name or establishment..." name="query">
+    <input type="text" data-search-target="input" placeholder="Rechercher par nom ou établissement..." name="query">
   </div>
 
   <h1><%= @age_section.value %> ans</h1>
@@ -21,6 +21,6 @@
   </div>
 
   <% if admin_signed_in? %>
-    <%= link_to "add group", new_group_path(age_section_id: @age_section.id), class: "join-btn" %>
+    <%= link_to "Ajouter un groupe", new_group_path(age_section_id: @age_section.id), class: "join-btn" %>
   <% end %>
 </div>

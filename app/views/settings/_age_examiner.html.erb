@@ -5,9 +5,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">
-          Selectionner un examinateur pour la section <%= age_section.value %> ans
+          Sélectionner un examinateur pour la section <%= age_section.value %> ans
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
       </div>
 
       <% if examiners.any? %>
@@ -19,17 +19,17 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close<%= age_section.id %>">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close<%= age_section.id %>">Fermer</button>
             <%= f.submit "Valider", class: "btn btn-primary", id: "issue", data: { age_section: age_section.id} %>
           </div>
         <% end %>
       <% else %>
         <div class="modal-body">
-          <p>Tout les examinateur sont déja ajouter</p>
+          <p>Tous les examinateurs sont déjà ajoutés</p>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
         </div>
       <% end %>
 

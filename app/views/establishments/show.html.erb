@@ -100,7 +100,7 @@
                 </div>
               <% else %>
                 <div class="action-buttons">
-                  <%= link_to "Procéder a l'évaluation", new_establishment_establishment_criterium_path(@establishment.id), class: "btn-action-gradient" %>
+                  <%= link_to "Procéder à l'évaluation", new_establishment_establishment_criterium_path(@establishment.id), class: "btn-action-gradient" %>
                 </div>
               <% end %>
             <% end %>
@@ -157,7 +157,7 @@
         <% elsif examiner_signed_in? && @evals.to_a.any? %>
         <div class="result-card-gradient">
           <div class="result-content">
-            <span class="label">Note Attribuer</span>
+            <span class="label">Note attribuée</span>
             <span class="big-score"><%= (@evals.sum(:values) / @evals.count).round(2) %></span>
             <div class="timer-badge">
               <span>⏱ 0</span>

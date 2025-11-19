@@ -13,7 +13,7 @@
   <% if group.ratted %>
     <td class="marked final-marks <%= group.classify_mark(group.final_marks)[:class] %>"><p><%= group.final_marks %></p></td>
   <% else %>
-    <td class="marked final-marks">en cours</td>
+    <td class="marked final-marks">En cours</td>
   <% end %>
 </tr>
 
@@ -31,15 +31,15 @@
 
   <div class="mobile-card-body">
     <span class="mobile-badge mark-<%= evaluation[0][:class] %>">
-      Eval 1 : <%= evaluation[0][:mark] %>
+      Éval 1 : <%= evaluation[0][:mark] %>
     </span>
 
     <span class="mobile-badge mark-<%= evaluation[1][:class] %>">
-      Eval 2 : <%= evaluation[1][:mark] %>
+      Éval 2 : <%= evaluation[1][:mark] %>
     </span>
 
     <span class="mobile-badge mark-<%= group.classify_mark(group.final_marks)[:class] %>">
-      Finale : <%= group.final_marks || "en cours" %>
+      Finale : <%= group.final_marks || "En cours" %>
     </span>
   </div>
 </div>
