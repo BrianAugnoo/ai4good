@@ -1,5 +1,5 @@
 class CriteriumCategory < ApplicationRecord
-  has_many :criteria
+  has_many :criteria, dependent: :destroy
   has_many :groups, through: :criteria
   has_many :examiners, through: :criteria
   def self.categories
