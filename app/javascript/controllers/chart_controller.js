@@ -6,7 +6,6 @@ export default class extends Controller {
   connect() {
     const chart = this.chartTarget
 
-    // Couleurs définies : Restant (Gris clair ou Primaire sombre), Complété (Secondaire/Rose)
     const colors = ['#cbd5e1', '#EC0EED'];
 
     const data = [{
@@ -16,20 +15,27 @@ export default class extends Controller {
       marker: {
         colors: colors
       },
-      hole: .4, // Transforme en Donut chart, plus moderne
-      textinfo: "label+percent",
+      hole: .4,
+
+      // --- MODIFICATION ICI ---
+      // "label+percent" affichait le % (ex: "Complété 15%")
+      // "label+value" affiche la valeur brute (ex: "Complété 3")
+      // "value" affiche juste le chiffre (ex: "3")
+      textinfo: "label+value",
+      // ------------------------
+
       textposition: "inside",
       automargin: true
     }];
 
     const layout = {
-      autosize: true, // Important pour le responsive
-      height: 350,    // Hauteur de base suggérée
-      margin: { l: 20, r: 20, t: 20, b: 20 }, // Marges réduites
-      paper_bgcolor: "rgba(0,0,0,0)", // Fond transparent pour fondre dans la div blanche
+      autosize: true,
+      height: 350,
+      margin: { l: 20, r: 20, t: 20, b: 20 },
+      paper_bgcolor: "rgba(0,0,0,0)",
       showlegend: true,
       legend: {
-        orientation: "h", // Légende horizontale en bas
+        orientation: "h",
         x: 0.5,
         xanchor: "center",
         y: -0.1
@@ -38,7 +44,7 @@ export default class extends Controller {
 
     const config = {
       responsive: true,
-      displayModeBar: false // Cache la barre d'outils Plotly moche au survol
+      displayModeBar: false
     };
 
     Plotly.newPlot('chart', data, layout, config);
