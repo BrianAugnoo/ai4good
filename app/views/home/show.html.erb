@@ -9,7 +9,11 @@
       <h1>Menu</h1>
       <%= link_to "Tableau de bord administrateur", admin_dashboard_path%>
       <%= link_to "Tableau de bord examinateur", examiner_dashboard_path%>
-      <%= link_to "Classement", age_sections_path%>
+      <% if examiner_signed_in? || admin_signed_in? %>
+        <%= link_to "Classement", age_sections_path  %>
+      <% else %>
+        <%= link_to "Ajouter les informations du groupe", guests_path %>
+      <% end %>
     </nav>
   </div>
 </div>

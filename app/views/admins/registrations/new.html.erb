@@ -1,2 +1,23 @@
-<h2>Accés non autoriser, veuillez demander au dev les Identifiants</h2>
-<%= link_to "Se connecter", new_session_path(resource_name), class: "btn btn-primary" %><br />
+<%= render "partial/back_button", page_name: "accueil", page_path: root_path %>
+<div class="restricted-access-container">
+  <div class="restricted-card">
+
+    <div class="icon-wrapper">
+      <i class="fa-solid fa-user-lock"></i>
+    </div>
+
+    <h2>Accès Restreint</h2>
+
+    <p class="message">
+      La création de compte administrateur est fermée au public.<br>
+      Veuillez contacter <strong>Augnoo Brian</strong> pour obtenir vos identifiants d'accès.
+    </p>
+
+    <div class="actions">
+      <%= link_to new_session_path(resource_name), class: "btn-gradient" do %>
+        <i class="fa-solid fa-arrow-right-to-bracket"></i> Se connecter
+      <% end %>
+    </div>
+
+  </div>
+</div>

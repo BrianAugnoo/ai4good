@@ -179,3 +179,224 @@ $star-inactive: #e2e8f0; // Gris clair pour les étoiles vides
   50% { transform: scale(1.4); }
   100% { transform: scale(1); }
 }
+
+@mixin brand-gradient {
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+}
+
+.guest-auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg-color;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+
+  .guest-auth-card {
+    background: white;
+    width: 100%;
+    max-width: 450px;
+    padding: 3rem 2.5rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(92, 18, 207, 0.08); // Ombre violette légère
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    text-align: center; // Centre le texte par défaut pour le header
+
+    // --- En-tête avec Icône ---
+    .auth-header {
+      margin-bottom: 2.5rem;
+
+      .icon-wrapper {
+        width: 70px;
+        height: 70px;
+        background: rgba($primary, 0.08);
+        color: $primary;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin: 0 auto 1.5rem; // Centré horizontalement
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: $text-dark;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.5px;
+      }
+
+      p {
+        color: $text-muted;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+    }
+
+    // --- Formulaire ---
+    .auth-form {
+      text-align: left; // Remet le formulaire aligné à gauche
+
+      .form-group {
+        margin-bottom: 1.5rem;
+
+        .form-label {
+          display: block;
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: $text-dark;
+          margin-bottom: 0.5rem;
+          margin-left: 4px;
+        }
+
+        .form-input {
+          width: 100%;
+          padding: 0.8rem 1rem;
+          border: 2px solid $input-border;
+          border-radius: 12px;
+          font-size: 1.1rem; // Texte un peu plus gros pour l'identifiant
+          letter-spacing: 1px; // Espacement pour la lisibilité des codes
+          transition: all 0.2s;
+          background: #fcfcfc;
+
+          &:focus {
+            outline: none;
+            border-color: $primary;
+            background: white;
+            box-shadow: 0 0 0 4px rgba($primary, 0.1);
+          }
+
+          &::placeholder {
+            color: #cbd5e1;
+            letter-spacing: normal;
+          }
+        }
+      }
+
+      .form-actions {
+        margin-top: 2rem;
+
+        .btn-submit-gradient {
+          width: 100%;
+          padding: 1rem;
+          border: none;
+          border-radius: 12px;
+          color: white;
+          font-weight: 700;
+          font-size: 1rem;
+          cursor: pointer;
+          @include brand-gradient;
+          box-shadow: 0 4px 15px rgba($primary, 0.3);
+          transition: transform 0.2s, box-shadow 0.2s;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba($primary, 0.4);
+          }
+
+          &:active {
+            transform: translateY(0);
+          }
+        }
+      }
+    }
+
+    // --- Pied de carte (Lien retour) ---
+    .auth-footer {
+      margin-top: 2rem;
+      border-top: 1px solid $input-border;
+      padding-top: 1.5rem;
+
+      .back-link {
+        color: $text-muted;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.2s;
+
+        &:hover {
+          color: $text-dark;
+        }
+      }
+    }
+  }
+}
+
+.file-upload-group {
+  margin-bottom: 1.8rem;
+
+  .form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: #333;
+  }
+
+  .file-input-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Cache l’input natif */
+  .file-input-hidden {
+    display: none;
+  }
+
+  /* Bouton custom */
+  .custom-file-upload {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #f3f3f3;
+    border: 2px dashed #bdbdbd;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    color: #444;
+
+    i {
+      font-size: 1rem;
+    }
+
+    &:hover {
+      background: #e9e9e9;
+      border-color: #8c8c8c;
+    }
+
+    &:active {
+      background: #dcdcdc;
+    }
+  }
+
+  /* Preview Image */
+  .img-preview-rounded {
+    display: block;
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    margin-top: 10px;
+  }
+
+  /* Preview Video */
+  .video-preview-rounded {
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    margin-top: 10px;
+  }
+
+  /* Zone preview container */
+  .preview-container {
+    margin-top: 12px;
+
+    img,
+    video {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+  }
+}

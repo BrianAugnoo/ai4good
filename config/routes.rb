@@ -29,4 +29,6 @@ Rails.application.routes.draw do
   end
   resources :establishment_criteria, only: [ :edit, :update ]
   resources :criteria_names, only: [ :index, :create, :destroy ]
+  resources :guests, only: [ :index, :update ]
+  get "guest/edit_group" => "guests#edit", as: :edit_guest
 end

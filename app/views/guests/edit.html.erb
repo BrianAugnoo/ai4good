@@ -1,0 +1,138 @@
+<div class="guest-auth-container">
+  <div class="guest-auth-card">
+
+    <div class="auth-header">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </div>
+      <%# Utilisation de majuscules et accents corrects %>
+      <h2>Compléter les informations</h2>
+      <p class="text-muted">
+        Établissement : <strong><%= @group.etablished %></strong><br>
+        Groupe : <strong><%= @group.name %></strong>
+      </p>
+    </div>
+
+    <%= form_with model: @group, url: group_path(id: @group.id, guest: true), local: true, method: :patch, class: "auth-form" do |f| %>
+
+      <%# --- Champ Thème --- %>
+      <div class="form-group">
+        <%= f.label :theme, "Thème du projet", class: "form-label" %>
+        <%= f.text_field :theme,
+            required: true,
+            class: "form-input",
+            placeholder: "Ex : Intelligence Artificielle",
+            autofocus: true %>
+      </div>
+
+      <%# --- Champ Membres (TomSelect) --- %>
+      <div class="form-group">
+        <label for="group-members-input" class="form-label">Membres du groupe</label>
+        <%# J'ai ajouté une classe pour pouvoir le cibler en CSS si besoin %>
+        <input name="members" id="group-members-input" value="" autocomplete="off" placeholder="Ajoutez un membre et appuyez sur Entrée">
+        <small class="text-muted">Séparez les noms par la touche Entrée.</small>
+      </div>
+
+      <%# --- Upload Logo (Stylisé) --- %>
+      <div class="form-group file-upload-group">
+        <%= f.label :photo, "Logo du groupe", class: "form-label" %>
+        <div class="file-input-wrapper">
+          <%= f.file_field :photo,
+              direct_upload: true,
+              accept: "image/*",
+              id: "avatar_input",
+              class: "file-input-hidden" %>
+
+          <label for="avatar_input" class="custom-file-upload">
+             <i class="fa-solid fa-image"></i> Choisir une image
+          </label>
+        </div>
+
+        <div class="preview-container mt-2">
+          <img id="avatar_preview" class="img-preview-rounded" style="display: none;" alt="Aperçu du logo" />
+        </div>
+      </div>
+
+      <%# --- Upload Vidéo (Stylisé) --- %>
+      <div class="form-group file-upload-group">
+        <%= f.label :video, "Vidéo de présentation", class: "form-label" %>
+        <div class="file-input-wrapper">
+          <%= f.file_field :video,
+              direct_upload: true,
+              accept: "video/mp4,video/webm,video/ogg",
+              id: "video_input",
+              class: "file-input-hidden" %>
+
+          <label for="video_input" class="custom-file-upload">
+             <i class="fa-solid fa-video"></i> Choisir une vidéo
+          </label>
+        </div>
+
+        <div class="preview-container mt-3 text-center">
+          <video id="video_preview" controls class="video-preview-rounded" style="display: none; width: 100%; max-height: 200px;"></video>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Valider et Accéder", class: "btn-submit-gradient" %>
+      </div>
+
+    <% end %>
+
+    <div class="auth-footer">
+      <%= link_to "Retour à l'accueil", root_path, class: "back-link" %>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Initialisation de TomSelect
+  new TomSelect("#group-members-input", {
+    persist: false,
+    createOnBlur: true,
+    create: true,
+    plugins: ['remove_button'] // Optionnel : ajoute une croix pour supprimer
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+      // --- Gestion Vidéo ---
+      // J'ai renommé 'input' en 'videoInput' pour éviter le conflit
+      const videoInput = document.getElementById("video_input");
+      const videoPreview = document.getElementById("video_preview");
+
+      if (videoInput && videoPreview) {
+        videoInput.addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          const url = URL.createObjectURL(file);
+          videoPreview.src = url;
+          videoPreview.style.display = "block";
+
+          videoPreview.onended = () => {
+            URL.revokeObjectURL(url);
+          };
+        });
+      }
+
+      // --- Gestion Avatar ---
+      // J'ai renommé 'input' en 'avatarInput' pour éviter le conflit
+      const avatarInput = document.getElementById("avatar_input");
+      const avatarPreview = document.getElementById("avatar_preview");
+
+      if (avatarInput && avatarPreview) {
+        avatarInput.addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            avatarPreview.src = e.target.result;
+            avatarPreview.style.display = "block"; // Affiche l'image une fois chargée
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+  });
+</script>

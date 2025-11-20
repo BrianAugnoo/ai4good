@@ -52,16 +52,21 @@ class GroupsController < ApplicationController
     group = Group.find(params[:id])
     group.update(set_params)
     if group.save
-      flash[:notice] = "Group Succesful Changed"
-      redirect_to group_path(group)
+      flash[:notice] = "Modification Appliqué avec succès!"
+      if params[:guest]
+        group.members.destroy_all
+        group.add_members(params[:members].split(",")) unless params[:members].empty?
+        redirect_to root_path
+      else
+        redirect_to group_path(group)
+      end
     else
       flash[:alert] = "Une erreur est survenu"
-      render edit_group_path(group)
     end
   end
 
   private
   def set_params
-    params.require(:group).permit(:name, :theme, :timer, :photo, :video, :establishment_id)
+    params.require(:group).permit(:name, :theme, :timer, :photo, :video, :establishment_id, :email)
   end
 end
