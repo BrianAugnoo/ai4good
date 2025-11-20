@@ -1,14 +1,17 @@
 <%= render "partial/back_button", page_name: "dashboard", page_path: dashboard_path %>
 <% if admin_signed_in? || examiner_permited? %>
-  <div class="establishement-container">
-    <div>
-      <h1>Liste des Etablissements</h1>
+  <div class="establishement-container group-container" data-controller="search">
+    <h1>Liste des Etablissements</h1>
+    <div class="search-bar">
+     <input type="text" data-search-target="input" placeholder="Rechercher par nom ou établissement..." name="query">
     </div>
     <% i = 0 %>
-    <div class="groups">
+    <div class="groups" data-search-target="list">
       <% @establishments.each do |establishment| %>
         <% i += 1 %>
-        <%= render "establishment", establishment: establishment, classement: establishment.valid_eval? ? i : false %>
+        <div>
+          <%= render "establishment", establishment: establishment, classement: establishment.valid_eval? ? i : false %>
+        </div>
       <% end %>
     </div>
     <% if admin_signed_in? %>

@@ -11,9 +11,11 @@ $bg-page: #f8fafc;
 
 .establishement-container {
   padding: 2rem;
-  max-width: 1200px;
+  // max-width: 1200px;
   margin: 0 auto;
   font-family: 'Inter', sans-serif; // Police moderne
+  width: 100vw !important;
+  // margin: 0 !important;
 
   // 1. Style pour le Titre H1
   h1 {

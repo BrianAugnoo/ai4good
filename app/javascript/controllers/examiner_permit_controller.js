@@ -19,7 +19,7 @@ export default class extends Controller {
     const id = checkbox.dataset.id
 
     try {
-      const response = await fetch(`/examiners/${id}`, {
+      const response = await fetch(`/custom_examiners/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
