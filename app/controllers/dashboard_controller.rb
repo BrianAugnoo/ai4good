@@ -10,8 +10,8 @@ class DashboardController < ApplicationController
 
   def examiner
     @groups = Group.all
-    @ratted_groups = @groups.where(ratted: true)
-    @remaining_groups = @groups.where(ratted: false)
+    @ratted_groups = @groups.evaluated_by(current_examiner)
+    @remaining_groups = @groups.not_evaluated_by(current_examiner)
     @age_sections = current_examiner.age_sections
   end
 end

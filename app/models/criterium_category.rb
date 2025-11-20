@@ -4,14 +4,6 @@ class CriteriumCategory < ApplicationRecord
   has_many :examiners, through: :criteria
   def self.categories
     {
-      "Evaluation 1"=> {
-        "organisation"=> "Le groupe s'est-il bien réparti les rôles et les tâches ?",
-        "méthode de travail"=> "Le projet a-t-il été préparé avec une vraie démarche (idées, scénario, essais) ?",
-        "esprit critique"=> "Les élèves ont-ils su améliorer leur travail après les premiers essais ?",
-        "créativité" => "Ont-ils proposé des idées originales ?",
-        "colaboration"=> "Ont-ils bien travaillé ensemble et communiqué efficacement ?"
-      },
-
       "Evaluation 2"=> {
         "clareté du message"=> "La vidéo raconte-t-elle clairement une idée ou une histoire ?",
         "qualité audio-visuelle"=> "Le rendu est-il agréable à regarder et à écouter ?",

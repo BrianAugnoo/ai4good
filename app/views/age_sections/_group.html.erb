@@ -1,15 +1,13 @@
 <tr>
   <td class="group-info">
     <%= group.photo.attached? ? image_tag(group.photo) : image_tag("group_default.webp") %>
-    <div>
-      <p><%= group.etablished %></p>
       <p><%= group.name %></p>
-    </div>
   </td>
-  <% evaluation = group.evaluation %>
-  <% evaluation.each do |element| %>
-    <td class="marked <%= element[:class] %>"><p><%= element[:mark] %></p></td>
-  <% end %>
+
+    <td class="">
+      <%= group.etablished %>
+    </td>
+
   <% if group.ratted %>
     <td class="marked final-marks <%= group.classify_mark(group.final_marks)[:class] %>"><p><%= group.final_marks %></p></td>
   <% else %>
@@ -30,16 +28,11 @@
   <% evaluation = group.evaluation %>
 
   <div class="mobile-card-body">
-    <span class="mobile-badge mark-<%= evaluation[0][:class] %>">
-      Éval 1 : <%= evaluation[0][:mark] %>
+    <span class="mobile-badge">
+      Etablissement: <%= group.etablished %>
     </span>
-
-    <span class="mobile-badge mark-<%= evaluation[1][:class] %>">
-      Éval 2 : <%= evaluation[1][:mark] %>
-    </span>
-
     <span class="mobile-badge mark-<%= group.classify_mark(group.final_marks)[:class] %>">
-      Finale : <%= group.final_marks || "En cours" %>
+      Notes Finale : <%= group.ratted ? group.final_marks : "En cours" %>
     </span>
   </div>
 </div>

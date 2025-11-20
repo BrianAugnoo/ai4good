@@ -10,6 +10,19 @@ class Group < ApplicationRecord
 
   has_one_attached :video
   has_one_attached :photo
+
+  scope :evaluated_by, ->(examiner) {
+    joins(:criteria)
+      .where(criteria: { examiner: examiner })
+      .distinct
+  }
+
+  def self.not_evaluated_by(examiner)
+    evaluated_ids = self.joins(:criteria)
+                         .where(criteria: { examiner_id: examiner.id })
+                         .select(:id)
+    where.not(id: evaluated_ids)
+  end
   # retourne la note final si tout les examinateur ont noter corectement tout les
   # critére sinon il y a un bug et ca retourne une string
 

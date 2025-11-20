@@ -6,12 +6,14 @@ class GroupsController < ApplicationController
     @group_type = { "tout les groups": [ "", nil ], "evaluation terminé": [ "", true ], "evaluation en cours": [ "", false ] }
     if ratted == "true"
       @groups = groups.where(ratted: ratted)
+      @groups = groups.evaluated_by(current_examiner) if examiner_signed_in?
       @group_type[:"evaluation terminé"] = [ "selected", true ]
     elsif ratted == "false"
       @groups = groups.where(ratted: ratted)
+      @groups = groups.not_evaluated_by(current_examiner)
       @group_type[:"evaluation en cours"] = [ "selected", false ]
     else
-      @groups = groups.all
+      @groups = groups
       @group_type[:"tout les groups"] = [ "selected", nil ]
     end
   end

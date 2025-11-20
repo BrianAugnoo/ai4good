@@ -1,11 +1,11 @@
 <div class="content age_sections" id="setting-content" data-controller="status">
-  <p>Autorisation première évaluation</p>
+  <p>Autorisation du classement</p>
   <label class="switch">
     <input
       type="checkbox"
       data-status-target="toggle"
-      data-column="first_rate"
-      <%= "checked" if Status.first.first_rate %>
+      data-column="leaderboard"
+      <%= "checked" if Status.first.leaderboard %>
     >
     <span class="slider"></span>
   </label>

@@ -13,8 +13,9 @@ class CriteriumController < ApplicationController
         )
       end
       group.validate_rate
+      flash[:notice] = "evaluation soumis avec succée"
     rescue => e
-      raise e
+      flash[:alert] = "une erreur s'est produite err: #{e}"
     end
       redirect_to group_path(group)
   end

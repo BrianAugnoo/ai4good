@@ -15,7 +15,7 @@
     <div class="header-banner">
       <div class="banner-content">
         <span class="badge-theme"><%= @group.theme %></span>
-        <h1><%= @group.etablished %></h1>
+        <h1><%= admin_signed_in? ? @group.etablished : "Évaluation de groupe" %></h1>
 
         <div class="meta-tags">
           <span>Nom du groupe : <%= @group.name %></span>
@@ -46,6 +46,7 @@
 
         <div class="card-body">
           <div class="categories-list">
+            <% exam_eval = "en cours" %>
             <% categories.each do |category| %>
 
               <%# Vue Admin : On affiche tout %>
@@ -68,8 +69,9 @@
 
                     <ul class="dropdown-menu custom-dropdown">
                       <li class="dd-header">
+                        <% exam_eval = criteria.sum(:values) / criteria.count %>
                         <span>Moyenne</span>
-                        <span class="score-pill"><%= criteria.sum(:values) / criteria.count %></span>
+                        <span class="score-pill"><%= exam_eval %></span>
                       </li>
                       <li><hr class="dropdown-divider"></li>
                       <% criteria.each do |criterium| %>
@@ -80,27 +82,20 @@
                       <% end %>
                     </ul>
                   </div>
+                <% else %>
+                  <div class="action-buttons">
+                    <% if status.second_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[1]).empty? %>
+                      <%= link_to new_criterium_path(categorie: CriteriumCategory.keys[0], group_id: @group.id), class: "btn-action-gradient" do %>
+                        Noter : <%= CriteriumCategory.keys[0] %>
+                      <% end %>
+                    <% end %>
+                  </div>
                 <% end %>
               <% end %>
             <% end %>
           </div>
 
           <%# ACTIONS EXAMINATEUR %>
-          <% if examiner_signed_in? %>
-            <div class="action-buttons">
-              <% if status.first_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[0]).empty? %>
-                <%= link_to new_criterium_path(categorie: CriteriumCategory.keys[0], group_id: @group.id), class: "btn-action-gradient" do %>
-                  Noter : <%= CriteriumCategory.keys[0] %>
-                <% end %>
-              <% end %>
-
-              <% if status.second_rate && current_examiner.criteria_submited(@group, CriteriumCategory.keys[1]).empty? %>
-                <%= link_to new_criterium_path(categorie: CriteriumCategory.keys[1], group_id: @group.id), class: "btn-action-gradient" do %>
-                   Noter : <%= CriteriumCategory.keys[1] %>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
         </div>
       </section>
 
@@ -137,7 +132,7 @@
         <div class="result-card-gradient">
           <div class="result-content">
             <span class="label">Note Finale</span>
-            <span class="big-score"><%= @group.final_marks %></span>
+            <span class="big-score"><%= admin_signed_in? ? @group.final_marks : exam_eval %></span>
             <div class="timer-badge">
               <span>⏱ <%= @group.timer %></span>
             </div>
@@ -153,8 +148,13 @@
         <ul class="members-list">
           <% @group.members.each do |member| %>
             <li>
-              <span class="avatar"><%= member.name[0].upcase %></span>
-              <span class="name"><%= member.name %></span>
+              <% if admin_signed_in? %>
+                <span class="avatar"><%= member.name[0].upcase %></span>
+                <span class="name"><%= member.name %></span>
+              <% else %>
+                <span class="avatar">A</span>
+                <span class="name">Anonyme</span>
+              <% end %>
             </li>
           <% end %>
         </ul>

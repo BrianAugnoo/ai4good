@@ -11,6 +11,6 @@ class StatusesController < ApplicationController
   private
 
   def status_params
-    params.require(:status).permit(:first_rate, :second_rate, :edit_rate)
+    params.require(:status).permit(:first_rate, :second_rate, :edit_rate, :leaderboard)
   end
 end
