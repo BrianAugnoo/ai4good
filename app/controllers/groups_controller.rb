@@ -10,7 +10,7 @@ class GroupsController < ApplicationController
       @group_type[:"evaluation terminé"] = [ "selected", true ]
     elsif ratted == "false"
       @groups = groups.where(ratted: ratted)
-      @groups = groups.not_evaluated_by(current_examiner)
+      @groups = groups.not_evaluated_by(current_examiner) if examiner_signed_in?
       @group_type[:"evaluation en cours"] = [ "selected", false ]
     else
       @groups = groups

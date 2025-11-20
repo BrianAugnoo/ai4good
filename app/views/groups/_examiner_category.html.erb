@@ -1,20 +1,38 @@
-<div class="examiner_category">
-  <% submited_examiner = category.submited?(group) %>
-  <% group.age_section.examiners.each do |examiner| %>
-    <% btn_class = submited_examiner.include?(examiner) ? "btn btn-primary" : "btn btn-secondary" %>
-    <div class="dropdown">
-      <button class="<%= btn_class %> dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <%= examiner.name %>
+<% submited_examiner = category.submited?(group) %>
+<% group.age_section.examiners.each do |examiner| %>
+  <% if submited_examiner.include?(examiner) %>
+    
+    <% criteria = examiner.criteria_submited(group, category.name) %>
+
+    <div class="dropdown-wrapper">
+      <button class="btn-outline-brand dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <span><%= examiner.name %></span>
+        <span class="badge-check">Complété</span>
       </button>
-      <% if submited_examiner.include?(examiner) %>
-        <ul class="dropdown-menu">
-          <% examiner.criteria_submited(group, category.name).each do |criterium| %>
-            <li>
-              <p class="dropdown-item"><%= criterium.name %>: <%= criterium.values %></p>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
+
+      <ul class="dropdown-menu custom-dropdown">
+        <li class="dd-header">
+          <span>Moyenne</span>
+          <span class="score-pill"><%= (criteria.sum(:values) / criteria.count).round(2) %></span>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+
+        <%# --- DÉBUT DE LA BOUCLE --- %>
+        <% criteria.each do |criterium| %>
+          <li class="dd-item">
+            <span class="c-name"><%= criterium.name %></span>
+            <span class="c-val"><%= criterium.values %></span>
+          </li>
+        <% end %>
+        <%# --- FIN DE LA BOUCLE (C'était ici l'erreur) --- %>
+
+      </ul>
+    </div>
+  <% else %>
+    <div class="dropdown-wrapper">
+      <button class="btn-outline-brand dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <span><%= examiner.name %></span>
+      </button>
     </div>
   <% end %>
-</div>
+<% end %>
